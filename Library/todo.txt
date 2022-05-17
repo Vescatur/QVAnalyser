@@ -1,3 +1,5 @@
+Split the one method into a lot of smaller ones.
+
+
 3 models with 10 paramaters
 the different timings.
-Split the one method into a lot of smaller ones.
