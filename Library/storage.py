@@ -9,7 +9,6 @@ class Storage(object):
 
     def __init__(self):
         self.save_location = "./../Resources/Saves/"
-        self.try_create_directory(self.save_location)
         self.save_index = 0
         while path.exists(self.generate_save_folder_path(self.save_index)):
             self.save_index += 1

@@ -1,6 +1,9 @@
+from os import path
+
+from Library.Tools.tool import Tool
 
 
-class ModestTool(object):
+class ModestTool(Tool):
 
     def __init__(self):
         self.resourcesPath = "./../Resources"
@@ -16,3 +19,13 @@ class ModestTool(object):
             .format(self.toolPath, filePath, propertyName, parametersText)
         # Does not use Interval iteration
         return commands
+
+    def setup_tool(self):
+        if not path.exists("./../Resources/Tools/Modest"):
+            return False
+        if not path.exists("./../Resources/Tools/Modest/modest.exe"):
+            return False
+        return True
+
+    def name(self):
+        return "Modest"

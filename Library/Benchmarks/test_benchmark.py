@@ -12,6 +12,7 @@ class TestBenchmark(Benchmark):
         modestTool = ModestTool()
         self.add_hadded_monmege_execution(modestTool)
         self.add_reentrant_queues_execution(modestTool)
+        self.tools.append(modestTool)
 
     # noinspection SpellCheckingInspection
     def add_hadded_monmege_execution(self, modestTool):

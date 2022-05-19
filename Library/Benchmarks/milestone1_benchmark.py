@@ -12,6 +12,7 @@ class Milestone1Benchmark(Benchmark):
         self.add_hadded_monmege_execution(modestTool)
         self.add_reentrant_queues_execution(modestTool)
         self.add_zeroconf_execution(modestTool)
+        self.tools.append(modestTool)
 
     def add_hadded_monmege_execution(self, modestTool):
         executions = []
