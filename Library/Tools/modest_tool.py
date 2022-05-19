@@ -9,7 +9,7 @@ class ModestTool(Tool):
 
     def __init__(self):
         self.tool_folder_path = "{}Modest/".format(Setup().tools_path)
-        self.tool_path = "{}modest.exe".format(self.tool_folder_path)
+        self.tool_path = "{}modest".format(self.tool_folder_path)
         self.temp_file_path = "{}temp_output.json".format(self.tool_folder_path)
 
     def generate_commands_interval_iteration(self, filePath, propertyName, parameters):
