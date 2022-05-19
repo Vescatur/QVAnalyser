@@ -10,6 +10,7 @@ class Benchmark(object):
         self.setup.setup_resource_folders()
         self.storage = Storage()
         self.tools = []
+        self.benchmark_path = Setup().benchmark_models_path
 
     def run(self):
         self.setup.setup_tools(self)

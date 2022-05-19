@@ -18,7 +18,7 @@ class Milestone1Benchmark(Benchmark):
         executions = []
         for size in range(10, 31):
             parameters = {"N": size, "p": 0.7}
-            benchmarkFile = './../Resources/BenchmarkModels/haddad-monmege.v1.jani'
+            benchmarkFile = self.benchmark_path+'haddad-monmege.v1.jani'
             propertyName = "target"
             commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
             execution = Execution(commands, len(executions))
@@ -29,7 +29,7 @@ class Milestone1Benchmark(Benchmark):
         executions = []
         for size in range(3, 11):
             parameters = {"JOB_TYPES": 3, "C_LEFT": size, "C_RIGHT": size, "TIME_BOUND": 5}
-            benchmarkFile = './../Resources/BenchmarkModels/reentrant-queues.v3.jani'
+            benchmarkFile = self.benchmark_path+'reentrant-queues.v3.jani'
             propertyName = "PminBothQueuesFullIsOne"
             commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
             execution = Execution(commands, len(executions))
@@ -39,7 +39,7 @@ class Milestone1Benchmark(Benchmark):
         executions = []
         for size in range(3, 11):
             parameters = {"JOB_TYPES": 3, "C_LEFT": size, "C_RIGHT": size, "TIME_BOUND": 5}
-            benchmarkFile = './../Resources/BenchmarkModels/reentrant-queues.v3.jani'
+            benchmarkFile = self.benchmark_path+'reentrant-queues.v3.jani'
             propertyName = "TminBothQueuesFull"
             commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
             execution = Execution(commands, len(executions))
@@ -49,7 +49,7 @@ class Milestone1Benchmark(Benchmark):
         executions = []
         for size in range(3, 11):
             parameters = {"JOB_TYPES": 3, "C_LEFT": size, "C_RIGHT": size, "TIME_BOUND": 5}
-            benchmarkFile = './../Resources/BenchmarkModels/reentrant-queues.v3.jani'
+            benchmarkFile = self.benchmark_path+'reentrant-queues.v3.jani'
             propertyName = "TmaxBothQueuesFull"
             commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
             execution = Execution(commands, len(executions))
@@ -59,7 +59,7 @@ class Milestone1Benchmark(Benchmark):
         executions = []
         for size in range(3, 11):
             parameters = {"JOB_TYPES": 3, "C_LEFT": size, "C_RIGHT": size, "TIME_BOUND": 5}
-            benchmarkFile = './../Resources/BenchmarkModels/reentrant-queues.v3.jani'
+            benchmarkFile = self.benchmark_path+'reentrant-queues.v3.jani'
             propertyName = "PmaxBothQueuesFullBound"
             commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
             execution = Execution(commands, len(executions))
@@ -69,7 +69,7 @@ class Milestone1Benchmark(Benchmark):
         executions = []
         for size in range(3, 11):
             parameters = {"JOB_TYPES": 3, "C_LEFT": size, "C_RIGHT": size, "TIME_BOUND": 5}
-            benchmarkFile = './../Resources/BenchmarkModels/reentrant-queues.v3.jani'
+            benchmarkFile = self.benchmark_path+'reentrant-queues.v3.jani'
             propertyName = "SmaxBothQueuesFull"
             commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
             execution = Execution(commands, len(executions))
@@ -80,7 +80,7 @@ class Milestone1Benchmark(Benchmark):
         executions = []
         for deadline in range(10, 210, 10):
             parameters = {"N": 1000, "K": 1, "reset": False, "deadline": deadline}
-            benchmarkFile = './../Resources/BenchmarkModels/zeroconf_dl.v1.jani'
+            benchmarkFile = self.benchmark_path+'zeroconf_dl.v1.jani'
             propertyName = "deadline_max"
             commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
             execution = Execution(commands, len(executions))
@@ -90,7 +90,7 @@ class Milestone1Benchmark(Benchmark):
         executions = []
         for deadline in range(10, 210, 10):
             parameters = {"N": 1000, "K": 2, "reset": False, "deadline": deadline}
-            benchmarkFile = './../Resources/BenchmarkModels/zeroconf_dl.v1.jani'
+            benchmarkFile = self.benchmark_path+'zeroconf_dl.v1.jani'
             propertyName = "deadline_max"
             commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
             execution = Execution(commands, len(executions))
@@ -100,7 +100,7 @@ class Milestone1Benchmark(Benchmark):
         executions = []
         for deadline in range(10, 210, 10):
             parameters = {"N": 2000, "K": 1, "reset": False, "deadline": deadline}
-            benchmarkFile = './../Resources/BenchmarkModels/zeroconf_dl.v1.jani'
+            benchmarkFile = self.benchmark_path+'zeroconf_dl.v1.jani'
             propertyName = "deadline_max"
             commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
             execution = Execution(commands, len(executions))

@@ -1,3 +1,7 @@
+import json
+import os
+
+from Library.Tools.modest_tool import ModestTool
 from Library.command_execution import CommandExecution
 
 
@@ -12,6 +16,25 @@ class Execution(object):
         self.return_code = None
         self.command_executions = None
         self.index = index
+        self.json_output = None
+        self.states = 0
+        self.total_time = 0
+        self.state_space_time = 0
+        self.property_time = 0
+        self.property_output = 0
+
+    def modest_specific(self):
+        file = open(ModestTool().temp_file_path, "r", encoding='utf-8-sig')
+        self.json_output = json.load(file)
+        file.close()
+        os.remove(ModestTool().temp_file_path)
+
+        self.total_time = self.json_output["time"]
+        state_space_exploration_values = self.json_output["data"][0]["values"]
+        self.states = state_space_exploration_values[1]["value"]
+        self.state_space_time = state_space_exploration_values[5]["value"]
+        self.property_time = self.json_output["property-times"][0]["time"]
+        self.property_output = self.json_output["data"][1]
 
     def run(self):
         self.error = False
@@ -20,6 +43,8 @@ class Execution(object):
         self.logs = []
         self.return_code = None
         self.command_executions = []
+        self.json_output = None
+        self.states = 0
         for command in self.commands:
             command_execution = CommandExecution(command, self.time_limit)
             self.command_executions.append(command_execution)
@@ -37,3 +62,4 @@ class Execution(object):
             else:
                 self.return_code = command_execution.return_code
                 self.error = self.error or command_execution.return_code != 0
+        self.modest_specific()

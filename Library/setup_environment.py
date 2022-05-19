@@ -2,16 +2,20 @@ import os
 from os import path
 
 
+def try_create_directory(location):
+    if not path.exists(location):
+        os.mkdir(location)
+
+
 class Setup(object):
 
-
     def __init__(self):
-        self.resources_path = "./../Resources"
-        self.tools_path = self.resources_path + "/Tools"
-        self.saves_path = self.resources_path + "/Saves"
+        self.resources_path = "./../Resources/"
+        self.benchmark_models_path = self.resources_path + "BenchmarkModels/"
+        self.tools_path = self.resources_path + "Tools/"
+        self.saves_path = self.resources_path + "Saves/"
 
     def setup_tools(self, benchmark):
-
         missing_tool = False
         missing_tool_name = ""
         for tool in benchmark.tools:
@@ -24,10 +28,7 @@ class Setup(object):
             raise Exception("Tool(s) {}is/are missing.".format(missing_tool_name))
 
     def setup_resource_folders(self):
-        self.try_create_directory("./../Resources/")
-        self.try_create_directory("./../Resources/Saves/")
-        self.try_create_directory("./../Resources/Tools/")
-
-    def try_create_directory(self, location):
-        if not path.exists(location):
-            os.mkdir(location)
+        try_create_directory(self.resources_path)
+        try_create_directory(self.benchmark_models_path)
+        try_create_directory(self.tools_path)
+        try_create_directory(self.saves_path)
