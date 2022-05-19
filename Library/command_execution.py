@@ -7,7 +7,7 @@ import time
 
 class CommandExecution(object):
     """ Represents the execution of a single command line argument. """
-    def __init__(self,command_line_str, time_limit):
+    def __init__(self, command_line_str, time_limit):
         self.time_limit = time_limit
         self.command_line_str = command_line_str
         self.timeout = None
@@ -19,12 +19,14 @@ class CommandExecution(object):
     def stop(self):
         self.timeout = True
         self.proc.kill()
+        self.proc = None
 
     def stop_after_timeout(self):
         self.timeout = False
         self.proc.send_signal(signal.SIGINT)
         time.sleep(20)
         self.proc.kill()
+        self.proc = None
 
     def run(self):
         command_line_list = self.command_line_str.split()
@@ -45,6 +47,7 @@ class CommandExecution(object):
             timer.cancel()
             self.wall_time = time.time() - start_time
             self.return_code = self.proc.returncode
+            self.proc = None
         self.output = self.output + stdout
         if len(stderr) > 0:
             self.output = self.output + "\n" + "#"*30 + "Output to stderr" + "#"*30 + "\n" + stderr

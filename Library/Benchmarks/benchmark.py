@@ -1,10 +1,15 @@
+from Library.storage import Storage
+
 
 class Benchmark(object):
 
     def __init__(self):
-        self.executions = []
+        self.execution_sequences = []
+        self.storage = Storage()
 
     def run(self):
-        for execution in self.executions:
-            execution.run()
-            print(execution.command_executions[0].output)
+        for execution_sequence in self.execution_sequences:
+            for execution in execution_sequence.executions:
+                execution.run()
+                self.storage.save_execution(execution, execution_sequence)
+                print(execution.command_executions[0].output)

@@ -2,7 +2,7 @@ from Library.command_execution import CommandExecution
 
 
 class Execution(object):
-    def __init__(self, commands):
+    def __init__(self, commands, index):
         self.commands = commands
         self.time_limit = 500
         self.wall_time = None
@@ -11,6 +11,7 @@ class Execution(object):
         self.error = None
         self.return_code = None
         self.command_executions = None
+        self.index = index
 
     def run(self):
         self.error = False
