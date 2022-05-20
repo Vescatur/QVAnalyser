@@ -16,24 +16,20 @@ class CommandExecution(object):
         self.wall_time = None
         self.proc = None
 
-    def stop(self):
-        self.timeout = True
-        self.proc.kill()
-        self.proc = None
 
     def stop_after_timeout(self):
-        self.timeout = False
-        self.proc.send_signal(signal.SIGINT)
-        time.sleep(20)
-        self.proc.kill()
-        self.proc = None
+    	if self.proc != None:
+        	self.timeout = False
+        	self.proc.send_signal(signal.SIGINT)
+        	time.sleep(20)
+        	self.proc.kill()
 
     def run(self):
         command_line_list = self.command_line_str.split()
         command_line_list[0] = os.path.expanduser(command_line_list[0])
         self.proc = subprocess.Popen(command_line_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False, encoding='utf-8')
         start_time = time.time()
-        timer = threading.Timer(self.time_limit, self.stop)
+        timer = threading.Timer(self.time_limit, self.stop_after_timeout)
         self.timeout = False
         self.output = ""
         timer.start()

@@ -9,7 +9,7 @@ class Milestone1Benchmark(Benchmark):
         super().__init__()
         self.execution_sequences = []
         modestTool = ModestTool()
-        self.add_hadded_monmege_execution(modestTool)
+        # self.add_hadded_monmege_execution(modestTool)
         self.add_reentrant_queues_execution(modestTool)
         self.add_zeroconf_execution(modestTool)
         self.tools.append(modestTool)
@@ -27,7 +27,7 @@ class Milestone1Benchmark(Benchmark):
 
     def add_reentrant_queues_execution(self, modestTool):
         executions = []
-        for size in range(3, 11):
+        for size in range(3, 6):
             parameters = {"JOB_TYPES": 3, "C_LEFT": size, "C_RIGHT": size, "TIME_BOUND": 5}
             benchmarkFile = self.benchmark_path+'reentrant-queues.v3.jani'
             propertyName = "PminBothQueuesFullIsOne"
@@ -37,7 +37,7 @@ class Milestone1Benchmark(Benchmark):
         self.execution_sequences.append(ExecutionSequence(executions, "reentrant_queues_PminBothQueuesFullIsOne"))
 
         executions = []
-        for size in range(3, 11):
+        for size in range(3, 6):
             parameters = {"JOB_TYPES": 3, "C_LEFT": size, "C_RIGHT": size, "TIME_BOUND": 5}
             benchmarkFile = self.benchmark_path+'reentrant-queues.v3.jani'
             propertyName = "TminBothQueuesFull"
@@ -47,7 +47,7 @@ class Milestone1Benchmark(Benchmark):
         self.execution_sequences.append(ExecutionSequence(executions, "reentrant_queues_TminBothQueuesFull"))
 
         executions = []
-        for size in range(3, 11):
+        for size in range(3, 6):
             parameters = {"JOB_TYPES": 3, "C_LEFT": size, "C_RIGHT": size, "TIME_BOUND": 5}
             benchmarkFile = self.benchmark_path+'reentrant-queues.v3.jani'
             propertyName = "TmaxBothQueuesFull"
@@ -57,7 +57,7 @@ class Milestone1Benchmark(Benchmark):
         self.execution_sequences.append(ExecutionSequence(executions, "reentrant_queues_TmaxBothQueuesFull"))
 
         executions = []
-        for size in range(3, 11):
+        for size in range(3, 6):
             parameters = {"JOB_TYPES": 3, "C_LEFT": size, "C_RIGHT": size, "TIME_BOUND": 5}
             benchmarkFile = self.benchmark_path+'reentrant-queues.v3.jani'
             propertyName = "PmaxBothQueuesFullBound"
@@ -67,7 +67,7 @@ class Milestone1Benchmark(Benchmark):
         self.execution_sequences.append(ExecutionSequence(executions, "reentrant_queues_TminBothQueuesFull"))
 
         executions = []
-        for size in range(3, 11):
+        for size in range(3, 6):
             parameters = {"JOB_TYPES": 3, "C_LEFT": size, "C_RIGHT": size, "TIME_BOUND": 5}
             benchmarkFile = self.benchmark_path+'reentrant-queues.v3.jani'
             propertyName = "SmaxBothQueuesFull"
