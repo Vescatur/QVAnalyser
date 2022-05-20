@@ -12,13 +12,14 @@ class TestBenchmark(Benchmark):
         modestTool = ModestTool()
         self.add_hadded_monmege_execution(modestTool)
         self.add_reentrant_queues_execution(modestTool)
+        self.tools.append(modestTool)
 
     # noinspection SpellCheckingInspection
     def add_hadded_monmege_execution(self, modestTool):
         executions = []
         for size in range(10, 12):
             parameters = {"N": size, "p": 0.7}
-            benchmarkFile = './../Resources/BenchmarkModels/haddad-monmege.v1.jani'
+            benchmarkFile = self.benchmark_path+'haddad-monmege.v1.jani'
             propertyName = "target"
             commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
             execution = Execution(commands, len(executions))
@@ -29,7 +30,7 @@ class TestBenchmark(Benchmark):
         executions = []
         for size in range(2, 3):
             parameters = {"JOB_TYPES": 3, "C_LEFT": size, "C_RIGHT": size, "TIME_BOUND": 5}
-            benchmarkFile = './../Resources/BenchmarkModels/reentrant-queues.v3.jani'
+            benchmarkFile = self.benchmark_path+'reentrant-queues.v3.jani'
             propertyName = "PminBothQueuesFullIsOne"
             commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
             execution = Execution(commands, len(executions))
