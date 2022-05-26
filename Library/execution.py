@@ -8,7 +8,7 @@ from Library.command_execution import CommandExecution
 class Execution(object):
     def __init__(self, commands, index):
         self.commands = commands
-        self.time_limit = 600
+        self.time_limit = 5
         self.wall_time = None
         self.logs = None
         self.timeout = None
@@ -24,17 +24,18 @@ class Execution(object):
         self.property_output = 0
 
     def modest_specific(self):
-        file = open(ModestTool().temp_file_path, "r", encoding='utf-8-sig')
-        self.json_output = json.load(file)
-        file.close()
-        os.remove(ModestTool().temp_file_path)
+        if os.path.exists(ModestTool().temp_file_path):
+            file = open(ModestTool().temp_file_path, "r", encoding='utf-8-sig')
+            self.json_output = json.load(file)
+            file.close()
+            os.remove(ModestTool().temp_file_path)
 
-        self.total_time = self.json_output["time"]
-        state_space_exploration_values = self.json_output["data"][0]["values"]
-        self.states = state_space_exploration_values[1]["value"]
-        self.state_space_time = state_space_exploration_values[5]["value"]
-        self.property_time = self.json_output["property-times"][0]["time"]
-        self.property_output = self.json_output["data"][1]
+            self.total_time = self.json_output["time"]
+            state_space_exploration_values = self.json_output["data"][0]["values"]
+            self.states = state_space_exploration_values[1]["value"]
+            self.state_space_time = state_space_exploration_values[5]["value"]
+            self.property_time = self.json_output["property-times"][0]["time"]
+            self.property_output = self.json_output["data"][1]
 
     def run(self):
         self.error = False
