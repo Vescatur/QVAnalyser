@@ -16,6 +16,13 @@ class Benchmark(object):
         self.setup.setup_tools(self)
         for execution_sequence in self.execution_sequences:
             for execution in execution_sequence.executions:
-                execution.run()
-                self.storage.save_execution(execution, execution_sequence)
-                print(execution.command_executions[0].output)
+                self.run_execution(execution, execution_sequence)
+
+    def run_execution(self, execution, execution_sequence):
+        try:
+            execution.run()
+            self.storage.save_execution(execution, execution_sequence)
+            print(execution.command_executions[0].output)
+        except:
+            print("Something went wrong with execution sequence {}".format(execution_sequence.name))
+

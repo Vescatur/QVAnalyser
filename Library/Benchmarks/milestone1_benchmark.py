@@ -9,7 +9,7 @@ class Milestone1Benchmark(Benchmark):
         super().__init__()
         self.execution_sequences = []
         modestTool = ModestTool()
-        # self.add_hadded_monmege_execution(modestTool)
+        self.add_hadded_monmege_execution(modestTool)
         self.add_reentrant_queues_execution(modestTool)
         self.add_zeroconf_execution(modestTool)
         self.tools.append(modestTool)

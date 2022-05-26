@@ -20,8 +20,8 @@ class CommandExecution(object):
     def stop_after_timeout(self):
     	if self.proc != None:
         	self.timeout = False
-        	self.proc.send_signal(signal.SIGINT)
-        	time.sleep(20)
+        	# self.proc.send_signal(signal.SIGINT)
+        	# time.sleep(20)
         	self.proc.kill()
 
     def run(self):

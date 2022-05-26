@@ -8,7 +8,7 @@ from Library.command_execution import CommandExecution
 class Execution(object):
     def __init__(self, commands, index):
         self.commands = commands
-        self.time_limit = 5
+        self.time_limit = 600
         self.wall_time = None
         self.logs = None
         self.timeout = None

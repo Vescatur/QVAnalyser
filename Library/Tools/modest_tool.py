@@ -9,7 +9,10 @@ class ModestTool(Tool):
 
     def __init__(self):
         self.tool_folder_path = "{}Modest/".format(Setup().tools_path)
-        self.tool_path = "{}modest".format(self.tool_folder_path)
+        if self.isLinux():
+            self.tool_path = "{}modest".format(self.tool_folder_path)
+        else:
+            self.tool_path = "{}modest.exe".format(self.tool_folder_path)
         self.temp_file_path = "{}temp_output.json".format(self.tool_folder_path)
 
     def generate_commands_interval_iteration(self, filePath, propertyName, parameters):
@@ -20,7 +23,6 @@ class ModestTool(Tool):
         parametersText = parametersText[:-1]  # Removes last comma.
         commands[0] = "{} check {} --alg IntervalIteration --props {} -E {} -O {} Json"\
             .format(self.tool_path, filePath, propertyName, parametersText,self.temp_file_path)
-        # Does not use Interval iteration
         return commands
 
     def setup_tool(self):
