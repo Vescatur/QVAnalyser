@@ -1,5 +1,5 @@
 from Library.Benchmarks.benchmark import Benchmark
-from Library.Tools.modest_tool import ModestTool
+from Specific.Tools.modest_tool import ModestTool
 from Library.execution import Execution
 from Library.execution_sequence import ExecutionSequence
 
