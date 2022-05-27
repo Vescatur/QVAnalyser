@@ -5,7 +5,10 @@ from Library.storage import Storage
 class Benchmark(object):
 
     def __init__(self):
+        self.benchmark_models = []
+        self.benchmark_sequences = []
         self.execution_sequences = []
+
         self.setup = Setup()
         self.setup.setup_resource_folders()
         self.storage = Storage()
