@@ -3,8 +3,8 @@ from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Benchmarks.benchmark_model import BenchmarkModel
 from Library.Benchmarks.benchmark_sequence import BenchmarkSequence
 from Specific.Tools.modest_tool import ModestTool
-from Library.execution import Execution
-from Library.execution_sequence import ExecutionSequence
+from Library.execution_old.execution import Execution
+from Library.execution_old.execution_sequence import ExecutionSequence
 
 
 # noinspection DuplicatedCode
