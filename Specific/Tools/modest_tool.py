@@ -1,37 +1,24 @@
 import os
 from os import path
 
-from Library.Tools.tool import Tool
-from Library.setup_environment import Setup
+from Library.Algorithms.algorithm import Algorithm
+from Library.Algorithms.tool import Tool
+from Specific.Algorithms.modest_interval_iteration import ModestIntervalIteration
+from Specific.Helpers.modest import Modest
 
 
 class ModestTool(Tool):
 
     def __init__(self):
-        self.tool_folder_path = "{}Modest/".format(Setup().tools_path)
-        if self.isLinux():
-            self.tool_path = "{}modest".format(self.tool_folder_path)
-        else:
-            self.tool_path = "{}modest.exe".format(self.tool_folder_path)
-        self.temp_file_path = "{}temp_output.json".format(self.tool_folder_path)
-
-    def generate_commands_interval_iteration(self, filePath, propertyName, parameters):
-        commands = [1]
-        parametersText = ""
-        for key in parameters:
-            parametersText += "{}={},".format(key, parameters[key])
-        parametersText = parametersText[:-1]  # Removes last comma.
-        commands[0] = "{} check {} --alg IntervalIteration --props {} -E {} -O {} Json"\
-            .format(self.tool_path, filePath, propertyName, parametersText,self.temp_file_path)
-        return commands
+        self.interval_iteration = Algorithm(ModestIntervalIteration, "modest interval iteration")
 
     def setup_tool(self):
-        if not path.exists(self.tool_folder_path):
+        if not path.exists(Modest().tool_folder_path):
             return False
-        if not path.exists(self.tool_path):
+        if not path.exists(Modest().tool_path):
             return False
-        if path.exists(self.temp_file_path):
-            os.remove(self.temp_file_path)
+        if path.exists(Modest().temp_file_path):
+            os.remove(Modest().temp_file_path)
         return True
 
     def name(self):

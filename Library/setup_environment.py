@@ -1,10 +1,7 @@
 import os
 from os import path
-
-
-def try_create_directory(location):
-    if not path.exists(location):
-        os.mkdir(location)
+from sys import platform
+from sys import platform
 
 
 class Setup(object):
@@ -28,7 +25,20 @@ class Setup(object):
             raise Exception("Tool(s) {}is/are missing.".format(missing_tool_name))
 
     def setup_resource_folders(self):
-        try_create_directory(self.resources_path)
-        try_create_directory(self.benchmark_models_path)
-        try_create_directory(self.tools_path)
-        try_create_directory(self.saves_path)
+        self.try_create_directory(self.resources_path)
+        self.try_create_directory(self.benchmark_models_path)
+        self.try_create_directory(self.tools_path)
+        self.try_create_directory(self.saves_path)
+
+    def try_create_directory(self, location):
+        if not path.exists(location):
+            os.mkdir(location)
+
+    def is_linux(self):
+        if platform == "linux" or platform == "linux2":
+            return True
+        elif platform == "win32":
+            return False
+        elif platform == "darwin":
+            raise Exception("Apple is not supported")
+        raise Exception("Operating system not recognized")

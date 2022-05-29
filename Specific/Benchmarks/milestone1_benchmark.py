@@ -1,7 +1,7 @@
 from Library.Benchmarks.benchmark import Benchmark
 from Specific.Tools.modest_tool import ModestTool
-from Library.execution_old.execution import Execution
-from Library.execution_old.execution_sequence import ExecutionSequence
+from QComp.execution_old.execution import Execution
+from QComp.execution_old.execution_sequence import ExecutionSequence
 
 
 class Milestone1Benchmark(Benchmark):

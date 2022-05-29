@@ -1,9 +1,9 @@
 
 class BenchmarkSequence(object):
 
-    def __init__(self,benchmark_model, property, parameters):
+    def __init__(self,benchmark_model, property_name, parameters):
         self.benchmark_model = benchmark_model
-        self.property = property
+        self.property_name = property_name
         self.parameters = parameters
         self.benchmark_instances = []
         self.benchmark_model.benchmark.benchmark_sequences.append(self)

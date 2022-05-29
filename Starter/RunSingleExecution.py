@@ -1,5 +1,5 @@
 from Specific.Tools.modest_tool import ModestTool
-from Library.execution_old.execution import Execution
+from QComp.execution_old.execution import Execution
 
 modestTool = ModestTool()
 parameters = {"JOB_TYPES": 3, "C_LEFT": 4, "C_RIGHT": 4, "TIME_BOUND": 5}
