@@ -7,7 +7,7 @@ class Execution(object):
 
     def __init__(self, instance, result):
         self.result = result
-        self.instance = instance
+        self.benchmark_instance = instance
         self.result.statistics[Statistics.WALL_TIME] = 0
         self.run()
 
@@ -15,7 +15,7 @@ class Execution(object):
         raise Exception("Unimplemented method Algorithm.run()")
 
     def run_command(self, command):
-        benchmark = self.instance.benchmark_sequence.benchmark_model.benchmark
+        benchmark = self.benchmark_instance.benchmark_sequence.benchmark_model.benchmark
         command_result = CommandExecution(command, benchmark).result
         self.result.command_results.append(command_result)
         if command_result.timed_out:
