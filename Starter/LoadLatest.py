@@ -1,5 +1,5 @@
 from Library.storage import Storage
 
 storage = Storage()
-executions = storage.load_latest_execution_sequences()
+benchmark = storage.load_latest_benchmark()
 i = 1

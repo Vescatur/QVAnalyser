@@ -5,5 +5,7 @@ class Algorithm(object):
         self.execution_constructor = execution_constructor
 
     def run(self, benchmark_instance):
-        return self.execution_constructor(benchmark_instance).result
+        result = self.execution_constructor(benchmark_instance).result
+        result.algorithm = self.name
+        return result
 

@@ -10,7 +10,7 @@ class Execution(object):
         self.run()
 
     def run(self):
-        raise Exception("Unimplemented method Algorithm.run_child()")
+        raise Exception("Unimplemented method Algorithm.run()")
 
     def run_command(self, command):
         benchmark = self.benchmark_instance.benchmark_sequence.benchmark_model.benchmark

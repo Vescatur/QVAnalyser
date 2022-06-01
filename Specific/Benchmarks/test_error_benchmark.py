@@ -1,23 +1,23 @@
 from Library.Benchmarks.benchmark import Benchmark
+from Library.Benchmarks.benchmark_instance import BenchmarkInstance
+from Library.Benchmarks.benchmark_model import BenchmarkModel
+from Library.Benchmarks.benchmark_sequence import BenchmarkSequence
 from Specific.Tools.error_tool import ErrorTool
-from QComp.execution_old.execution import Execution
-from QComp.execution_old.execution_sequence import ExecutionSequence
 
 
 # noinspection DuplicatedCode
 class TestErrorBenchmark(Benchmark):
     def __init__(self):
         super().__init__()
-        self.execution_sequences = []
         errorTool = ErrorTool()
-        self.add_hadded_monmege_execution(errorTool)
+        self.add_haddad_monmege_sequence()
         self.tools.append(errorTool)
+        self.algorithms.append(errorTool.error_algorithm)
 
     # noinspection SpellCheckingInspection
-    def add_hadded_monmege_execution(self, modestTool):
-        executions = []
-        for size in range(30, 33):
-            commands = modestTool.generate_commands_with_error()
-            execution = Execution(commands, len(executions))
-            executions.append(execution)
-        self.execution_sequences.append(ExecutionSequence(executions, "hadded_monmege"))
+    def add_haddad_monmege_sequence(self):
+        model = BenchmarkModel(self, 'haddad-monmege.v1.jani')
+
+        sequence = BenchmarkSequence(model, "target", {"p": 0.7})
+        for value in range(10, 12):
+            BenchmarkInstance(sequence, {"N": value})

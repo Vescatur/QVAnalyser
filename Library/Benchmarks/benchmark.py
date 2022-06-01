@@ -1,3 +1,5 @@
+import traceback
+
 from Library.setup_environment import Setup
 from Library.storage import Storage
 
@@ -18,19 +20,37 @@ class Benchmark(object):
 
     def run(self):
         self.setup.setup_tools(self)
+        self.storage.save_benchmark(self)
         for sequence in self.benchmark_sequences:
             for instance in sequence.benchmark_instances:
                 for algorithm in self.algorithms:
-                    self.run_algorithm(algorithm, instance, sequence)
+                    self.run_algorithm(algorithm, instance)
 
-    def run_algorithm(self, algorithm, instance, sequence):
-        #try:
-            print("Run: {} on {}".format(algorithm.name, sequence.benchmark_model.name))
+    def run_algorithm(self, algorithm, instance):
+        try:
+            print("Run: {} on {}".format(algorithm.name, instance.benchmark_sequence.benchmark_model.name))
             result = algorithm.run(instance)
-            # self.storage.save_execution(execution, execution_sequence)
-            # print(execution.command_executions[0].output)
+            result.index = len(instance.results)
+            instance.results.append(result)
+            self.storage.save_result(result, instance)
+            self.print_result(algorithm, instance, result)
+        except Exception as e:
+            self.print_exception(e, instance, algorithm)
+
+    def print_result(self, algorithm, instance, result):
+        if len(result.command_results) == 0:
+            print("No command results")
+        else:
             print(result.command_results[0].output_log)
             print(result.command_results[0].error_log)
-            print(result.command_results[0].exception)
-        #except Exception:
-        #    print("Something went wrong with execution sequence {}".format(sequence.benchmark_model.name))
+            if result.command_results[0].exception is not None:
+                self.print_exception(result.command_results[0].exception, instance, algorithm)
+
+    def print_exception(self, exception, instance, algorithm):
+        model_name = instance.benchmark_sequence.benchmark_model.name
+        sequence_index = instance.benchmark_sequence.index
+        instance_index = instance.index
+        print("Something went wrong with model {} with parameters {} and algorithm \"{}\". benchmark_sequence {} benchmark_instance {}. "
+              .format(model_name, str(instance.all_parameters), algorithm.name, sequence_index, instance_index))
+        print("".join(traceback.format_exception(type(exception), exception, exception.__traceback__)))
+        print(exception)
