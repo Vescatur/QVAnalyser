@@ -11,6 +11,7 @@ https://www.modestchecker.net/Downloads/Modest-Toolset-v3.1.190-g35b359a78-win-x
 
 Commands to run the application. You should be in the Starter folder.
 
+git pull
 export PYTHONPATH="../"
 python3 RunTestBenchmark.py
 
