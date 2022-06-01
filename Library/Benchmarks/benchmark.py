@@ -1,5 +1,6 @@
 import traceback
 
+from Library.Results.result import Result
 from Library.setup_environment import Setup
 from Library.storage import Storage
 
@@ -27,15 +28,19 @@ class Benchmark(object):
                     self.run_algorithm(algorithm, instance)
 
     def run_algorithm(self, algorithm, instance):
+        result = Result()
+        print("Run: {} on {}".format(algorithm.name, instance.benchmark_sequence.benchmark_model.name))
         try:
-            print("Run: {} on {}".format(algorithm.name, instance.benchmark_sequence.benchmark_model.name))
-            result = algorithm.run(instance)
-            result.index = len(instance.results)
-            instance.results.append(result)
-            self.storage.save_result(result, instance)
-            self.print_result(algorithm, instance, result)
+            algorithm.run(instance, result)
         except Exception as e:
             self.print_exception(e, instance, algorithm)
+            result.qva_error = e
+            result.threw_error = True
+
+        result.index = len(instance.results)
+        instance.results.append(result)
+        self.print_result(algorithm, instance, result)
+        self.storage.save_result(result, instance)
 
     def print_result(self, algorithm, instance, result):
         if len(result.command_results) == 0:

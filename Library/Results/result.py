@@ -8,6 +8,7 @@ class Result(object):
         self.command_results = []
         self.timed_out = False
         self.threw_error = False
+        self.qva_error = None
 
         self.statistics = {}
 

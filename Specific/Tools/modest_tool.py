@@ -12,7 +12,7 @@ class ModestTool(Tool):
     def __init__(self):
         self.interval_iteration = Algorithm(ModestIntervalIteration, "modest interval iteration")
 
-    def setup_tool(self):
+    def check_setup_tool(self):
         if not path.exists(Modest().tool_folder_path):
             return False
         if not path.exists(Modest().tool_path):

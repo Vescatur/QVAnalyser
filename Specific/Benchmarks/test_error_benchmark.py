@@ -13,6 +13,7 @@ class TestErrorBenchmark(Benchmark):
         self.add_haddad_monmege_sequence()
         self.tools.append(errorTool)
         self.algorithms.append(errorTool.error_algorithm)
+        self.algorithms.append(errorTool.command_error_algorithm)
 
     # noinspection SpellCheckingInspection
     def add_haddad_monmege_sequence(self):

@@ -4,8 +4,8 @@ class Algorithm(object):
         self.name = name
         self.execution_constructor = execution_constructor
 
-    def run(self, benchmark_instance):
-        result = self.execution_constructor(benchmark_instance).result
+    def run(self, instance, result):
         result.algorithm = self.name
+        self.execution_constructor(instance, result)
         return result
 

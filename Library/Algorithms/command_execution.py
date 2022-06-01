@@ -17,18 +17,18 @@ class CommandExecution(object):
         self.run()
 
     def run(self):
-        self.process = self.create_process()
         start_time = time.time()
         timer = threading.Timer(self.benchmark.time_limit, self.stop_after_timeout)
         timer.start()
         try:
+            self.process = self.create_process()
             self.result.output_log, self.result.error_log = self.process.communicate()
+            self.result.return_code = self.process.returncode
         except Exception as e:
             self.result.exception = e
         finally:
             timer.cancel()
             self.result.wall_time = time.time() - start_time
-            self.result.return_code = self.process.returncode
 
     def create_process(self):
         command_line_list = self.command_line_str.split()

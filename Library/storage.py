@@ -52,7 +52,10 @@ class Storage(object):
             self.load_results(save_index, instance)
             counter += 1
             location = self.generate_instance_folder_path(save_index, instance)
-            instance = sequence.benchmark_instances[counter]
+            if counter < len(sequence.benchmark_instances):
+                instance = sequence.benchmark_instances[counter]
+            else:
+                break
 
     def load_results(self, save_index, instance):
         counter = 0

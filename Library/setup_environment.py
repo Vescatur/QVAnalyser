@@ -16,7 +16,7 @@ class Setup(object):
         missing_tool = False
         missing_tool_name = ""
         for tool in benchmark.tools:
-            succes = tool.setup_tool()
+            succes = tool.check_setup_tool()
             if not succes:
                 missing_tool_name += tool.name() + " "
                 missing_tool = True
