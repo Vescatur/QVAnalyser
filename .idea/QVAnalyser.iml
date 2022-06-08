@@ -10,4 +10,7 @@
     <orderEntry type="jdk" jdkName="Remote Python 3.10.4 WSL: /usr/bin/python3.10" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PyDocumentationSettings">
+    <option name="renderExternalDocumentation" value="true" />
+  </component>
 </module>

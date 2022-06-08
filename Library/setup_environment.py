@@ -33,12 +33,3 @@ class Setup(object):
     def try_create_directory(self, location):
         if not path.exists(location):
             os.mkdir(location)
-
-    def is_linux(self):
-        if platform == "linux" or platform == "linux2":
-            return True
-        elif platform == "win32":
-            return False
-        elif platform == "darwin":
-            raise Exception("Apple is not supported")
-        raise Exception("Operating system not recognized")
