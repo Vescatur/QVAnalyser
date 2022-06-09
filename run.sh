@@ -1,4 +1,4 @@
 git pull
 export PYTHONPATH="../"
 cd Starter
-python3 RunTestBenchmark.py
+python3 RunMilestone1.py
