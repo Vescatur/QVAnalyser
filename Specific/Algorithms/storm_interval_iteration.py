@@ -21,7 +21,7 @@ class StormIntervalIteration(Execution):
         benchmark_sequence = self.benchmark_instance.benchmark_sequence
         file_path = benchmark_sequence.benchmark_model.file_path
         property_name = benchmark_sequence.property_name
-        command = "{} --jani {} --janiproperty {} --constants {} " \
+        command = "{} --jani {} --janiproperty {} --constants {} --minmax:method ii --topological:minmax ii --native:method ii --sound --verbose" \
             .format(Storm().tool_path, file_path, property_name, parametersText)
         return command
 

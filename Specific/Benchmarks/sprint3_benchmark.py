@@ -10,8 +10,8 @@ class Sprint3Benchmark(Benchmark):
     def __init__(self):
         super().__init__()
 
-        self.add_zeroconf()
         self.add_hadded_monmege()
+        self.add_zeroconf()
         self.add_reentrant_queues()
 
         stormTool = StormTool()
