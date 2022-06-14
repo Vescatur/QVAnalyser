@@ -1,4 +1,4 @@
 git pull
 export PYTHONPATH="../"
 cd Starter
-python3 RunSprint3.py
+python3.10 RunSprint3.py
