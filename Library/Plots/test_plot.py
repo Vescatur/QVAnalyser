@@ -13,7 +13,7 @@ class TestPlot(object):
         benchmark = storage.load_latest_benchmark()
 
 
-        self.CreateScatterPlot(benchmark,Statistics.TRANSITIONS,Statistics.STATES)
+        self.CreateScatterPlot(benchmark,Statistics.BRANCHES, Statistics.STATES)
         # number of errors per algorithm
         # number of timeouts
         # check if states, transitions and branches are always the same
@@ -35,7 +35,7 @@ class TestPlot(object):
 
 
 
-        # plt.style.use('_mpl-gallery')
+        # plt.style.use(_mpl-gallery)
 
         # make data
         # x = np.linspace(0, 10, 100)
@@ -49,20 +49,33 @@ class TestPlot(object):
         # ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
         #       ylim=(0, 8), yticks=np.arange(1, 8))
 
-    def CreateScatterPlot(self, benchmark, statisticY, statisticX):
+    def CreateScatterPlot(self, benchmark, statisticX, statisticY):
 
-        dataX = [0, 10, 17, 30]
-        dataY = [0, 1, 2, 10]
+        dataX = []
+        dataY = []
+        for benchmark_sequence in benchmark.benchmark_sequences:
+            for benchmark_instance in benchmark_sequence.benchmark_instances:
+                result = benchmark_instance.results[1]
+                if not result.threw_error:
+                    if statisticX in result.statistics and statisticY in result.statistics:
+                        # print(str(result.statistics[statisticX]) + " "+ str(result.statistics[statisticY]))
+                        dataX.append(result.statistics[statisticX])
+                        dataY.append(result.statistics[statisticY])
+
+        # s = [10, 20, 610, 11]
 
         # plt.show()
 
-        plt.scatter(dataX, dataY,"r--")
-        #plt.title('Tim')
-        plt.ylabel("Time in seconds")
-        plt.ylabel("Number of states")
-        plt.grid(True)
-        #plt.yscale('log')
-        #plt.xscale('log')
-        plt.axis([0, 100, 0.1, 60])
-        plt.savefig('./../Resources/Plots/test_plot.png')
+        plt.scatter(dataX, dataY, c="r", alpha=0.5)
+        # plt.scatter(dataX, dataY,s=s , c="b", alpha=0.5)
+
+        #plt.title(statistics)
+        plt.ylabel("Number of transitions")
+        plt.xlabel("Number of choices")
+        #plt.grid(True)
+        plt.yscale("log")
+        plt.xscale("log")
+        #plt.axis([1, 40000000 , 1,  40000000])
+        #plt.axis([1, 1000, 1, 1000])
+        plt.savefig("./../Resources/Plots/test_plot.png")
 
