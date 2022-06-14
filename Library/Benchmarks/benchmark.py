@@ -20,6 +20,21 @@ class Benchmark(object):
         self.benchmark_path = Setup().benchmark_models_path
 
     def run(self):
+        number_of_sequences = 0
+        number_of_instances = 0
+        number_of_algorithms = 0
+        for sequence in self.benchmark_sequences:
+            number_of_sequences += 1
+            for _ in sequence.benchmark_instances:
+                number_of_instances += 1
+
+        for _ in self.algorithms:
+            number_of_algorithms += 1
+        print("Found "+str(number_of_sequences)+" sequence(s), " +
+              str(number_of_instances)+" instance(s) and " +
+              str(number_of_algorithms)+" algorithm(s). This requires " +
+              str(number_of_instances * number_of_algorithms)+" executions.")
+
         self.setup.setup_tools(self)
         self.storage.save_benchmark(self)
         for sequence in self.benchmark_sequences:

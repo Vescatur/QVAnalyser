@@ -3,7 +3,6 @@ import json
 tab = "    "
 
 
-
 def start():
     benchmark_path = "./../Resources/BenchmarkModels/"
     benchmark_path_file = benchmark_path + "index.json"
@@ -27,34 +26,34 @@ def print_start(data):
     print("")
     print("")
     print("class QvbsBenchmark(Benchmark):")
-    print(tab+"def __init__(self):")
-    print(tab*2+"super().__init__()")
-    print(tab*2+"")
-    print(tab*2+"self.add_benchmark_instances()")
-    print(tab*2+"")
-    print(tab*2+"stormTool = StormTool()")
-    print(tab*2+"self.tools.append(stormTool)")
-    print(tab*2+"self.algorithms.append(stormTool.interval_iteration)")
-    print(tab*2+"")
-    print(tab*2+"modestTool = ModestTool()")
-    print(tab*2+"self.tools.append(modestTool)")
-    print(tab*2+"self.algorithms.append(modestTool.interval_iteration)")
-    print(tab+"")
-    print(tab*1+"def add_benchmark_instances(self):")
+    print(tab + "def __init__(self):")
+    print(tab * 2 + "super().__init__()")
+    print(tab * 2 + "")
+    print(tab * 2 + "self.add_benchmark_instances()")
+    print(tab * 2 + "")
+    print(tab * 2 + "stormTool = StormTool()")
+    print(tab * 2 + "self.tools.append(stormTool)")
+    print(tab * 2 + "self.algorithms.append(stormTool.interval_iteration)")
+    print(tab * 2 + "")
+    print(tab * 2 + "modestTool = ModestTool()")
+    print(tab * 2 + "self.tools.append(modestTool)")
+    print(tab * 2 + "self.algorithms.append(modestTool.interval_iteration)")
+    print(tab + "")
+    print(tab * 1 + "def add_benchmark_instances(self):")
 
     for benchmark_model in data:
         short_name = benchmark_model["short"]
-        print(tab*2+"self.add_" + short_name.replace("-", "_") + "()")
+        print(tab * 2 + "self.add_" + short_name.replace("-", "_") + "()")
 
 
 def print_end():
     print(tab)
-    print(tab+"def add_model(self, file_name, properties, parameter_settings):")
-    print(tab*2+"model = BenchmarkModel(self, file_name)")
-    print(tab*2+"for property_name in properties:")
-    print(tab*3+"for parameters in parameter_settings:")
-    print(tab*4+"sequence = BenchmarkSequence(model, property_name, parameters)")
-    print(tab*4+"BenchmarkInstance(sequence, {})")
+    print(tab + "def add_model(self, file_name, properties, parameter_settings):")
+    print(tab * 2 + "model = BenchmarkModel(self, file_name)")
+    print(tab * 2 + "for property_name in properties:")
+    print(tab * 3 + "for parameters in parameter_settings:")
+    print(tab * 4 + "sequence = BenchmarkSequence(model, property_name, parameters)")
+    print(tab * 4 + "BenchmarkInstance(sequence, {})")
     print("")
 
 
@@ -75,13 +74,31 @@ def print_body(benchmark_path, data):
 
 def print_benchmark_instances(path, short_name, name, model_type, original, files, properties):
     print(tab)
-    print(tab+"def add_" + short_name.replace("-", "_") + "(self):")
-    for file in files:
-        path_argument = "''"
-        property_argument = "''"
-        parameter_argument = "''"
-        print(tab*2+"self.add_model("+path_argument+", "+property_argument+", "+parameter_argument+")")
+    print(tab + "def add_" + short_name.replace("-", "_") + "(self):")
 
+    property_argument = []
+    for property_data in properties:
+        property_argument.append("'" + property_data[0] + "'")
+    property_argument_text = "[" + ", ".join(property_argument) + "]"
+    print(tab*2 + "properties = "+property_argument_text)
+
+    for file in files:
+        path_argument = "'" + path+"/"+ file[0] + "'"
+
+        parameter_argument = "["
+        for parameters in file[1]:
+            parameter_argument += "{"
+            for key in parameters:
+                parameter_argument += "'"+key+"': "+ str(parameters[key])+ ", "
+            if len(parameters) >= 1:
+                parameter_argument = parameter_argument[:-2]
+            parameter_argument += "},"
+        if len(file[1]) ==0:
+            parameter_argument += "{}"
+        else:
+            parameter_argument = parameter_argument[:-1]
+        parameter_argument += "]"
+        print(tab * 2 + "self.add_model(" + path_argument + ", properties, " + parameter_argument + ")")
 
 
 def read_property_data(benchmark_model_data):
@@ -103,9 +120,6 @@ def read_file_data(benchmark_model_data):
             parameters_settings.append(parameters)
         files.append([file_data["file"], parameters_settings])
     return files
-
-
-
 
 
 start()
