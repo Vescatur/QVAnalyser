@@ -7,6 +7,9 @@ The tool has been tested on Ubunutu 20. It should also work on other Linux distr
 ## Dependencies
 The analyser requires python 3.10 to run. We used python version 3.10.4. This page describes how to install it on Ubuntu 20 https://computingforgeeks.com/how-to-install-python-on-ubuntu-linux-system/
 
+The xelatex package to generate graphs
+https://tex.stackexchange.com/questions/179778/xelatex-under-ubuntu
+
 ## Tools
 The tool requires other the tools to be installed. They do not need to be added to the path variable. We instead use a relative path. They have to be installed in "./Resources/Tools". The analyser will give an error message if a tool has been incorrectly installed.
 
