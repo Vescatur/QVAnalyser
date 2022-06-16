@@ -27,30 +27,46 @@ class TestPlot(object):
         qva_error = 0
         timed_out = 0
         both = 0
-        sequence_number = 1
+        missing_results = 0
+        sequence_number = 0
         for sequence in benchmark.benchmark_sequences:
             sequence_number += 1
             complete_sequence = True
             for instance in sequence.benchmark_instances:
                 complete_instance = True
                 for result in instance.results:
-                    if result.threw_error:
-                        threw_error += 1
-                        print(sequence_number)
-                        print(result.command_results[0].output_log)
-                        if result.command_results[0].exception is not None:
-                            threw_error_with_exception += 1
-                    if result.qva_error:
-                        qva_error += 1
-                    if result.timed_out:
-                        timed_out += 1
-                    if result.threw_error and result.timed_out:
-                        both += 1
+                    if result.algorithm == "modest interval iteration":
+                        if result.threw_error:
+                            threw_error += 1
+                            #print(sequence_number)
+                            #print(result.command_results[0].output_log)
+                            if result.command_results[0].exception is not None:
+                                threw_error_with_exception += 1
+                        if result.qva_error:
+                            qva_error += 1
+                        if result.timed_out:
+                            timed_out += 1
+                        if result.threw_error and result.timed_out:
+                            both += 1
+                        if Statistics.PROPERTY_TIME not in result.statistics:
+                            missing_results += 1
+                            if not result.timed_out:
+                                print(sequence_number)
+                                print(result.command_results[0].output_log)
+                                print(result.command_results[0].error_log)
         print(threw_error)
         print(threw_error_with_exception)
         print(qva_error)
         print(timed_out)
         print(both)
+        print(missing_results)
+        # modest
+        # 0
+        # 0
+        # 0
+        # 270
+        # 0
+        # 935
 
     def CreateScatterPlot(self, benchmark, statisticX, statisticY):
 

@@ -1,6 +1,5 @@
 import json
 import os
-import shutil
 
 from Library.Algorithms.execution import Execution
 from Library.Results.statistics import Statistics
@@ -19,7 +18,7 @@ class ModestIntervalIteration(Execution):
         benchmark_sequence = self.benchmark_instance.benchmark_sequence
         file_path = benchmark_sequence.benchmark_model.file_path
         property_name = benchmark_sequence.property_name
-        command = "{} check {} --alg IntervalIteration --epsilon 1e-6 --props {} {} -O {} Json" \
+        command = "{} check {} --alg IntervalIteration --epsilon 1e-6 --props {} -E {} -O {} Json" \
             .format(Modest().tool_path, file_path, property_name, parametersText, Modest().temp_file_path)
         return command
 
@@ -28,10 +27,7 @@ class ModestIntervalIteration(Execution):
         for key in parameters:
             parametersText += "{}={},".format(key, parameters[key])
         parametersText = parametersText[:-1]  # Removes last comma.
-        if parametersText == "":
-            return ""
-        else:
-            return "-E " + parametersText
+        return parametersText
 
     def read_json(self):
         if os.path.exists(Modest().temp_file_path):
