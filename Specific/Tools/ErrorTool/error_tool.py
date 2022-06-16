@@ -1,8 +1,8 @@
 # Used to check whether benchmark.py is resilient.
 from Library.Algorithms.algorithm import Algorithm
 from Library.Algorithms.tool import Tool
-from Specific.Algorithms.command_error_algorithm import CommandErrorAlgorithm
-from Specific.Algorithms.error_algorithm import ErrorAlgorithm
+from Specific.Tools.ErrorTool.command_error_algorithm import CommandErrorAlgorithm
+from Specific.Tools.ErrorTool.error_algorithm import ErrorAlgorithm
 
 
 class ErrorTool(Tool):

@@ -1,7 +1,11 @@
 import json
 
 tab = "    "
+text = ""
 
+def add_line(new_line):
+    global text
+    text += new_line+"\n"
 
 def start():
     benchmark_path = "./../Resources/BenchmarkModels/"
@@ -9,55 +13,59 @@ def start():
     benchmark_file = open(benchmark_path_file)
     data = json.load(benchmark_file)
 
-    print_start(data)
-    print_body(benchmark_path, data)
-    print_end()
+    add_line_start(data)
+    add_line_body(benchmark_path, data)
+    add_line_end()
 
+    print(text)
     benchmark_file.close()
 
+    save_file_path = "./../Specific/Benchmarks/qvbs_benchmark.py"
 
-def print_start(data):
-    print("from Library.Benchmarks.benchmark import Benchmark")
-    print("from Library.Benchmarks.benchmark_model import BenchmarkModel")
-    print("from Library.Benchmarks.benchmark_sequence import BenchmarkSequence")
-    print("from Library.Benchmarks.benchmark_instance import BenchmarkInstance")
-    print("from Specific.Tools.modest_tool import ModestTool")
-    print("from Specific.Tools.storm_tool import StormTool")
-    print("")
-    print("")
-    print("class QvbsBenchmark(Benchmark):")
-    print(tab + "def __init__(self):")
-    print(tab * 2 + "super().__init__()")
-    print(tab * 2 + "")
-    print(tab * 2 + "self.add_benchmark_instances()")
-    print(tab * 2 + "")
-    print(tab * 2 + "stormTool = StormTool()")
-    print(tab * 2 + "self.tools.append(stormTool)")
-    print(tab * 2 + "self.algorithms.append(stormTool.interval_iteration)")
-    print(tab * 2 + "")
-    print(tab * 2 + "modestTool = ModestTool()")
-    print(tab * 2 + "self.tools.append(modestTool)")
-    print(tab * 2 + "self.algorithms.append(modestTool.interval_iteration)")
-    print(tab + "")
-    print(tab * 1 + "def add_benchmark_instances(self):")
+
+
+def add_line_start(data):
+    add_line("from Library.Benchmarks.benchmark import Benchmark")
+    add_line("from Library.Benchmarks.benchmark_model import BenchmarkModel")
+    add_line("from Library.Benchmarks.benchmark_sequence import BenchmarkSequence")
+    add_line("from Library.Benchmarks.benchmark_instance import BenchmarkInstance")
+    add_line("from Specific.Tools.modest_tool import ModestTool")
+    add_line("from Specific.Tools.storm_tool import StormTool")
+    add_line("")
+    add_line("")
+    add_line("class QvbsBenchmark(Benchmark):")
+    add_line(tab + "def __init__(self):")
+    add_line(tab * 2 + "super().__init__()")
+    add_line(tab * 2 + "")
+    add_line(tab * 2 + "self.add_benchmark_instances()")
+    add_line(tab * 2 + "")
+    add_line(tab * 2 + "stormTool = StormTool()")
+    add_line(tab * 2 + "self.tools.append(stormTool)")
+    add_line(tab * 2 + "self.algorithms.append(stormTool.interval_iteration)")
+    add_line(tab * 2 + "")
+    add_line(tab * 2 + "modestTool = ModestTool()")
+    add_line(tab * 2 + "self.tools.append(modestTool)")
+    add_line(tab * 2 + "self.algorithms.append(modestTool.interval_iteration)")
+    add_line(tab + "")
+    add_line(tab * 1 + "def add_benchmark_instances(self):")
 
     for benchmark_model in data:
         short_name = benchmark_model["short"]
-        print(tab * 2 + "self.add_" + short_name.replace("-", "_") + "()")
+        add_line(tab * 2 + "self.add_" + short_name.replace("-", "_") + "()")
 
 
-def print_end():
-    print(tab)
-    print(tab + "def add_model(self, file_name, properties, parameter_settings):")
-    print(tab * 2 + "model = BenchmarkModel(self, file_name)")
-    print(tab * 2 + "for property_name in properties:")
-    print(tab * 3 + "for parameters in parameter_settings:")
-    print(tab * 4 + "sequence = BenchmarkSequence(model, property_name, parameters)")
-    print(tab * 4 + "BenchmarkInstance(sequence, {})")
-    print("")
+def add_line_end():
+    add_line(tab)
+    add_line(tab + "def add_model(self, file_name, properties, parameter_settings):")
+    add_line(tab * 2 + "model = BenchmarkModel(self, file_name)")
+    add_line(tab * 2 + "for property_name in properties:")
+    add_line(tab * 3 + "for parameters in parameter_settings:")
+    add_line(tab * 4 + "sequence = BenchmarkSequence(model, property_name, parameters)")
+    add_line(tab * 4 + "BenchmarkInstance(sequence, {})")
+    add_line("")
 
 
-def print_body(benchmark_path, data):
+def add_line_body(benchmark_path, data):
     for benchmark_model in data:
         benchmark_model_path = benchmark_path + benchmark_model["path"]
         benchmark_model_file = open(benchmark_model_path + "/index.json")
@@ -69,18 +77,18 @@ def print_body(benchmark_path, data):
         name = benchmark_model_data["name"]
         files = read_file_data(benchmark_model_data)
         properties = read_property_data(benchmark_model_data)
-        print_benchmark_instances(path, short_name, name, model_type, original, files, properties)
+        add_line_benchmark_instances(path, short_name, name, model_type, original, files, properties)
 
 
-def print_benchmark_instances(path, short_name, name, model_type, original, files, properties):
-    print(tab)
-    print(tab + "def add_" + short_name.replace("-", "_") + "(self):")
+def add_line_benchmark_instances(path, short_name, name, model_type, original, files, properties):
+    add_line(tab)
+    add_line(tab + "def add_" + short_name.replace("-", "_") + "(self):")
 
     property_argument = []
     for property_data in properties:
         property_argument.append("'" + property_data[0] + "'")
     property_argument_text = "[" + ", ".join(property_argument) + "]"
-    print(tab*2 + "properties = "+property_argument_text)
+    add_line(tab*2 + "properties = "+property_argument_text)
 
     for file in files:
         path_argument = "'" + path+"/"+ file[0] + "'"
@@ -89,7 +97,7 @@ def print_benchmark_instances(path, short_name, name, model_type, original, file
         for parameters in file[1]:
             parameter_argument += "{"
             for key in parameters:
-                parameter_argument += "'"+key+"': "+ str(parameters[key])+ ", "
+                parameter_argument += "'"+key+"': " + str(parameters[key]) + ", "
             if len(parameters) >= 1:
                 parameter_argument = parameter_argument[:-2]
             parameter_argument += "},"
@@ -98,7 +106,7 @@ def print_benchmark_instances(path, short_name, name, model_type, original, file
         else:
             parameter_argument = parameter_argument[:-1]
         parameter_argument += "]"
-        print(tab * 2 + "self.add_model(" + path_argument + ", properties, " + parameter_argument + ")")
+        add_line(tab * 2 + "self.add_model(" + path_argument + ", properties, " + parameter_argument + ")")
 
 
 def read_property_data(benchmark_model_data):

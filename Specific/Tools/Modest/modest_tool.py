@@ -3,7 +3,7 @@ from os import path
 
 from Library.Algorithms.algorithm import Algorithm
 from Library.Algorithms.tool import Tool
-from Specific.Algorithms.modest_interval_iteration import ModestIntervalIteration
+from Specific.Tools.Modest.modest_interval_iteration import ModestIntervalIteration
 from Specific.Helpers.modest import Modest
 
 

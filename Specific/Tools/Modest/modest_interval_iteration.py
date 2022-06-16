@@ -18,7 +18,7 @@ class ModestIntervalIteration(Execution):
         benchmark_sequence = self.benchmark_instance.benchmark_sequence
         file_path = benchmark_sequence.benchmark_model.file_path
         property_name = benchmark_sequence.property_name
-        command = "{} check {} --alg IntervalIteration --props {} -E {} -O {} Json" \
+        command = "{} check {} --alg IntervalIteration --epsilon 1e-6 --props {} -E {} -O {} Json" \
             .format(Modest().tool_path, file_path, property_name, parametersText, Modest().temp_file_path)
         return command
 

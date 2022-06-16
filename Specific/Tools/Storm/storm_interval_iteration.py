@@ -21,7 +21,7 @@ class StormIntervalIteration(Execution):
         benchmark_sequence = self.benchmark_instance.benchmark_sequence
         file_path = benchmark_sequence.benchmark_model.file_path
         property_name = benchmark_sequence.property_name
-        command = "{} --jani {} --janiproperty {} --constants {} --minmax:method ii --topological:minmax ii --native:method ii --sound --verbose" \
+        command = "{} --jani {} --janiproperty {} {} --minmax:method ii --topological:minmax ii --native:method ii --sound --verbose --precision 1e-6" \
             .format(Storm().tool_path, file_path, property_name, parametersText)
         return command
 
@@ -30,7 +30,10 @@ class StormIntervalIteration(Execution):
         for key in parameters:
             parametersText += "{}={},".format(key, str(parameters[key]).lower())
         parametersText = parametersText[:-1]  # Removes last comma.
-        return parametersText
+        if parametersText == "":
+            return ""
+        else:
+            return "--constants " + parametersText
 
     def parse_statistics(self):
         log = self.result.command_results[0].output_log
