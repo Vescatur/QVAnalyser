@@ -1,9 +1,7 @@
-import json
-import os
 import re
 
-from Library.Algorithms.execution import Execution
-from Library.Results.statistics import Statistics
+from Library.Tools.execution import Execution
+from Library.Results.measurements import Measurements
 from Specific.Helpers.storm import Storm
 
 
@@ -48,43 +46,43 @@ class StormIntervalIteration(Execution):
 
             states = self.parse_states(line)
             if states is not None:
-                self.result.statistics[Statistics.STATES] = states
+                self.result.measurements[Measurements.STATES] = states
             branches = self.parse_branches(line)
             if branches is not None:
-                self.result.statistics[Statistics.BRANCHES] = branches
+                self.result.measurements[Measurements.BRANCHES] = branches
             transitions = self.parse_transitions(line)
             if transitions is not None:
-                self.result.statistics[Statistics.TRANSITIONS] = transitions
+                self.result.measurements[Measurements.TRANSITIONS] = transitions
 
             states_after_bisimulation = self.parse_states_bisimulation(line)
             if states_after_bisimulation is not None:
-                self.result.statistics[Statistics.STATES_AFTER_BISIMULATION] = states_after_bisimulation
+                self.result.measurements[Measurements.STATES_AFTER_BISIMULATION] = states_after_bisimulation
             branches_after_bisimulation = self.parse_branches_bisimulation(line)
             if branches_after_bisimulation is not None:
-                self.result.statistics[Statistics.BRANCHES] = branches_after_bisimulation
+                self.result.measurements[Measurements.BRANCHES] = branches_after_bisimulation
             transitions_after_bisimulation = self.parse_transitions_bisimulation(line)
             if transitions_after_bisimulation is not None:
-                self.result.statistics[Statistics.TRANSITIONS] = transitions_after_bisimulation
+                self.result.measurements[Measurements.TRANSITIONS] = transitions_after_bisimulation
 
             result = self.parse_result(line)
             if result is not None:
-                self.result.statistics[Statistics.PROPERTY_OUTPUT] = result
+                self.result.measurements[Measurements.PROPERTY_OUTPUT] = result
 
             parsing_time = self.parse_parsing_time(line)
             if parsing_time is not None:
-                self.result.statistics[Statistics.PARSING_TIME] = parsing_time
+                self.result.measurements[Measurements.PARSING_TIME] = parsing_time
 
             building_time = self.parse_building_time(line)
             if building_time is not None:
-                self.result.statistics[Statistics.STATE_SPACE_TIME] = building_time
+                self.result.measurements[Measurements.STATE_SPACE_TIME] = building_time
 
             bisimulation_time = self.parse_bisimulation_time(line)
             if bisimulation_time is not None:
-                self.result.statistics[Statistics.BISIMULATION_TIME] = bisimulation_time
+                self.result.measurements[Measurements.BISIMULATION_TIME] = bisimulation_time
 
             property_time = self.parse_modelchecking_time(line)
             if property_time is not None:
-                self.result.statistics[Statistics.PROPERTY_TIME] = property_time
+                self.result.measurements[Measurements.PROPERTY_TIME] = property_time
 
             error = self.parse_error(line)
             if error is not None:

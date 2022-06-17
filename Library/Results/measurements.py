@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Statistics(Enum):
+class Measurements(Enum):
     STATES = "states"
     TRANSITIONS = "transitions"
     BRANCHES = "branches"

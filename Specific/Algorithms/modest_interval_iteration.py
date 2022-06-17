@@ -1,8 +1,8 @@
 import json
 import os
 
-from Library.Algorithms.execution import Execution
-from Library.Results.statistics import Statistics
+from Library.Tools.execution import Execution
+from Library.Results.measurements import Measurements
 from Specific.Helpers.modest import Modest
 
 
@@ -37,11 +37,11 @@ class ModestIntervalIteration(Execution):
             file.close()
             os.remove(Modest().temp_file_path)
 
-            self.result.statistics[Statistics.TOOL_REPORTED_TIME] = json_output["time"]
+            self.result.measurements[Measurements.TOOL_REPORTED_TIME] = json_output["time"]
             state_space_exploration_values = json_output["data"][0]["values"]
-            self.result.statistics[Statistics.STATES] = state_space_exploration_values[1]["value"]
-            self.result.statistics[Statistics.TRANSITIONS] = state_space_exploration_values[2]["value"]
-            self.result.statistics[Statistics.BRANCHES] = state_space_exploration_values[3]["value"]
-            self.result.statistics[Statistics.STATE_SPACE_TIME] = state_space_exploration_values[5]["value"]
-            self.result.statistics[Statistics.PROPERTY_TIME] = json_output["property-times"][0]["time"]
-            self.result.statistics[Statistics.PROPERTY_OUTPUT] = json_output["data"][1]["value"]
+            self.result.measurements[Measurements.STATES] = state_space_exploration_values[1]["value"]
+            self.result.measurements[Measurements.TRANSITIONS] = state_space_exploration_values[2]["value"]
+            self.result.measurements[Measurements.BRANCHES] = state_space_exploration_values[3]["value"]
+            self.result.measurements[Measurements.STATE_SPACE_TIME] = state_space_exploration_values[5]["value"]
+            self.result.measurements[Measurements.PROPERTY_TIME] = json_output["property-times"][0]["time"]
+            self.result.measurements[Measurements.PROPERTY_OUTPUT] = json_output["data"][1]["value"]

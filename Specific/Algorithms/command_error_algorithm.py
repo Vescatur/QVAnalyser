@@ -1,5 +1,5 @@
 
-from Library.Algorithms.execution import Execution
+from Library.Tools.execution import Execution
 
 
 class CommandErrorAlgorithm(Execution):

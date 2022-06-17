@@ -1,8 +1,8 @@
 import os
 from os import path
 
-from Library.Algorithms.algorithm import Algorithm
-from Library.Algorithms.tool import Tool
+from Library.Tools.algorithm import Algorithm
+from Library.Tools.tool import Tool
 from Specific.Algorithms.modest_interval_iteration import ModestIntervalIteration
 from Specific.Helpers.modest import Modest
 

@@ -1,8 +1,7 @@
-import os
 from os import path
 
-from Library.Algorithms.algorithm import Algorithm
-from Library.Algorithms.tool import Tool
+from Library.Tools.algorithm import Algorithm
+from Library.Tools.tool import Tool
 from Specific.Algorithms.storm_interval_iteration import StormIntervalIteration
 from Specific.Helpers.storm import Storm
 

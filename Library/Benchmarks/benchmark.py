@@ -31,7 +31,7 @@ class Benchmark(object):
         result = Result()
         print("Run: {} on {}".format(algorithm.name, instance.benchmark_sequence.benchmark_model.name))
         try:
-            algorithm.run(instance, result)
+            algorithm.parse_benchmark(instance, result)
         except Exception as e:
             self.print_exception(e, instance, algorithm)
             result.qva_error = e

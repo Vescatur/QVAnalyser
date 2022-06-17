@@ -1,6 +1,5 @@
-from Library.Algorithms.command_execution import CommandExecution
-from Library.Results.result import Result
-from Library.Results.statistics import Statistics
+from Library.Tools.command_execution import CommandExecution
+from Library.Results.measurements import Measurements
 
 
 class Execution(object):
@@ -8,7 +7,7 @@ class Execution(object):
     def __init__(self, instance, result):
         self.result = result
         self.benchmark_instance = instance
-        self.result.statistics[Statistics.WALL_TIME] = 0
+        self.result.measurements[Measurements.WALL_TIME] = 0
         self.run()
 
     def run(self):
@@ -22,5 +21,5 @@ class Execution(object):
             self.result.timed_out = True
         if command_result.exception is not None:
             self.result.threw_error = True
-        self.result.statistics[Statistics.WALL_TIME] = self.result.statistics[Statistics.WALL_TIME] + command_result.wall_time
+        self.result.measurements[Measurements.WALL_TIME] = self.result.measurements[Measurements.WALL_TIME] + command_result.wall_time
         return command_result

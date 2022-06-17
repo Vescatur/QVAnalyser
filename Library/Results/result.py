@@ -10,6 +10,6 @@ class Result(object):
         self.threw_error = False
         self.qva_error = None
 
-        self.statistics = {}
+        self.measurements = {}
 
         self.index = None

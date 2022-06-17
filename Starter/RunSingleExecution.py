@@ -7,6 +7,6 @@ benchmarkFile = './../Resources/BenchmarkModels/reentrant-queues.v3.jani'
 propertyName = "PmaxBothQueuesFullBound"
 commands = modestTool.generate_commands_interval_iteration(benchmarkFile, propertyName, parameters)
 execution = Execution(commands,0)
-execution.run()
+execution.parse_benchmark()
 print(execution.wall_time)
 print(execution.command_executions[0].output)

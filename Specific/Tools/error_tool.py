@@ -1,6 +1,6 @@
 # Used to check whether benchmark.py is resilient.
-from Library.Algorithms.algorithm import Algorithm
-from Library.Algorithms.tool import Tool
+from Library.Tools.algorithm import Algorithm
+from Library.Tools.tool import Tool
 from Specific.Algorithms.command_error_algorithm import CommandErrorAlgorithm
 from Specific.Algorithms.error_algorithm import ErrorAlgorithm
 
