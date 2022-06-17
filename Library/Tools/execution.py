@@ -14,6 +14,7 @@ class Execution(object):
         raise Exception("Unimplemented method Algorithm.run()")
 
     def run_command(self, command):
+        print(command)
         benchmark = self.benchmark_instance.benchmark_sequence.benchmark_model.benchmark
         command_result = CommandExecution(command, benchmark).result
         self.result.command_results.append(command_result)

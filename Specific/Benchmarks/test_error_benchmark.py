@@ -2,7 +2,7 @@ from Library.Benchmarks.benchmark import Benchmark
 from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Benchmarks.benchmark_model import BenchmarkModel
 from Library.Benchmarks.benchmark_sequence import BenchmarkSequence
-from Specific.Tools.error_tool import ErrorTool
+from Specific.Tools.ErrorTool.error_tool import ErrorTool
 
 
 # noinspection DuplicatedCode

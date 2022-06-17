@@ -2,7 +2,7 @@ from Library.Benchmarks.benchmark import Benchmark
 from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Benchmarks.benchmark_model import BenchmarkModel
 from Library.Benchmarks.benchmark_sequence import BenchmarkSequence
-from Specific.Tools.modest_tool import ModestTool
+from Specific.Tools.Modest.modest_tool import ModestTool
 
 
 class Milestone1Benchmark(Benchmark):

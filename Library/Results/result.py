@@ -3,7 +3,8 @@
 class Result(object):
 
     def __init__(self):
-        self.algorithm = None
+        self.algorithm_name = None
+        self.tool_name = None
 
         self.command_results = []
         self.timed_out = False

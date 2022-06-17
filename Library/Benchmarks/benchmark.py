@@ -20,12 +20,24 @@ class Benchmark(object):
         self.benchmark_path = Setup().benchmark_models_path
 
     def run(self):
+        self.print_start_information(self.benchmark_sequences, self.algorithms)
+        self.run_algorithms()
+
+    def run_algorithms(self):
         self.setup.setup_tools(self)
         self.storage.save_benchmark(self)
         for sequence in self.benchmark_sequences:
             for instance in sequence.benchmark_instances:
                 for algorithm in self.algorithms:
-                    self.run_algorithm(algorithm, instance)
+                    if not self.has_algorithm_run_on_instance(algorithm, instance):
+                        self.run_algorithm(algorithm, instance)
+
+
+    def has_algorithm_run_on_instance(self, algorithm, instance):
+        for result in instance.results:
+            if algorithm.name == result.algorithm:
+                return True
+        return False
 
     def run_algorithm(self, algorithm, instance):
         result = Result()
@@ -59,3 +71,42 @@ class Benchmark(object):
               .format(model_name, str(instance.all_parameters), algorithm.name, sequence_index, instance_index))
         print("".join(traceback.format_exception(type(exception), exception, exception.__traceback__)))
         print(exception)
+
+    def print_start_information(self, benchmark_sequences, algorithms):
+        number_of_sequences = 0
+        number_of_complete_sequences = 0
+        number_of_instances = 0
+        number_of_complete_instances = 0
+        number_of_executions = 0
+        number_of_complete_executions = 0
+        number_of_algorithms = 0
+        for sequence in benchmark_sequences:
+            complete_sequence = True
+            for instance in sequence.benchmark_instances:
+                complete_instance = True
+                for algorithm in self.algorithms:
+                    number_of_executions += 1
+                    if self.has_algorithm_run_on_instance(algorithm, instance):
+                        number_of_complete_executions += 1
+                    else:
+                        complete_sequence = False
+                        complete_instance = False
+                number_of_instances += 1
+                if complete_instance:
+                    number_of_complete_instances += 1
+            number_of_sequences += 1
+            if complete_sequence:
+                number_of_complete_sequences += 1
+
+        for _ in algorithms:
+            number_of_algorithms += 1
+
+        print("Found " + str(number_of_sequences) + " sequence(s), " +
+              str(number_of_instances) + " instance(s) and " +
+              str(number_of_algorithms) + " algorithm(s). This requires " +
+              str(number_of_executions) + " executions.")
+
+        if number_of_complete_executions != 0:
+            print(str(number_of_complete_sequences)+"/"+str(number_of_sequences)+" sequence(s) completed. " +
+                  str(number_of_complete_instances)+"/"+str(number_of_instances)+" instance(s) completed. " +
+                  str(number_of_complete_executions)+"/"+str(number_of_executions)+" execution(s) completed.")
