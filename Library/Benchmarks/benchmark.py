@@ -35,7 +35,7 @@ class Benchmark(object):
 
     def has_algorithm_run_on_instance(self, algorithm, instance):
         for result in instance.results:
-            if algorithm.name == result.algorithm:
+            if algorithm.name == result.algorithm_name:
                 return True
         return False
 
@@ -43,7 +43,7 @@ class Benchmark(object):
         result = Result()
         print("Run: {} on {}".format(algorithm.name, instance.benchmark_sequence.benchmark_model.name))
         try:
-            algorithm.parse_benchmark(instance, result)
+            algorithm.run(instance, result)
         except Exception as e:
             self.print_exception(e, instance, algorithm)
             result.qva_error = e
