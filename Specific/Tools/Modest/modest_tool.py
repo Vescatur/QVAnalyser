@@ -27,8 +27,9 @@ class ModestTool(Tool):
 
     def parse_result(self, result):
         if not hasattr(result, 'json_output'):
-            result.threw_error = True
-            if result.error_text == None:
+            if not result.timed_out:
+                result.threw_error = True
+                # if result.error_text == None: TODO: add this line for new benchmarks
                 result.error_text = "No json_output"
         else:
             json_output = result.json_output
@@ -38,5 +39,7 @@ class ModestTool(Tool):
             result.measurements[Measurements.TRANSITIONS] = state_space_exploration_values[2]["value"]
             result.measurements[Measurements.BRANCHES] = state_space_exploration_values[3]["value"]
             result.measurements[Measurements.STATE_SPACE_TIME] = state_space_exploration_values[5]["value"]
-            result.measurements[Measurements.PROPERTY_TIME] = json_output["property-times"][0]["time"]
-            result.measurements[Measurements.PROPERTY_OUTPUT] = json_output["data"][1]["value"]
+            if len(json_output["property-times"])>=1:
+                result.measurements[Measurements.PROPERTY_TIME] = json_output["property-times"][0]["time"]
+            if len(json_output["property-times"])>=2:
+                result.measurements[Measurements.PROPERTY_OUTPUT] = json_output["data"][1]["value"]

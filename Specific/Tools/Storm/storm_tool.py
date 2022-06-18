@@ -1,5 +1,5 @@
 from os import path
-from typing import re
+import re
 
 from Library.Results.measurements import Measurements
 from Library.Tools.algorithm import Algorithm
