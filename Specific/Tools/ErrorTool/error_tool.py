@@ -1,6 +1,6 @@
 # Used to check whether benchmark.py is resilient.
-from Library.Algorithms.algorithm import Algorithm
-from Library.Algorithms.tool import Tool
+from Library.Tools.algorithm import Algorithm
+from Library.Tools.tool import Tool
 from Specific.Tools.ErrorTool.command_error_algorithm import CommandErrorAlgorithm
 from Specific.Tools.ErrorTool.error_algorithm import ErrorAlgorithm
 
@@ -8,8 +8,8 @@ from Specific.Tools.ErrorTool.error_algorithm import ErrorAlgorithm
 class ErrorTool(Tool):
 
     def __init__(self):
-        self.error_algorithm = Algorithm(ErrorAlgorithm, "error")
-        self.command_error_algorithm = Algorithm(CommandErrorAlgorithm, "command_error")
+        self.error_algorithm = Algorithm(self,ErrorAlgorithm, "error")
+        self.command_error_algorithm = Algorithm(self,CommandErrorAlgorithm, "command_error")
 
     def check_setup_tool(self):
         return True

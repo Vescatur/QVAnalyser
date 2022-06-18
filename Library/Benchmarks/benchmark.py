@@ -12,6 +12,7 @@ class Benchmark(object):
         self.benchmark_sequences = []
         self.algorithms = []
         self.time_limit = 600
+        self.save_index = None
 
         self.setup = Setup()
         self.setup.setup_resource_folders()
@@ -22,10 +23,11 @@ class Benchmark(object):
     def run(self):
         self.print_start_information(self.benchmark_sequences, self.algorithms)
         self.run_algorithms()
+        self.storage.save_finished_benchmark(self)
 
     def run_algorithms(self):
         self.setup.setup_tools(self)
-        self.storage.save_benchmark(self)
+        self.storage.save_unfinished_benchmark(self)
         for sequence in self.benchmark_sequences:
             for instance in sequence.benchmark_instances:
                 for algorithm in self.algorithms:
@@ -35,7 +37,7 @@ class Benchmark(object):
 
     def has_algorithm_run_on_instance(self, algorithm, instance):
         for result in instance.results:
-            if algorithm.name == result.algorithm:
+            if algorithm.name == result.algorithm_name:
                 return True
         return False
 
