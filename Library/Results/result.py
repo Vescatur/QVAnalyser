@@ -10,6 +10,7 @@ class Result(object):
         self.timed_out = False
         self.threw_error = False
         self.qva_error = None
+        self.error_text = None
 
         self.measurements = {}
 

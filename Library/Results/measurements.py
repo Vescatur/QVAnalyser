@@ -7,7 +7,7 @@ class Measurements(Enum):
     BRANCHES = "branches"
     STATES_AFTER_BISIMULATION = "states_after_bisimulation"
     TRANSITIONS_AFTER_BISIMULATION = "transitions_after_bisimulation"
-    CHOICES_AFTER_BISIMULATION = "choices_after_bisimulation"
+    BRANCHES_AFTER_BISIMULATION = "branches_after_bisimulation"
 
     WALL_TIME = "wall_time"
     TOOL_REPORTED_TIME = "tool_reported_time"

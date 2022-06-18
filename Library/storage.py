@@ -13,9 +13,19 @@ class Storage(object):
         while path.exists(self.generate_save_folder_path(self.save_index)):
             self.save_index += 1
 
-    def save_benchmark(self, benchmark):
-        self.try_create_directory(self.generate_save_folder_path(self.save_index))
-        benchmark_path = self.generate_benchmark_path(self.save_index)
+    def save_result_benchmark(self, benchmark):
+        self.save_benchmark(benchmark, self.generate_results_benchmark_path)
+
+    def save_finished_benchmark(self, benchmark):
+        self.save_benchmark(benchmark, self.generate_finished_benchmark_path)
+
+    def save_unfinished_benchmark(self, benchmark):
+        benchmark.save_index = self.save_index
+        self.save_benchmark(benchmark, self.generate_unfinished_benchmark_path)
+
+    def save_benchmark(self,benchmark, path_generator):
+        self.try_create_directory(self.generate_save_folder_path(benchmark.save_index))
+        benchmark_path = path_generator(benchmark.save_index)
         with open(benchmark_path, 'wb') as save_file:
             pickle.dump(benchmark, save_file)
 
@@ -34,9 +44,15 @@ class Storage(object):
         return self.load_benchmark(self.save_index - 1)
 
     def load_benchmark(self, save_index):
-        benchmark_path = self.generate_benchmark_path(save_index)
+        benchmark_path = self.generate_results_benchmark_path(save_index)
+        if not path.exists(benchmark_path):
+            benchmark_path = self.generate_finished_benchmark_path(save_index)
+        if not path.exists(benchmark_path):
+            benchmark_path = self.generate_unfinished_benchmark_path(save_index)
+
         with open(benchmark_path, 'rb') as save_file:
             benchmark = pickle.load(save_file)
+        benchmark.save_index = save_index
 
         for sequence in benchmark.benchmark_sequences:
             if path.exists(self.generate_sequence_folder_path(save_index, sequence)):
@@ -74,8 +90,14 @@ class Storage(object):
     def generate_save_folder_path(self, save_index):
         return self.save_location + str(save_index) + "/"
 
-    def generate_benchmark_path(self, save_index):
-        return self.generate_save_folder_path(save_index) + "benchmark.qva"
+    def generate_unfinished_benchmark_path(self, save_index):
+        return self.generate_save_folder_path(save_index) + "unfinished_benchmark.qva"
+
+    def generate_finished_benchmark_path(self, save_index):
+        return self.generate_save_folder_path(save_index) + "finished_benchmark.qva"
+
+    def generate_results_benchmark_path(self, save_index):
+        return self.generate_save_folder_path(save_index) + "results_benchmark.qva"
 
     def generate_sequence_folder_path(self, save_index, benchmark_sequence):
         return self.generate_save_folder_path(save_index) + str(benchmark_sequence.index) + "/"

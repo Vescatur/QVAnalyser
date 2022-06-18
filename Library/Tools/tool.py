@@ -8,5 +8,5 @@ class Tool(object):
     def name(self):
         raise Exception("Unimplemented method Tool.name()")
 
-    def parse_results(self):
-        raise Exception("Unimplemented method Tool.parse_results()")
+    def parse_result(self, result):
+        raise Exception("Unimplemented method Tool.parse_result()")
