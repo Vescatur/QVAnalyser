@@ -17,10 +17,9 @@ class ResultParser(object):
                     self.parse_result(result)
 
     def parse_result(self, result):
-        result.measurements = []
         tool_for_result = None
         for tool in self.benchmark.tools:
-            if tool.name == result.tool_name:
+            if tool.name() == result.tool_name:
                 tool_for_result = tool
                 break
         if tool_for_result is not None:

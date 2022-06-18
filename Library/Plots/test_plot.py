@@ -1,4 +1,4 @@
-from Library.Results.statistics import Statistics
+from Library.Results.measurements import Measurements
 from Library.storage import Storage
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,7 +13,7 @@ class TestPlot(object):
         benchmark = storage.load_latest_benchmark()
 
 
-        self.CreateScatterPlot(benchmark,Statistics.TRANSITIONS, Statistics.BRANCHES)
+        self.CreateScatterPlot(benchmark,Measurements.TRANSITIONS, Measurements.BRANCHES)
 
         self.print_error_information(benchmark)
 
@@ -48,7 +48,7 @@ class TestPlot(object):
                             timed_out += 1
                         if result.threw_error and result.timed_out:
                             both += 1
-                        if Statistics.PROPERTY_TIME not in result.statistics:
+                        if Measurements.PROPERTY_TIME not in result.Measurements:
                             missing_results += 1
                             if not result.timed_out:
                                 print(sequence_number)
@@ -77,10 +77,10 @@ class TestPlot(object):
                 if len(benchmark_instance.results) >= 2:
                     result = benchmark_instance.results[1]
                     if not result.threw_error:
-                        if Statistics.BRANCHES in result.statistics and Statistics.STATES in result.statistics and Statistics.TRANSITIONS in result.statistics:
-                            # print(str(result.statistics[statisticX]) + " "+ str(result.statistics[statisticY]))
-                            dataX.append(result.statistics[Statistics.STATES])
-                            dataY.append(result.statistics[Statistics.BRANCHES]/result.statistics[Statistics.TRANSITIONS])
+                        if Measurements.BRANCHES in result.Measurements and Measurements.STATES in result.Measurements and Measurements.TRANSITIONS in result.Measurements:
+                            # print(str(result.Measurements[statisticX]) + " "+ str(result.Measurements[statisticY]))
+                            dataX.append(result.Measurements[Measurements.STATES])
+                            dataY.append(result.Measurements[Measurements.BRANCHES]/result.Measurements[Measurements.TRANSITIONS])
 
         # s = [10, 20, 610, 11]
 
@@ -89,7 +89,7 @@ class TestPlot(object):
         plt.scatter(dataX, dataY, c="r", alpha=0.1)
         # plt.scatter(dataX, dataY,s=s , c="b", alpha=0.5)
 
-        #plt.title(statistics)
+        #plt.title(Measurements)
         plt.ylabel("Number of transitions")
         plt.xlabel("Number of choices")
         #plt.grid(True)

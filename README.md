@@ -7,6 +7,12 @@ The tool has been tested on Ubunutu 20. It should also work on other Linux distr
 ## Dependencies
 The analyser requires python 3.10 to run. We used python version 3.10.4. This page describes how to install it on Ubuntu 20 https://computingforgeeks.com/how-to-install-python-on-ubuntu-linux-system/
 
+The analyser requires matplotlib and numpy. Use the following commands to install them
+
+sudo apt install python3-pip
+pip install matplotlib
+pip install numpy
+
 The xelatex package to generate graphs
 https://tex.stackexchange.com/questions/179778/xelatex-under-ubuntu
 

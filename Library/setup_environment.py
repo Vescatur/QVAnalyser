@@ -1,7 +1,6 @@
 import os
 from os import path
 from sys import platform
-from sys import platform
 
 
 class Setup(object):

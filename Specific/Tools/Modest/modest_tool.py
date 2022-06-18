@@ -26,12 +26,17 @@ class ModestTool(Tool):
         return "Modest"
 
     def parse_result(self, result):
-        json_output = result.json_output
-        result.measurements[Measurements.TOOL_REPORTED_TIME] = json_output["time"]
-        state_space_exploration_values = json_output["data"][0]["values"]
-        result.measurements[Measurements.STATES] = state_space_exploration_values[1]["value"]
-        result.measurements[Measurements.TRANSITIONS] = state_space_exploration_values[2]["value"]
-        result.measurements[Measurements.BRANCHES] = state_space_exploration_values[3]["value"]
-        result.measurements[Measurements.STATE_SPACE_TIME] = state_space_exploration_values[5]["value"]
-        result.measurements[Measurements.PROPERTY_TIME] = json_output["property-times"][0]["time"]
-        result.measurements[Measurements.PROPERTY_OUTPUT] = json_output["data"][1]["value"]
+        if not hasattr(result, 'json_output'):
+            result.threw_error = True
+            if result.error_text == None:
+                result.error_text = "No json_output"
+        else:
+            json_output = result.json_output
+            result.measurements[Measurements.TOOL_REPORTED_TIME] = json_output["time"]
+            state_space_exploration_values = json_output["data"][0]["values"]
+            result.measurements[Measurements.STATES] = state_space_exploration_values[1]["value"]
+            result.measurements[Measurements.TRANSITIONS] = state_space_exploration_values[2]["value"]
+            result.measurements[Measurements.BRANCHES] = state_space_exploration_values[3]["value"]
+            result.measurements[Measurements.STATE_SPACE_TIME] = state_space_exploration_values[5]["value"]
+            result.measurements[Measurements.PROPERTY_TIME] = json_output["property-times"][0]["time"]
+            result.measurements[Measurements.PROPERTY_OUTPUT] = json_output["data"][1]["value"]

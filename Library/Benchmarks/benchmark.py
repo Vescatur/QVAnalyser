@@ -23,6 +23,7 @@ class Benchmark(object):
     def run(self):
         self.print_start_information(self.benchmark_sequences, self.algorithms)
         self.run_algorithms()
+        self.storage.save_finished_benchmark(self)
 
     def run_algorithms(self):
         self.setup.setup_tools(self)
