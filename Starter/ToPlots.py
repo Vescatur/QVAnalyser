@@ -1,6 +1,8 @@
-from Library.Plots.test_plot import TestPlot
+from Library.Plots.plot_sprint_3 import PlotSprint3
+from Library.setup_environment import Setup
 
-plot = TestPlot()
+Setup().setup_resource_folders()
+plot = PlotSprint3()
 plot.CreatePlots()
 
 # select benchmark

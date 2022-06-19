@@ -17,3 +17,21 @@ class Measurements(Enum):
     PROPERTY_TIME = "property_time"
 
     PROPERTY_OUTPUT = "property_output"
+
+    def to_label_text(self):
+        if self == Measurements.TRANSITIONS:
+            return "Number of transitions"
+        if self == Measurements.BRANCHES:
+            return "Number of branches"
+        if self == Measurements.STATES:
+            return "Number of states"
+        if self == Measurements.PARSING_TIME:
+            return "Time to parse file"
+        if self == Measurements.STATE_SPACE_TIME:
+            return "Time to generate state space"
+        if self == Measurements.PROPERTY_TIME:
+            return "Time to calculate result"
+        if self == Measurements.TOOL_REPORTED_TIME:
+            return "Time reported by tool"
+        if self == Measurements.WALL_TIME:
+            return "Wall time"

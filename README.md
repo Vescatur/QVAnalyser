@@ -9,9 +9,10 @@ The analyser requires python 3.10 to run. We used python version 3.10.4. This pa
 
 The analyser requires matplotlib and numpy. Use the following commands to install them
 
-sudo apt install python3-pip
-pip install matplotlib
-pip install numpy
+sudo apt-get install python3-distutils
+https://stackoverflow.com/questions/69503329/pip-is-not-working-for-python-3-10-on-ubuntu/69527217#69527217
+curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+python3.10 -m pip install matplotlib
 
 The xelatex package to generate graphs
 https://tex.stackexchange.com/questions/179778/xelatex-under-ubuntu
