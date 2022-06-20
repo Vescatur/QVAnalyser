@@ -1,4 +1,4 @@
-from Library.Plots.plot_sprint_3 import PlotSprint3
+from Specific.Plots.plot_sprint_3 import PlotSprint3
 from Library.setup_environment import Setup
 
 Setup().setup_resource_folders()

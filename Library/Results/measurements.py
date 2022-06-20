@@ -35,3 +35,12 @@ class Measurements(Enum):
             return "Time reported by tool"
         if self == Measurements.WALL_TIME:
             return "Wall time"
+
+    def is_characteristic(self):
+        if self == Measurements.TRANSITIONS:
+            return True
+        if self == Measurements.BRANCHES:
+            return True
+        if self == Measurements.STATES:
+            return True
+        return False
