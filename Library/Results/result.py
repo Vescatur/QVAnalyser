@@ -1,3 +1,4 @@
+from copy import deepcopy
 
 
 class Result(object):
@@ -15,3 +16,14 @@ class Result(object):
         self.measurements = {}
 
         self.index = None
+
+    def __deepcopy__(self, memo):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+        for key, v in self.__dict__.items():
+            if key == "self.command_results":
+                setattr(result, key, [])
+            else:
+                setattr(result, key, deepcopy(v, memo))
+        return result

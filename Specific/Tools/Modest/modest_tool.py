@@ -52,9 +52,9 @@ class ModestTool(Tool):
                 result.measurements[Measurements.PROPERTY_OUTPUT] = int(property_data["value"])
             elif property_data["data"][0]["group"] == "Precomputations" and property_data["data"][1]["group"] == "Unif+":
                 pass
-            elif property_data["data"][0]["group"] == "Precomputations" and property_data["data"][2]["group"] == "Unif+":
-                pass
             elif property_data["data"][0]["group"] == "Precomputations" and property_data["data"][1]["group"] == "Interval iteration" :
                 result.measurements[Measurements.PROPERTY_OUTPUT] = property_data["value"]
+            elif property_data["data"][0]["group"] == "Precomputations" and property_data["data"][2]["group"] == "Unif+":
+                pass
             else:
                 result.measurements[Measurements.PROPERTY_OUTPUT] = json_output["data"][1]["value"]

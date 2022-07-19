@@ -17,6 +17,7 @@ class Plot(object):
         self.file_name = file_name
         self.data_x = []
         self.data_y = []
+        self.axis = None
 
     def set_current_benchmark(self,benchmark):
         self.benchmarks.append(benchmark)
@@ -70,6 +71,9 @@ class Plot(object):
         plt.scatter(self.data_x, self.data_y, c="b", alpha=0.5)
         plt.title(str(len(self.data_x)) + " results")
         plt.grid(True)
+
+        if self.axis is not None:
+            plt.axis(self.axis)
 
         if self.log_x:
             plt.xscale("log")
