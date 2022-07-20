@@ -1,15 +1,17 @@
 import matplotlib.pyplot as plt
 
+from Library.Benchmarks.benchmark import Benchmark
 from Library.Plots.plot import Plot
 from Library.Plots.plot_filters import result_contains_measurement, result_not_threw_error, result_not_timeout, \
     get_result_with_algorithm, instance_contains_algorithms
 from Library.Results.measurements import Measurements
+from Library.Tools.algorithm import Algorithm
 from Library.setup_environment import Setup
 
 
 class ToolPlot(Plot):
 
-    def __init__(self, benchmark, measurement, algorithm_x, algorithm_y,file_name):
+    def __init__(self, benchmark: Benchmark, measurement: Measurements, algorithm_x: Algorithm, algorithm_y: Algorithm, file_name: str):
         super().__init__(benchmark, file_name)
         self.measurement = measurement
         self.algorithm_x = algorithm_x

@@ -1,7 +1,9 @@
+from Library.Benchmarks.benchmark_sequence import BenchmarkSequence
+
 
 class BenchmarkInstance(object):
 
-    def __init__(self, benchmark_sequence, parameters):
+    def __init__(self, benchmark_sequence: BenchmarkSequence, parameters):
         self.benchmark_sequence = benchmark_sequence
         self.parameters = parameters
         self.all_parameters = self.parameters | benchmark_sequence.parameters

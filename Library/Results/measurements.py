@@ -18,7 +18,7 @@ class Measurements(Enum):
 
     PROPERTY_OUTPUT = "property_output"
 
-    def to_label_text(self):
+    def to_label_text(self) -> str:
         if self == Measurements.TRANSITIONS:
             return "Number of transitions"
         if self == Measurements.BRANCHES:
@@ -36,7 +36,7 @@ class Measurements(Enum):
         if self == Measurements.WALL_TIME:
             return "Wall time"
 
-    def is_characteristic(self):
+    def is_characteristic(self) -> bool:
         if self == Measurements.TRANSITIONS:
             return True
         if self == Measurements.BRANCHES:

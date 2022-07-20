@@ -1,9 +1,10 @@
+from Library.Benchmarks.benchmark import Benchmark
 from Library.Results.measurements import Measurements
 
 
 class ResultsPrinter(object):
 
-    def print_characteristics(self, benchmark):
+    def print_characteristics(self, benchmark: Benchmark):
         different_states = 0
         different_transitions = 0
         different_branches = 0
@@ -75,7 +76,7 @@ class ResultsPrinter(object):
                         states_is_one += 1
         print(states_is_one)
 
-    def print_error_information(self, benchmark):
+    def print_error_information(self, benchmark: Benchmark):
         threw_error_with_exception = 0
         threw_error = 0
         qva_error = 0

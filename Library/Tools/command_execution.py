@@ -3,13 +3,14 @@ import subprocess
 import threading
 import time
 
+from Library.Benchmarks.benchmark import Benchmark
 from Library.Results.command_result import CommandResult
 
 
 class CommandExecution(object):
     """ Represents the execution of a single command line argument. """
 
-    def __init__(self, command_line_str, benchmark):
+    def __init__(self, command_line_str: str, benchmark: Benchmark):
         self.command_line_str = command_line_str
         self.benchmark = benchmark
         self.result = CommandResult(command_line_str)
@@ -30,7 +31,7 @@ class CommandExecution(object):
             timer.cancel()
             self.result.wall_time = time.time() - start_time
 
-    def create_process(self):
+    def create_process(self) -> subprocess:
         command_line_list = self.command_line_str.split()
         command_line_list[0] = os.path.expanduser(command_line_list[0])
         return subprocess\

@@ -10,24 +10,22 @@ class TestBenchmark(Benchmark):
     def __init__(self):
         super().__init__()
 
-        self.add_haddad_monmege_sequence()
-        self.add_reentrant_queues_sequence()
+        self.add_haddad_monmege_sequence_target()
+        self.add_haddad_monmege_sequence_exp_steps()
 
         modestTool = ModestTool()
         self.tools.append(modestTool)
         self.algorithms.append(modestTool.interval_iteration)
 
     # noinspection SpellCheckingInspection
-    def add_haddad_monmege_sequence(self):
-        model = BenchmarkModel(self, 'haddad-monmege.v1.jani')
+    def add_haddad_monmege_sequence_target(self):
+        model = BenchmarkModel(self, 'dtmc/haddad-monmege/haddad-monmege.jani', "haddad-monmege.prctl", "haddad-monmege.pm", "dtmc",
+                       "PRISM", "adversarial example for value iteration")
+        sequence = BenchmarkSequence(model, "target","prob-reach", {"p": 0.7})
+        BenchmarkInstance(sequence, {"N": 10})
 
-        sequence = BenchmarkSequence(model, "target", {"p": 0.7})
-        for value in range(10, 12):
-            BenchmarkInstance(sequence, {"N": value})
-
-    def add_reentrant_queues_sequence(self):
-        model = BenchmarkModel(self, 'reentrant-queues.v3.jani')
-
-        sequence = BenchmarkSequence(model, "PminBothQueuesFullIsOne", {"JOB_TYPES": 3, "TIME_BOUND": 5})
-        for value in range(2, 3):
-            BenchmarkInstance(sequence, {"C_LEFT": value, "C_RIGHT": value})
+    def add_haddad_monmege_sequence_exp_steps(self):
+        model = BenchmarkModel(self, 'dtmc/haddad-monmege/haddad-monmege.jani', "haddad-monmege.prctl", "haddad-monmege.pm", "dtmc",
+                       "PRISM", "adversarial example for value iteration")
+        sequence = BenchmarkSequence(model, "exp_steps","exp-steps", {"p": 0.7})
+        BenchmarkInstance(sequence, {"N": 10})

@@ -1,10 +1,13 @@
+from Library.Benchmarks.benchmark_instance import BenchmarkInstance
+from Library.Results.command_result import CommandResult
+from Library.Results.result import Result
 from Library.Tools.command_execution import CommandExecution
 from Library.Results.measurements import Measurements
 
 
 class Execution(object):
 
-    def __init__(self, instance, result):
+    def __init__(self, instance: BenchmarkInstance, result: Result):
         self.result = result
         self.benchmark_instance = instance
         self.result.measurements[Measurements.WALL_TIME] = 0
@@ -13,7 +16,7 @@ class Execution(object):
     def run(self):
         raise Exception("Unimplemented method Algorithm.run()")
 
-    def run_command(self, command):
+    def run_command(self, command: str) -> CommandResult:
         print(command)
         benchmark = self.benchmark_instance.benchmark_sequence.benchmark_model.benchmark
         command_result = CommandExecution(command, benchmark).result

@@ -1,6 +1,9 @@
+from Library.Benchmarks.benchmark import Benchmark
+
+
 class BenchmarkModel(object):
 
-    def __init__(self, benchmark, file_name_jani,file_name_prism_model,file_name_prism_props,formal_model_type,original_model_format,notes):
+    def __init__(self, benchmark: Benchmark, file_name_jani: str,file_name_prism_model: str,file_name_prism_props:str,formal_model_type:str,original_model_format:str,notes:str):
         self.file_path_jani = benchmark.benchmark_path + file_name_jani
         self.file_name_jani = file_name_jani
         self.file_name_prism_model = file_name_prism_model

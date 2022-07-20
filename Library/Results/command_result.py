@@ -2,7 +2,7 @@
 
 class CommandResult(object):
 
-    def __init__(self, command):
+    def __init__(self, command: str):
         self.command = command
         self.timed_out = False
         self.return_code = None

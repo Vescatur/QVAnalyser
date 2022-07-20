@@ -2,7 +2,6 @@ import copy
 
 import matplotlib.pyplot as plt
 
-from Library.Results.measurements import Measurements
 from Library.setup_environment import Setup
 
 
