@@ -22,6 +22,6 @@ class BenchmarkResultParser(object):
                 tool_for_result = tool
                 break
         if tool_for_result is not None:
-            tool_for_result.parser.parse_result(result)
+            tool_for_result.result_parser.parse_result(result)
         else:
             raise Exception("Could not find tool of result. The tool name is " + str(result.tool_name))

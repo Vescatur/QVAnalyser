@@ -2,7 +2,7 @@ import traceback
 
 from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Results.result import Result
-from Library.Tools.algorithm import Algorithm
+from Library.Tools.algorithm_with_constructor import AlgorithmWithConstructor
 from Library.setup_environment import Setup
 from Library.storage import Storage
 
@@ -37,13 +37,13 @@ class Benchmark(object):
                         self.run_algorithm(algorithm, instance)
 
 
-    def has_algorithm_run_on_instance(self, algorithm: Algorithm, instance: BenchmarkInstance) -> bool:
+    def has_algorithm_run_on_instance(self, algorithm: AlgorithmWithConstructor, instance: BenchmarkInstance) -> bool:
         for result in instance.results:
             if algorithm.name == result.algorithm_name:
                 return True
         return False
 
-    def run_algorithm(self, algorithm: Algorithm, instance: BenchmarkInstance):
+    def run_algorithm(self, algorithm: AlgorithmWithConstructor, instance: BenchmarkInstance):
         result = Result()
         print("Run: {} on {}".format(algorithm.name, instance.benchmark_sequence.benchmark_model.name))
         try:
@@ -58,7 +58,7 @@ class Benchmark(object):
         self.print_result(algorithm, instance, result)
         self.storage.save_result(result, instance)
 
-    def print_result(self, algorithm: Algorithm, instance: BenchmarkInstance, result: Result):
+    def print_result(self, algorithm: AlgorithmWithConstructor, instance: BenchmarkInstance, result: Result):
         if len(result.command_results) == 0:
             print("No command results")
         else:
@@ -67,7 +67,7 @@ class Benchmark(object):
             if result.command_results[0].exception is not None:
                 self.print_exception(result.command_results[0].exception, instance, algorithm)
 
-    def print_exception(self, exception: Exception, instance: BenchmarkInstance, algorithm: Algorithm):
+    def print_exception(self, exception: Exception, instance: BenchmarkInstance, algorithm: AlgorithmWithConstructor):
         model_name = instance.benchmark_sequence.benchmark_model.name
         sequence_index = instance.benchmark_sequence.index
         instance_index = instance.index
