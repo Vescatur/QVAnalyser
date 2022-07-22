@@ -1,10 +1,11 @@
 from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Benchmarks.benchmark_model import BenchmarkModel
+from Library.Benchmarks.property_type import PropertyType
 
 
 class BenchmarkSequence(object):
 
-    def __init__(self, benchmark_model: BenchmarkModel, property_name: str, property_type: str, parameters):
+    def __init__(self, benchmark_model: BenchmarkModel, property_name: str, property_type: PropertyType, parameters):
         self.benchmark_model = benchmark_model
         self.property_name = property_name
         self.property_type = property_type

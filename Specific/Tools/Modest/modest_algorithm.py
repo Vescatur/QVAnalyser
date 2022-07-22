@@ -1,4 +1,6 @@
 from Library.Benchmarks.benchmark_instance import BenchmarkInstance
+from Library.Benchmarks.model_type import ModelType
+from Library.Benchmarks.property_type import PropertyType
 from Library.Results.result import Result
 from Library.Tools.algorithm import Algorithm
 from Library.Tools.tool import Tool
@@ -17,25 +19,25 @@ class ModestAlgorithm(Algorithm):
         property_type = instance.benchmark_sequence.property_type
         match self.algorithm_type:
             case ModestAlgorithmType.LinearProgramming | ModestAlgorithmType.SequentialIntervalIteration:
-                if property_type == "prob-reach":
+                if property_type == PropertyType.REACHABILITY:
                     return True
                 else:
                     return False
             case ModestAlgorithmType.ValueIteration | ModestAlgorithmType.IntervalIteration | ModestAlgorithmType.SoundValueIteration | ModestAlgorithmType.OptimisticValueIteration:
                 return True
             case ModestAlgorithmType.GeneralLabeledRealTimeDynamicProgramming:
-                if model_type == "mdp":
+                if model_type == ModelType.MDP:
                     return True
                 else:
                     return False
             case ModestAlgorithmType.ConfidenceInterval:
-                if model_type == "dtmc" or model_type == "ctmc":
+                if model_type == ModelType.DTMC or model_type == ModelType.CTMC:
                     return True
                 else:
                     return False
             case ModestAlgorithmType.Adaptive | ModestAlgorithmType.APMC:
-                if model_type == "dtmc" or model_type == "ctmc":
-                    if property_type == "prob-reach":
+                if model_type == ModelType.DTMC or model_type == ModelType.CTMC:
+                    if property_type == PropertyType.REACHABILITY:
                         return True
                 return False
             case _:

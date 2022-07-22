@@ -1,0 +1,4 @@
+from Specific.Benchmarks.qvbs_benchmark_one_instance_per_property import QvbsBenchmarkOneInstancePerProperty
+
+benchmark = QvbsBenchmarkOneInstancePerProperty()
+benchmark.run()

@@ -5,7 +5,6 @@ import shutil
 from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Results.result import Result
 from Library.Tools.execution import Execution
-from Library.Results.measurements import Measurements
 from Specific.Helpers.modest import Modest
 from Specific.Tools.Modest.modest_algorithm_type import ModestAlgorithmType
 

@@ -1,8 +1,5 @@
 import json
 
-from Library.Benchmarks.model_type import ModelType
-from Library.Benchmarks.property_type import PropertyType
-
 tab = "    "
 text = ""
 
@@ -20,7 +17,7 @@ def start():
     generate_body(benchmark_path, data)
     benchmark_file.close()
 
-    save_file_path = "../Specific/Benchmarks/qvbs_benchmark.py"
+    save_file_path = "../Specific/Benchmarks/qvbs_benchmark_one_instance_per_property.py"
     with open(save_file_path, 'w') as save_file:
         save_file.writelines(text)
 
@@ -36,9 +33,10 @@ def generate_start(benchmark_path,data):
     add_line("from Specific.Tools.Storm.storm_tool import StormTool")
     add_line("")
     add_line("# This class has been generated using _GenerateBenchmarkFromQVBS.py")
-    add_line("class QvbsBenchmark(Benchmark):")
+    add_line("class QvbsBenchmarkOneInstancePerProperty(Benchmark):")
     add_line(tab + "def __init__(self):")
     add_line(tab * 2 + "super().__init__()")
+    add_line(tab * 2 + "self.time_limit = 10")
     add_line(tab * 2 + "")
     add_line(tab * 2 + "self.add_benchmark_instances()")
     add_line(tab * 2 + "")
@@ -52,6 +50,7 @@ def generate_start(benchmark_path,data):
     add_line(tab + "")
     add_line(tab * 1 + "def add_benchmark_instances(self):")
 
+
     for benchmark_model in data:
         short_name = benchmark_model["short"]
         benchmark_model_path = benchmark_path + benchmark_model["path"]
@@ -61,6 +60,7 @@ def generate_start(benchmark_path,data):
         for file in benchmark_model_data["files"]:
             add_line(tab * 2 + "self.add_" + short_name.replace("-", "_") + "_" + str(index) + "()")
             index +=1
+            break
 
 
 def generate_body(benchmark_path, data):
@@ -84,13 +84,14 @@ def generate_code_for_benchmark_model(benchmark_model, benchmark_path):
     for file in benchmark_model_data["files"]:
         generate_code_for_file(short_name, file, model_type, original, notes, path, index, benchmark_model_data)
         index += 1
+        break
 
 def generate_code_for_file(short_name, file, model_type, original, notes, path, index , benchmark_model_data):
 
     model_type_argument = to_model_type_argument(model_type)
 
     add_line(tab)
-    add_line(tab + "def add_" + short_name.replace("-", "_")+ "_"+ str(index) + "(self):")
+    add_line(tab + "def add_" + short_name.replace("-", "_") + "_" + str(index) + "(self):")
 
     parameters_settings = []
     for parameter_setting_data in file["open-parameter-values"]:
@@ -115,9 +116,13 @@ def generate_code_for_file(short_name, file, model_type, original, notes, path, 
     for parameters in parameters_settings:
         parameter_argument = generate_parameter_argument(parameters)
         for property_data in benchmark_model_data["properties"]:
-            property_type_argument = to_property_type_argument(property_data["type"])
-            add_line(tab * 2 + "sequence = BenchmarkSequence(model, \"" + property_data["name"] + "\", " + property_type_argument + ", "+parameter_argument+")")
-            add_line(tab * 2 + "BenchmarkInstance(sequence, {})")
+            match property_data["type"]:
+                case "exp-reward" | "exp-time" | "exp-reward" | "prob-reach":
+                    property_type_argument = to_property_type_argument(property_data["type"])
+                    add_line(tab * 2 + "sequence = BenchmarkSequence(model, \"" + property_data[
+                        "name"] + "\", " + property_type_argument + ", " + parameter_argument + ")")
+                    add_line(tab * 2 + "BenchmarkInstance(sequence, {})")
+        break
 
 
 def to_property_type_argument(property_type):
@@ -145,7 +150,6 @@ def to_model_type_argument(model_type):
             return "ModelType.MA"
         case "pta":
             return "ModelType.PTA"
-
 
 def generate_parameter_argument(parameters):
     parameter_argument = "{"
