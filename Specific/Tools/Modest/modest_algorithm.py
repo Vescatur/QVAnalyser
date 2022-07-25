@@ -18,12 +18,12 @@ class ModestAlgorithm(Algorithm):
         model_type = instance.benchmark_sequence.benchmark_model.formal_model_type
         property_type = instance.benchmark_sequence.property_type
         match self.algorithm_type:
-            case ModestAlgorithmType.LINEAR_PROGRAMMING | ModestAlgorithmType.SequentialIntervalIteration:
+            case ModestAlgorithmType.LINEAR_PROGRAMMING | ModestAlgorithmType.SEQUENTIAL_INTERVAL_ITERATION:
                 if property_type == PropertyType.REACHABILITY:
                     return True
                 else:
                     return False
-            case ModestAlgorithmType.VALUE_ITERATION | ModestAlgorithmType.IntervalIteration | ModestAlgorithmType.SOUND_VALUE_ITERATION | ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION:
+            case ModestAlgorithmType.VALUE_ITERATION | ModestAlgorithmType.INTERVAL_ITERATION | ModestAlgorithmType.SOUND_VALUE_ITERATION | ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION:
                 return True
             case ModestAlgorithmType.GENERAL_LABELED_REAL_TIME_DYNAMIC_PROGRAMMING:
                 if model_type == ModelType.MDP:

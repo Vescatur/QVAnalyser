@@ -2,6 +2,8 @@ from Library.Benchmarks.benchmark import Benchmark
 from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Benchmarks.benchmark_model import BenchmarkModel
 from Library.Benchmarks.benchmark_sequence import BenchmarkSequence
+from Library.Benchmarks.model_type import ModelType
+from Library.Benchmarks.property_type import PropertyType
 from Specific.Tools.Modest.modest_tool import ModestTool
 
 
@@ -17,8 +19,6 @@ class TestLongBenchmark(Benchmark):
 
     # noinspection SpellCheckingInspection
     def add_haddad_monmege_sequence(self):
-        model = BenchmarkModel(self, 'haddad-monmege.v1.jani')
-
-        sequence = BenchmarkSequence(model, "target", {"p": 0.7})
-        for value in range(30, 31):
-            BenchmarkInstance(sequence, {"N": value})
+        model = BenchmarkModel(self, "dtmc/haddad-monmege/haddad-monmege.jani","dtmc/haddad-monmege/haddad-monmege.prctl","dtmc/haddad-monmege/haddad-monmege.pm", ModelType.DTMC,"PRISM","adversarial example for value iteration")
+        sequence = BenchmarkSequence(model, "target", PropertyType.REACHABILITY, {"N": 100, "p": 0.7})
+        BenchmarkInstance(sequence, {})

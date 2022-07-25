@@ -4,7 +4,6 @@ from Library.Tools.tool import Tool
 from Specific.Tools.Storm.storm_algorithm import StormAlgorithm
 from Specific.Tools.Storm.storm_algorithm_type import StormAlgorithmType
 from Specific.Tools.Storm.storm_engine_type import StormEngineType
-from Specific.Tools.Storm.storm_interval_iteration import StormIntervalIteration
 from Specific.Helpers.storm import Storm
 from Specific.Tools.Storm.storm_result_parser import StormResultParser
 

@@ -28,9 +28,9 @@ class ModestExecution(Execution):
         algorithm_name = self.to_command_text(self.algorithm_type)
 
         match self.algorithm_type:
-            case ModestAlgorithmType.VALUE_ITERATION | ModestAlgorithmType.IntervalIteration | \
+            case ModestAlgorithmType.VALUE_ITERATION | ModestAlgorithmType.INTERVAL_ITERATION | \
                  ModestAlgorithmType.SOUND_VALUE_ITERATION | ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION | \
-                 ModestAlgorithmType.LINEAR_PROGRAMMING | ModestAlgorithmType.SequentialIntervalIteration:
+                 ModestAlgorithmType.LINEAR_PROGRAMMING | ModestAlgorithmType.SEQUENTIAL_INTERVAL_ITERATION:
                 command = "{} check {} --alg {} --epsilon 1e-6 --width 1e-3 --props {} {} -O {} Json" \
                     .format(Modest().tool_path, file_path, algorithm_name, property_name, parameters_argument, Modest().temp_file_path)
                 return command
@@ -65,9 +65,9 @@ class ModestExecution(Execution):
         match algorithm_type:
             case ModestAlgorithmType.VALUE_ITERATION:
                 return "ValueIteration"
-            case ModestAlgorithmType.IntervalIteration:
+            case ModestAlgorithmType.INTERVAL_ITERATION:
                 return "IntervalIteration"
-            case ModestAlgorithmType.SequentialIntervalIteration:
+            case ModestAlgorithmType.SEQUENTIAL_INTERVAL_ITERATION:
                 return "SequentialIntervalIteration"
             case ModestAlgorithmType.SOUND_VALUE_ITERATION:
                 return "SoundValueIteration"
