@@ -90,4 +90,3 @@ class StormResultParser(ResultParser):
         if match:
             result.measurements[measurement] = float(match.group(1))
 
->>>>>>> 258a4a86520200c13a94b35dc03edf3ffc05249a

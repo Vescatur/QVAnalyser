@@ -12,6 +12,35 @@ class StormTool(Tool):
 
     def __init__(self):
         super().__init__(StormResultParser())
+        self.value_iteration_dd = StormAlgorithm(self, "storm value iteration dd",
+                                                  StormAlgorithmType.VALUE_ITERATION, StormEngineType.DECISION_DIAGRAM,
+                                                  False)
+        self.policy_iteration_dd = StormAlgorithm(self, "storm policy iteration dd",
+                                                  StormAlgorithmType.POLICY_ITERATION, StormEngineType.DECISION_DIAGRAM,
+                                                  False)
+
+        self.jacobi_dd = StormAlgorithm(self, "storm jacobi dd",
+                                                  StormAlgorithmType.JACOBI, StormEngineType.DECISION_DIAGRAM,
+                                                  False)
+
+        self.rational_search_dd = StormAlgorithm(self, "storm rational search dd",
+                                                  StormAlgorithmType.RATIONAL_SEARCH, StormEngineType.DECISION_DIAGRAM,
+                                                  False)
+
+        self.value_iteration_dd_to_sparse = StormAlgorithm(self, "storm value iteration dd-to-sparse",
+                                                  StormAlgorithmType.VALUE_ITERATION, StormEngineType.DECISION_DIAGRAM_TO_SPARSE_MATRICES,
+                                                  False)
+        self.top_value_iteration_dd_to_sparse = StormAlgorithm(self, "storm topological value iteration dd-to-sparse",
+                                                  StormAlgorithmType.VALUE_ITERATION, StormEngineType.DECISION_DIAGRAM_TO_SPARSE_MATRICES,
+                                                  True)
+
+        self.value_iteration_hybrid = StormAlgorithm(self, "storm value iteration hybrid",
+                                                  StormAlgorithmType.VALUE_ITERATION, StormEngineType.HYBRID,
+                                                  False)
+        self.top_value_iteration_hybrid = StormAlgorithm(self, "storm topological value iteration hybrid",
+                                                  StormAlgorithmType.VALUE_ITERATION, StormEngineType.HYBRID,
+                                                  True)
+
         self.top_jacobi = StormAlgorithm(self, "storm topological jacobi sparse", StormAlgorithmType.JACOBI, StormEngineType.SPARSE_MATRICES, True)
         self.top_gmm_plus_plus = StormAlgorithm(self, "storm topological gmm plus plus sparse", StormAlgorithmType.GMM_PLUS_PLUS, StormEngineType.SPARSE_MATRICES, True)
         self.top_gauss_seidel = StormAlgorithm(self, "storm topological gauss seidel sparse", StormAlgorithmType.GAUSS_SEIDEL, StormEngineType.SPARSE_MATRICES, True)

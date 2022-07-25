@@ -23,7 +23,8 @@ class TestBenchmark(Benchmark):
         self.add_dpm_1()
         self.add_brp_pta_1()
 
-        '''modestTool = ModestTool()
+        '''
+        modestTool = ModestTool()
         self.tools.append(modestTool)
         self.algorithms.append(modestTool.value_iteration)
         self.algorithms.append(modestTool.interval_iteration)
@@ -36,7 +37,7 @@ class TestBenchmark(Benchmark):
         self.algorithms.append(modestTool.adaptive)
         self.algorithms.append(modestTool.glrtdp)'''
         stormTool = StormTool()
-        self.algorithms.append(stormTool.top_jacobi)
+        '''self.algorithms.append(stormTool.top_jacobi)
         self.algorithms.append(stormTool.top_gmm_plus_plus)
         self.algorithms.append(stormTool.top_gauss_seidel)
         self.algorithms.append(stormTool.top_successive_over_relaxation)
@@ -51,9 +52,15 @@ class TestBenchmark(Benchmark):
         self.algorithms.append(stormTool.top_policy_iteration)
         self.algorithms.append(stormTool.top_linear_programming)
         self.algorithms.append(stormTool.top_value_iteration_to_policy_iteration)
-        #self.algorithms.append(stormTool.acyclic)
-        self.algorithms.append(stormTool.abstract_refinement)
-        #self.algorithms.append(stormTool.exploration)
+        self.algorithms.append(stormTool.abstract_refinement)'''
+        self.algorithms.append(stormTool.value_iteration_dd)
+        self.algorithms.append(stormTool.policy_iteration_dd)
+        self.algorithms.append(stormTool.jacobi_dd)
+        self.algorithms.append(stormTool.rational_search_dd)
+        self.algorithms.append(stormTool.value_iteration_dd_to_sparse)
+        self.algorithms.append(stormTool.top_value_iteration_dd_to_sparse)
+        self.algorithms.append(stormTool.value_iteration_hybrid)
+        self.algorithms.append(stormTool.top_value_iteration_hybrid)
 
 
     def add_leader_sync_1(self):
@@ -82,7 +89,11 @@ class TestBenchmark(Benchmark):
         BenchmarkInstance(sequence, {})
         sequence = BenchmarkSequence(model, "all_before_min", PropertyType.REACHABILITY, {})
         BenchmarkInstance(sequence, {})
+        sequence = BenchmarkSequence(model, "some_before", PropertyType.REACHABILITY, {})
+        BenchmarkInstance(sequence, {})
         sequence = BenchmarkSequence(model, "time_min", PropertyType.EXPECTED_REWARD, {})
+        BenchmarkInstance(sequence, {})
+        sequence = BenchmarkSequence(model, "time_max", PropertyType.EXPECTED_REWARD, {})
         BenchmarkInstance(sequence, {})
 
     def add_dpm_1(self):
