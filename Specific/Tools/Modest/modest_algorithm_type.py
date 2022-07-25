@@ -3,16 +3,16 @@ from enum import Enum
 
 
 class ModestAlgorithmType(Enum):
-    ValueIteration = "ValueIteration"
-    IntervalIteration = "IntervalIteration"
-    SequentialIntervalIteration = "SequentialIntervalIteration"
-    SoundValueIteration = "SoundValueIteration"
-    OptimisticValueIteration = "OptimisticValueIteration"
-    LinearProgramming = "LinearProgramming"
-    SymblicitStateElimination = "SymblicitStateElimination"
-    ConfidenceInterval = "ConfidenceInterval"
+    VALUE_ITERATION = "ValueIteration"
+    INTERVAL_ITERATION = "IntervalIteration"
+    SEQUENTIAL_INTERVAL_ITERATION = "SequentialIntervalIteration"
+    SOUND_VALUE_ITERATION = "SoundValueIteration"
+    OPTIMISTIC_VALUE_ITERATION = "OptimisticValueIteration"
+    LINEAR_PROGRAMMING = "LinearProgramming"
+    SYMBLICIT_STATE_ELIMINATION = "SymblicitStateElimination"
+    CONFIDENCE_INTERVAL = "ConfidenceInterval"
     APMC = "APMC"
-    Adaptive = "Adaptive"
-    GeneralLabeledRealTimeDynamicProgramming = "GeneralLabeledRealTimeDynamicProgramming"
+    ADAPTIVE = "Adaptive"
+    GENERAL_LABELED_REAL_TIME_DYNAMIC_PROGRAMMING = "GeneralLabeledRealTimeDynamicProgramming"
 
 

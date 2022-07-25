@@ -8,6 +8,9 @@ from Specific.Tools.Modest.modest_tool import ModestTool
 
 
 # noinspection DuplicatedCode
+from Specific.Tools.Storm.storm_tool import StormTool
+
+
 class TestBenchmark(Benchmark):
     def __init__(self):
         super().__init__()
@@ -20,7 +23,7 @@ class TestBenchmark(Benchmark):
         self.add_dpm_1()
         self.add_brp_pta_1()
 
-        modestTool = ModestTool()
+        '''modestTool = ModestTool()
         self.tools.append(modestTool)
         self.algorithms.append(modestTool.value_iteration)
         self.algorithms.append(modestTool.interval_iteration)
@@ -31,7 +34,26 @@ class TestBenchmark(Benchmark):
         self.algorithms.append(modestTool.confidence_interval)
         self.algorithms.append(modestTool.okamoto)
         self.algorithms.append(modestTool.adaptive)
-        self.algorithms.append(modestTool.glrtdp)
+        self.algorithms.append(modestTool.glrtdp)'''
+        stormTool = StormTool()
+        self.algorithms.append(stormTool.top_jacobi)
+        self.algorithms.append(stormTool.top_gmm_plus_plus)
+        self.algorithms.append(stormTool.top_gauss_seidel)
+        self.algorithms.append(stormTool.top_successive_over_relaxation)
+        self.algorithms.append(stormTool.top_walkerchae)
+        self.algorithms.append(stormTool.top_value_iteration)
+        self.algorithms.append(stormTool.top_interval_iteration)
+        self.algorithms.append(stormTool.top_sound_value_iteration)
+        self.algorithms.append(stormTool.top_optimistic_value_iteration)
+        self.algorithms.append(stormTool.top_rational_search)
+        self.algorithms.append(stormTool.top_eigen)
+        self.algorithms.append(stormTool.top_elimination)
+        self.algorithms.append(stormTool.top_policy_iteration)
+        self.algorithms.append(stormTool.top_linear_programming)
+        self.algorithms.append(stormTool.top_value_iteration_to_policy_iteration)
+        #self.algorithms.append(stormTool.acyclic)
+        self.algorithms.append(stormTool.abstract_refinement)
+        #self.algorithms.append(stormTool.exploration)
 
 
     def add_leader_sync_1(self):

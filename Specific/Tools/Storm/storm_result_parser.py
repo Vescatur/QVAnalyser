@@ -5,6 +5,9 @@ import re
 
 class StormResultParser(ResultParser):
 
+    def __init__(self):
+        self.result_in_next_line = False
+
     def parse_result(self, result):
         self.result_in_next_line = False
         log = result.command_results[0].output_log

@@ -18,24 +18,24 @@ class ModestAlgorithm(Algorithm):
         model_type = instance.benchmark_sequence.benchmark_model.formal_model_type
         property_type = instance.benchmark_sequence.property_type
         match self.algorithm_type:
-            case ModestAlgorithmType.LinearProgramming | ModestAlgorithmType.SequentialIntervalIteration:
+            case ModestAlgorithmType.LINEAR_PROGRAMMING | ModestAlgorithmType.SequentialIntervalIteration:
                 if property_type == PropertyType.REACHABILITY:
                     return True
                 else:
                     return False
-            case ModestAlgorithmType.ValueIteration | ModestAlgorithmType.IntervalIteration | ModestAlgorithmType.SoundValueIteration | ModestAlgorithmType.OptimisticValueIteration:
+            case ModestAlgorithmType.VALUE_ITERATION | ModestAlgorithmType.IntervalIteration | ModestAlgorithmType.SOUND_VALUE_ITERATION | ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION:
                 return True
-            case ModestAlgorithmType.GeneralLabeledRealTimeDynamicProgramming:
+            case ModestAlgorithmType.GENERAL_LABELED_REAL_TIME_DYNAMIC_PROGRAMMING:
                 if model_type == ModelType.MDP:
                     return True
                 else:
                     return False
-            case ModestAlgorithmType.ConfidenceInterval:
+            case ModestAlgorithmType.CONFIDENCE_INTERVAL:
                 if model_type == ModelType.DTMC or model_type == ModelType.CTMC:
                     return True
                 else:
                     return False
-            case ModestAlgorithmType.Adaptive | ModestAlgorithmType.APMC:
+            case ModestAlgorithmType.ADAPTIVE | ModestAlgorithmType.APMC:
                 if model_type == ModelType.DTMC or model_type == ModelType.CTMC:
                     if property_type == PropertyType.REACHABILITY:
                         return True

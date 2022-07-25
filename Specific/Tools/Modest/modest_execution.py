@@ -28,17 +28,17 @@ class ModestExecution(Execution):
         algorithm_name = self.to_command_text(self.algorithm_type)
 
         match self.algorithm_type:
-            case ModestAlgorithmType.ValueIteration | ModestAlgorithmType.IntervalIteration | \
-                 ModestAlgorithmType.SoundValueIteration | ModestAlgorithmType.OptimisticValueIteration | \
-                 ModestAlgorithmType.LinearProgramming | ModestAlgorithmType.SequentialIntervalIteration:
+            case ModestAlgorithmType.VALUE_ITERATION | ModestAlgorithmType.IntervalIteration | \
+                 ModestAlgorithmType.SOUND_VALUE_ITERATION | ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION | \
+                 ModestAlgorithmType.LINEAR_PROGRAMMING | ModestAlgorithmType.SequentialIntervalIteration:
                 command = "{} check {} --alg {} --epsilon 1e-6 --width 1e-3 --props {} {} -O {} Json" \
                     .format(Modest().tool_path, file_path, algorithm_name, property_name, parameters_argument, Modest().temp_file_path)
                 return command
-            case ModestAlgorithmType.APMC | ModestAlgorithmType.ConfidenceInterval | ModestAlgorithmType.Adaptive:
+            case ModestAlgorithmType.APMC | ModestAlgorithmType.CONFIDENCE_INTERVAL | ModestAlgorithmType.ADAPTIVE:
                 command = "{} modes {} --statistical {} --max-run-length 0 -C 0.95 --width 1e-3 --props {} {} -O {} Json" \
                     .format(Modest().tool_path, file_path, algorithm_name, property_name, parameters_argument, Modest().temp_file_path)
                 return command
-            case ModestAlgorithmType.GeneralLabeledRealTimeDynamicProgramming:
+            case ModestAlgorithmType.GENERAL_LABELED_REAL_TIME_DYNAMIC_PROGRAMMING:
                 command = "{} modysh {} --epsilon 1e-6 --props {} {} -O {} Json" \
                     .format(Modest().tool_path, file_path, property_name, parameters_argument, Modest().temp_file_path)
                 return command
@@ -63,24 +63,24 @@ class ModestExecution(Execution):
 
     def to_command_text(self,algorithm_type) -> str:
         match algorithm_type:
-            case ModestAlgorithmType.ValueIteration:
+            case ModestAlgorithmType.VALUE_ITERATION:
                 return "ValueIteration"
             case ModestAlgorithmType.IntervalIteration:
                 return "IntervalIteration"
             case ModestAlgorithmType.SequentialIntervalIteration:
                 return "SequentialIntervalIteration"
-            case ModestAlgorithmType.SoundValueIteration:
+            case ModestAlgorithmType.SOUND_VALUE_ITERATION:
                 return "SoundValueIteration"
-            case ModestAlgorithmType.OptimisticValueIteration:
+            case ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION:
                 return "OptimisticValueIteration"
-            case ModestAlgorithmType.LinearProgramming:
+            case ModestAlgorithmType.LINEAR_PROGRAMMING:
                 return "LinearProgramming"
-            case ModestAlgorithmType.ConfidenceInterval:
+            case ModestAlgorithmType.CONFIDENCE_INTERVAL:
                 return "CI"
             case ModestAlgorithmType.APMC:
                 return "Okamoto"
-            case ModestAlgorithmType.Adaptive:
+            case ModestAlgorithmType.ADAPTIVE:
                 return "Adaptive"
-            case ModestAlgorithmType.GeneralLabeledRealTimeDynamicProgramming:
+            case ModestAlgorithmType.GENERAL_LABELED_REAL_TIME_DYNAMIC_PROGRAMMING:
                 return ""
 
