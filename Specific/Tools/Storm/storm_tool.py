@@ -1,9 +1,9 @@
 from os import path
-import re
 
-from Library.Results.measurements import Measurements
-from Library.Tools.algorithm import Algorithm
 from Library.Tools.tool import Tool
+from Specific.Tools.Storm.storm_algorithm import StormAlgorithm
+from Specific.Tools.Storm.storm_algorithm_type import StormAlgorithmType
+from Specific.Tools.Storm.storm_engine_type import StormEngineType
 from Specific.Tools.Storm.storm_interval_iteration import StormIntervalIteration
 from Specific.Helpers.storm import Storm
 from Specific.Tools.Storm.storm_result_parser import StormResultParser
@@ -13,8 +13,28 @@ class StormTool(Tool):
 
     def __init__(self):
         super().__init__(StormResultParser())
-        self.interval_iteration = Algorithm(self,StormIntervalIteration, "storm interval iteration")
-        self.result_in_next_line = False
+        self.top_jacobi = StormAlgorithm(self, "storm topological jacobi sparse", StormAlgorithmType.JACOBI, StormEngineType.SPARSE_MATRICES, True)
+        self.top_gmm_plus_plus = StormAlgorithm(self, "storm topological gmm plus plus sparse", StormAlgorithmType.GMM_PLUS_PLUS, StormEngineType.SPARSE_MATRICES, True)
+        self.top_gauss_seidel = StormAlgorithm(self, "storm topological gauss seidel sparse", StormAlgorithmType.GAUSS_SEIDEL, StormEngineType.SPARSE_MATRICES, True)
+        self.top_successive_over_relaxation = StormAlgorithm(self, "storm topological successive_over_relaxation  sparse", StormAlgorithmType.SUCCESSIVE_OVER_RELAXATION, StormEngineType.SPARSE_MATRICES, True)
+        self.top_walkerchae = StormAlgorithm(self, "storm topological walkerchae sparse", StormAlgorithmType.WALKERCHAE, StormEngineType.SPARSE_MATRICES, True)
+        self.top_value_iteration = StormAlgorithm(self, "storm topological value iteration sparse", StormAlgorithmType.VALUE_ITERATION, StormEngineType.SPARSE_MATRICES, True)
+        self.top_interval_iteration = StormAlgorithm(self, "storm topological interval iteration sparse", StormAlgorithmType.INTERVAL_ITERATION, StormEngineType.SPARSE_MATRICES, True)
+        self.top_sound_value_iteration = StormAlgorithm(self, "storm topological sound_value iteration sparse", StormAlgorithmType.SOUND_VALUE_ITERATION, StormEngineType.SPARSE_MATRICES, True)
+        self.top_optimistic_value_iteration = StormAlgorithm(self, "storm topological optimistic value iteration sparse", StormAlgorithmType.OPTIMISTIC_VALUE_ITERATION, StormEngineType.SPARSE_MATRICES, True)
+        self.top_rational_search = StormAlgorithm(self, "storm topological rational search sparse", StormAlgorithmType.RATIONAL_SEARCH, StormEngineType.SPARSE_MATRICES, True)
+        self.top_eigen = StormAlgorithm(self, "storm topological eigen sparse", StormAlgorithmType.EIGEN, StormEngineType.SPARSE_MATRICES, True)
+        self.top_elimination = StormAlgorithm(self, "storm topological elimination sparse", StormAlgorithmType.ELIMINATION, StormEngineType.SPARSE_MATRICES, True)
+        self.top_policy_iteration = StormAlgorithm(self, "storm topological policy iteration sparse", StormAlgorithmType.POLICY_ITERATION, StormEngineType.SPARSE_MATRICES, True)
+        self.top_linear_programming = StormAlgorithm(self, "storm topological linear programming sparse", StormAlgorithmType.LINEAR_PROGRAMMING, StormEngineType.SPARSE_MATRICES, True)
+        self.top_value_iteration_to_policy_iteration = StormAlgorithm(self, "storm topological value iteration to policy iteration sparse", StormAlgorithmType.VALUE_ITERATION_TO_POLICY_ITERATION, StormEngineType.SPARSE_MATRICES, True)
+
+        self.acyclic = StormAlgorithm(self, "storm acyclic sparse", StormAlgorithmType.ACYCLIC, StormEngineType.SPARSE_MATRICES, False)
+        # can only handle acyclic models
+
+        self.abstract_refinement = StormAlgorithm(self, "storm abstract refinement", StormAlgorithmType.ABSTRACTION_REFINEMENT, StormEngineType.ABSTRACTION_REFINEMENT, False)
+        # self.exploration = StormAlgorithm(self, "storm exploration", StormAlgorithmType.EXPLORATION, StormEngineType.EXPLORATION, False)
+        # only for prism files
 
     def check_setup_tool(self):
         if not path.exists(Storm().tool_folder_path):

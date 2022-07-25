@@ -12,7 +12,6 @@ class StormIntervalIteration(Execution):
         self.status = "start"
         command = self.generate_command_text()
         self.run_command(command)
-        #self.parse_statistics()
 
     def generate_command_text(self):
         parametersText = self.generate_parameter_text(self.benchmark_instance.all_parameters)
