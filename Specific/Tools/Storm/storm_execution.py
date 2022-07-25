@@ -89,7 +89,7 @@ class StormExecution(Execution):
             case StormAlgorithmType.LINEAR_PROGRAMMING:
                 return "linear-programming"
             case StormAlgorithmType.RATIONAL_SEARCH:
-                return "ratsearch"
+                return "ratsearch --exact"
             case StormAlgorithmType.INTERVAL_ITERATION:
                 return "interval-iteration"
             case StormAlgorithmType.SOUND_VALUE_ITERATION:
@@ -117,11 +117,11 @@ class StormExecution(Execution):
             case StormAlgorithmType.SOUND_VALUE_ITERATION:
                 return native_argument + "sound-value-iteration"
             case StormAlgorithmType.OPTIMISTIC_VALUE_ITERATION:
-                return native_argument + "optimistic-value-iteration"
+                return native_argument + "ovi"
             case StormAlgorithmType.INTERVAL_ITERATION:
                 return native_argument + "interval-iteration"
             case StormAlgorithmType.RATIONAL_SEARCH:
-                return native_argument + "ratsearch"
+                return native_argument + "ratsearch --exact"
         return ""
 
 
