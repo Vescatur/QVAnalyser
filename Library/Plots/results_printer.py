@@ -1,4 +1,5 @@
 from Library.Benchmarks.benchmark import Benchmark
+from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Results.measurements import Measurements
 
 
@@ -77,8 +78,17 @@ class ResultsPrinter(object):
         print(states_is_one)
 
     def print_error_information(self, benchmark: Benchmark):
+        for algorithm in benchmark.algorithms:
+            pass
+            # self.print_error_information_for_algorithm(benchmark,algorithm)
+        self.print_error_per_instance(benchmark)
+
+    def print_error_information_for_algorithm(self, benchmark,algorithm):
+        print()
+        print(algorithm.name)
         threw_error_with_exception = 0
         threw_error = 0
+        not_supported = 0
         qva_error = 0
         timed_out = 0
         both = 0
@@ -91,30 +101,81 @@ class ResultsPrinter(object):
             for instance in sequence.benchmark_instances:
                 complete_instance = True
                 for result in instance.results:
-                    if result.algorithm_name == "modest interval iteration":
-                        total += 1
-                        if result.threw_error:
-                            threw_error += 1
-                            # print(sequence_number)
-                            # print(result.command_results[0].output_log)
-                            if result.command_results[0].exception is not None:
-                                threw_error_with_exception += 1
-                        if result.qva_error:
-                            qva_error += 1
-                        if result.timed_out:
-                            timed_out += 1
-                        if result.threw_error and result.timed_out:
-                            both += 1
-                        if Measurements.PROPERTY_TIME not in result.measurements:
-                            if not result.timed_out and not result.threw_error:
-                                missing_results += 1
+                    if result.algorithm_name == algorithm.name:
+                        if hasattr(result,"not_supported") and result.not_supported: #TODO: Remove the left part of the and
+                            not_supported += 1
+                        else:
+                            total += 1
+                            if result.threw_error:
+                                threw_error += 1
                                 print(sequence_number)
-                                print(result.command_results[0].output_log)
-                                print(result.command_results[0].error_log)
-        print("total "+str(total))
-        print("threw error "+str(threw_error))
-        print("threw error with exception "+str(threw_error_with_exception))
-        print("qva exception "+str(qva_error))
-        print("timed out "+str(timed_out))
-        print("both "+str(both))
-        print("missing results "+str(missing_results))
+                                print(result.error_text)
+                                if len(result.command_results) >= 1 and result.command_results[0].exception is not None:
+                                    threw_error_with_exception += 1
+                                    print(result.command_results[0].output_log)
+                                    print(result.command_results[0].error_log)
+                            if result.qva_error:
+                                qva_error += 1
+                            if result.timed_out:
+                                timed_out += 1
+                            if result.threw_error and result.timed_out:
+                                both += 1
+                            if Measurements.PROPERTY_TIME not in result.measurements:
+                                if not result.timed_out and not result.threw_error:
+                                    missing_results += 1
+        print("executed " + str(total) + " not supported " + str(not_supported))
+        print("threw error " + str(threw_error))
+        print("threw error with exception " + str(threw_error_with_exception))
+        print("qva exception " + str(qva_error))
+        print("timed out " + str(timed_out))
+        print("both " + str(both))
+        print("missing results " + str(missing_results))
+
+    def print_error_per_instance(self, benchmark):
+        for sequence in benchmark.benchmark_sequences:
+            for instance in sequence.benchmark_instances:
+                self.print_error_for_instance(instance)
+
+    def print_error_for_instance(self, instance: BenchmarkInstance):
+        #print()
+        #print(instance.benchmark_sequence.benchmark_model.name + " " + instance.benchmark_sequence.property_name)
+        threw_error_with_exception = 0
+        threw_error = 0
+        not_supported = 0
+        qva_error = 0
+        timed_out = 0
+        both = 0
+        missing_results = 0
+        total = 0
+        for result in instance.results:
+            if hasattr(result,"not_supported") and result.not_supported: #TODO: Remove the left part of the and
+                not_supported += 1
+            else:
+                total += 1
+                if result.threw_error:
+                    threw_error += 1
+                    # print(result.error_text + " | " + result.algorithm_name )
+                    if result.error_text == "(Engine.cpp:166): The selected combination of engine (abs) and model type (mdp) does not seem to be supported for this value type.": #or \
+                            #result.error_text == "(Engine.cpp:166): The selected combination of engine (abs) and model type (dtmc) does not seem to be supported for this value type.":
+                        print(result.command_results[0].command)
+                    if len(result.command_results) >= 1 and result.command_results[0].exception is not None:
+                        threw_error_with_exception += 1
+                if result.qva_error:
+                    qva_error += 1
+                if result.timed_out:
+                    timed_out += 1
+                if result.threw_error and result.timed_out:
+                    both += 1
+                if Measurements.PROPERTY_TIME not in result.measurements:
+                    if not result.timed_out and not result.threw_error:
+                        missing_results += 1
+                        # print(sequence_number)
+                        # print(result.command_results[0].output_log)
+                        # print(result.command_results[0].error_log)
+        #print("executed " + str(total) + " not supported " + str(not_supported))
+        #print("threw error " + str(threw_error))
+        #print("threw error with exception " + str(threw_error_with_exception))
+        #print("qva exception " + str(qva_error))
+        #print("timed out " + str(timed_out))
+        #print("both " + str(both))
+        #print("missing results " + str(missing_results))

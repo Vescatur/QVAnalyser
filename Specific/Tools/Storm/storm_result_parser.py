@@ -1,4 +1,5 @@
 from Library.Results.measurements import Measurements
+from Library.Results.result import Result
 from Library.Tools.result_parser import ResultParser
 import re
 
@@ -8,7 +9,9 @@ class StormResultParser(ResultParser):
     def __init__(self):
         self.result_in_next_line = False
 
-    def parse_result(self, result):
+    def parse_result(self, result: Result, benchmark):
+        if hasattr(result,"not_supported") and result.not_supported: # TODO: remove left part of the and
+            return
         self.result_in_next_line = False
         log = result.command_results[0].output_log
         status = "start"

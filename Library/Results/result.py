@@ -8,6 +8,7 @@ class Result(object):
         self.tool_name = None
 
         self.command_results = []
+        self.not_supported = False
         self.timed_out = False
         self.threw_error = False
         self.qva_error = None

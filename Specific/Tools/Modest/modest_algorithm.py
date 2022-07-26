@@ -17,13 +17,28 @@ class ModestAlgorithm(Algorithm):
     def is_supported(self, instance: BenchmarkInstance):
         model_type = instance.benchmark_sequence.benchmark_model.formal_model_type
         property_type = instance.benchmark_sequence.property_type
+
+
+        match instance.benchmark_sequence.benchmark_model.name:
+            case "dtmc/bluetooth/bluetooth" | "dtmc/herman/herman": # Complex initial states specifications are not yet supported
+                return False
+            case "pta/csma-pta/csma-pta":
+                return False # Incompatible expression type: Expected int, found real
+            case "pta/csma_abst-pta/csma_abst-pta" | "pta/repudiation_honest/repudiation_honest" | "pta/repudiation_malicious/repudiation_malicious":
+                match self.algorithm_type:
+                    case ModestAlgorithmType.VALUE_ITERATION | ModestAlgorithmType.INTERVAL_ITERATION | \
+                         ModestAlgorithmType.SEQUENTIAL_INTERVAL_ITERATION | ModestAlgorithmType.SOUND_VALUE_ITERATION | \
+                         ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION | ModestAlgorithmType.LINEAR_PROGRAMMING:
+                        return False # Open clock constraints are not allowed.
+
         match self.algorithm_type:
             case ModestAlgorithmType.LINEAR_PROGRAMMING | ModestAlgorithmType.SEQUENTIAL_INTERVAL_ITERATION:
                 if property_type == PropertyType.REACHABILITY:
                     return True
                 else:
                     return False
-            case ModestAlgorithmType.VALUE_ITERATION | ModestAlgorithmType.INTERVAL_ITERATION | ModestAlgorithmType.SOUND_VALUE_ITERATION | ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION:
+            case ModestAlgorithmType.VALUE_ITERATION | ModestAlgorithmType.INTERVAL_ITERATION | \
+                 ModestAlgorithmType.SOUND_VALUE_ITERATION | ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION:
                 return True
             case ModestAlgorithmType.GENERAL_LABELED_REAL_TIME_DYNAMIC_PROGRAMMING:
                 if model_type == ModelType.MDP:

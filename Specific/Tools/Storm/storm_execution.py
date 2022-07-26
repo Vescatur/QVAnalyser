@@ -29,8 +29,11 @@ class StormExecution(Execution):
         native_argument = self.generate_native_argument()
         topological_minmax_argument = self.generate_topological_minmax_argument()
         topological_eqsolver_argument = self.generate_topological_eqsolver_argument()
-        command = "{} --jani {} --janiproperty {} {} {} {} {} {} {} {} --verbose --precision 1e-6" \
-            .format(Storm().tool_path, file_path, property_name, parameters_argument, engine_argument, eqsolver_argument, topological_eqsolver_argument, native_argument, minmax_argument, topological_minmax_argument)
+        exact = ""
+        if self.algorithm_type == StormAlgorithmType.RATIONAL_SEARCH:
+            exact = "--exact"
+        command = "{} --jani {} --janiproperty {} {} {} {} {} {} {} {} {} --verbose --precision 1e-6" \
+            .format(Storm().tool_path, file_path, property_name, parameters_argument, engine_argument, eqsolver_argument, topological_eqsolver_argument, native_argument, minmax_argument, topological_minmax_argument,exact)
         return command
 
     def generate_eqsolver_argument(self):
@@ -89,7 +92,7 @@ class StormExecution(Execution):
             case StormAlgorithmType.LINEAR_PROGRAMMING:
                 return "linear-programming"
             case StormAlgorithmType.RATIONAL_SEARCH:
-                return "ratsearch --exact"
+                return "ratsearch"
             case StormAlgorithmType.INTERVAL_ITERATION:
                 return "interval-iteration"
             case StormAlgorithmType.SOUND_VALUE_ITERATION:
@@ -121,7 +124,7 @@ class StormExecution(Execution):
             case StormAlgorithmType.INTERVAL_ITERATION:
                 return native_argument + "interval-iteration"
             case StormAlgorithmType.RATIONAL_SEARCH:
-                return native_argument + "ratsearch --exact"
+                return native_argument + "ratsearch"
         return ""
 
 
