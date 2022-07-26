@@ -39,7 +39,8 @@ class ModestAlgorithm(Algorithm):
                 if model_type == ModelType.DTMC or model_type == ModelType.CTMC:
                     if property_type == PropertyType.REACHABILITY:
                         return True
-                return False
+                else:
+                    return False
             case _:
                 raise Exception("Incomplete match statement")
 
