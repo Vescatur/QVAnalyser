@@ -20,6 +20,7 @@ class PrismAlgorithmType(Enum):
     #MDP
     POLICY_ITERATION = "policy iteration"
     MODIFIED_POLICY_ITERATION = "modified policy iteration"
+    INTERVAL_ITERATION = "interval iteration"
 
     #PTA
     STOCHASTIC_GAMES = "stochastic games"

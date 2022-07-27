@@ -15,45 +15,13 @@ class QvbsBenchmarkOneInstancePerProperty(Benchmark):
         
         self.add_benchmark_instances()
         
-
+        stormTool = StormTool()
+        self.tools.append(stormTool)
+        self.algorithms.append(stormTool.interval_iteration)
+        
         modestTool = ModestTool()
         self.tools.append(modestTool)
-        self.algorithms.append(modestTool.value_iteration)
         self.algorithms.append(modestTool.interval_iteration)
-        self.algorithms.append(modestTool.sequential_interval_iteration)
-        self.algorithms.append(modestTool.sound_value_iteration)
-        self.algorithms.append(modestTool.optimistic_value_iteration)
-        self.algorithms.append(modestTool.linear_programming)
-        self.algorithms.append(modestTool.confidence_interval)
-        self.algorithms.append(modestTool.okamoto)
-        self.algorithms.append(modestTool.adaptive)
-        self.algorithms.append(modestTool.glrtdp)
-
-        stormTool = StormTool()
-        self.algorithms.append(stormTool.top_jacobi)
-        self.algorithms.append(stormTool.top_gmm_plus_plus)
-        self.algorithms.append(stormTool.top_gauss_seidel)
-        self.algorithms.append(stormTool.top_successive_over_relaxation)
-        self.algorithms.append(stormTool.top_walkerchae)
-        self.algorithms.append(stormTool.top_value_iteration)
-        self.algorithms.append(stormTool.top_interval_iteration)
-        self.algorithms.append(stormTool.top_sound_value_iteration)
-        self.algorithms.append(stormTool.top_optimistic_value_iteration)
-        self.algorithms.append(stormTool.top_rational_search)
-        self.algorithms.append(stormTool.top_eigen)
-        self.algorithms.append(stormTool.top_elimination)
-        self.algorithms.append(stormTool.top_policy_iteration)
-        self.algorithms.append(stormTool.top_linear_programming)
-        self.algorithms.append(stormTool.top_value_iteration_to_policy_iteration)
-        self.algorithms.append(stormTool.abstract_refinement)
-        self.algorithms.append(stormTool.value_iteration_dd)
-        self.algorithms.append(stormTool.policy_iteration_dd)
-        self.algorithms.append(stormTool.jacobi_dd)
-        self.algorithms.append(stormTool.rational_search_dd)
-        self.algorithms.append(stormTool.value_iteration_dd_to_sparse)
-        self.algorithms.append(stormTool.top_value_iteration_dd_to_sparse)
-        self.algorithms.append(stormTool.value_iteration_hybrid)
-        self.algorithms.append(stormTool.top_value_iteration_hybrid)
     
     def add_benchmark_instances(self):
         self.add_cluster_1()
@@ -234,6 +202,8 @@ class QvbsBenchmarkOneInstancePerProperty(Benchmark):
     def add_haddad_monmege_1(self):
         model = BenchmarkModel(self, "dtmc/haddad-monmege/haddad-monmege.jani","dtmc/haddad-monmege/haddad-monmege.prctl","dtmc/haddad-monmege/haddad-monmege.pm", ModelType.DTMC,"PRISM","adversarial example for value iteration")
         sequence = BenchmarkSequence(model, "target", PropertyType.REACHABILITY, {"N": 20, "p": 0.7})
+        BenchmarkInstance(sequence, {})
+        sequence = BenchmarkSequence(model, "exp_steps", PropertyType.EXPECTED_STEPS, {"N": 20, "p": 0.7})
         BenchmarkInstance(sequence, {})
     
     def add_herman_1(self):
@@ -520,6 +490,8 @@ class QvbsBenchmarkOneInstancePerProperty(Benchmark):
     
     def add_resource_gathering_1(self):
         model = BenchmarkModel(self, "mdp/resource-gathering/resource-gathering.jani","mdp/resource-gathering/resource-gathering.prctl","mdp/resource-gathering/resource-gathering.pm", ModelType.MDP,"PRISM","")
+        sequence = BenchmarkSequence(model, "expsteps", PropertyType.EXPECTED_STEPS, {"B": 200, "GOLD_TO_COLLECT": 15, "GEM_TO_COLLECT": 15})
+        BenchmarkInstance(sequence, {})
     
     def add_tireworld_1(self):
         model = BenchmarkModel(self, "mdp/tireworld/tireworld.17.jani","","", ModelType.MDP,"PPDDL","IPPC 2006 benchmark")

@@ -61,7 +61,7 @@ class TestBenchmark(Benchmark):
         self.algorithms.append(stormTool.top_value_iteration_hybrid)'''
         prismTool = PrismTool()
         self.algorithms.append(prismTool.value_iteration_sparse)
-        '''
+
         self.algorithms.append(prismTool.top_value_iteration_sparse)
         self.algorithms.append(prismTool.value_iteration_explicit)
         self.algorithms.append(prismTool.top_value_iteration_explicit)
@@ -87,7 +87,7 @@ class TestBenchmark(Benchmark):
         self.algorithms.append(prismTool.stochastic_games)
         self.algorithms.append(prismTool.digital_clocks)
         self.algorithms.append(prismTool.backwards_reachability)
-        '''
+
 
 
     def add_leader_sync_1(self):
