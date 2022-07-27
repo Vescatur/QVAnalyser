@@ -4,11 +4,17 @@ from Library.Benchmarks.model_type import ModelType
 
 class BenchmarkModel(object):
 
-    def __init__(self, benchmark: Benchmark, file_name_jani: str,file_name_prism_model: str,file_name_prism_props:str,formal_model_type: ModelType,original_model_format:str,notes:str):
+    def __init__(self, benchmark: Benchmark, file_name_jani: str, file_name_prism_props:str, file_name_prism_model: str, formal_model_type: ModelType,original_model_format:str,notes:str):
         self.file_path_jani = benchmark.benchmark_path + file_name_jani
         self.file_name_jani = file_name_jani
-        self.file_name_prism_model = file_name_prism_model
-        self.file_name_prism_props = file_name_prism_props
+        if file_name_prism_model == "":
+            self.file_path_prism_model = None
+        else:
+            self.file_path_prism_model = benchmark.benchmark_path + file_name_prism_model
+        if file_name_prism_props == "":
+            self.file_path_prism_props = None
+        else:
+            self.file_path_prism_props = benchmark.benchmark_path + file_name_prism_props
         self.formal_model_type = formal_model_type
         self.original_model_format = original_model_format
         self.notes = notes

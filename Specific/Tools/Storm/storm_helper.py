@@ -1,7 +1,7 @@
 from Library.setup_environment import Setup
 
 
-class Storm(object):
+class StormHelper(object):
 
     def __init__(self):
         self.tool_folder_path = "{}storm/".format(Setup().tools_path)

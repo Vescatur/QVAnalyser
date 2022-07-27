@@ -23,6 +23,14 @@ class StormAlgorithm(Algorithm):
         if model_type == ModelType.PTA:
             return False
 
+        match instance.benchmark_sequence.benchmark_model.name:
+            case "ma/polling-system/polling-system" | "ma/reentrant-queues/reentrant-queues": # These models have the feature nondet-selection
+                return False
+            case "ma/breakdown-queues/breakdown-queues" | "ma/ftwc/ftwc" | "mdp/echoring/echoring":
+                match self.engine_type:
+                    case StormEngineType.HYBRID | StormEngineType.DECISION_DIAGRAM_TO_SPARSE_MATRICES:
+                        return False # The symbolic JANI model builder currently does not support assignment levels"
+
         match self.engine_type:
             case StormEngineType.DECISION_DIAGRAM:
                 match self.algorithm_type:
