@@ -1,7 +1,7 @@
 from Library.setup_environment import Setup
 
 
-class Modest(object):
+class ModestHelper(object):
 
     def __init__(self):
         self.tool_folder_path = "{}Modest/".format(Setup().tools_path)

@@ -82,6 +82,7 @@ class Benchmark(object):
         number_of_instances = 0
         number_of_complete_instances = 0
         number_of_executions = 0
+        number_of_not_supported = 0
         number_of_complete_executions = 0
         number_of_algorithms = 0
         for sequence in benchmark_sequences:
@@ -89,12 +90,15 @@ class Benchmark(object):
             for instance in sequence.benchmark_instances:
                 complete_instance = True
                 for algorithm in self.algorithms:
-                    number_of_executions += 1
-                    if self.has_algorithm_run_on_instance(algorithm, instance):
-                        number_of_complete_executions += 1
+                    if algorithm.is_supported(instance):
+                        number_of_executions += 1
+                        if self.has_algorithm_run_on_instance(algorithm, instance):
+                            number_of_complete_executions += 1
+                        else:
+                            complete_sequence = False
+                            complete_instance = False
                     else:
-                        complete_sequence = False
-                        complete_instance = False
+                        number_of_not_supported += 1
                 number_of_instances += 1
                 if complete_instance:
                     number_of_complete_instances += 1
@@ -108,7 +112,7 @@ class Benchmark(object):
         print("Found " + str(number_of_sequences) + " sequence(s), " +
               str(number_of_instances) + " instance(s) and " +
               str(number_of_algorithms) + " algorithm(s). This requires " +
-              str(number_of_executions) + " executions.")
+              str(number_of_executions) + " executions. " + str(number_of_not_supported) + " are not supported.")
 
         if number_of_complete_executions != 0:
             print(str(number_of_complete_sequences)+"/"+str(number_of_sequences)+" sequence(s) completed. " +

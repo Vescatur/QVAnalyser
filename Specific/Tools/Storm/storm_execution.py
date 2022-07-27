@@ -1,7 +1,7 @@
 from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Results.result import Result
 from Library.Tools.execution import Execution
-from Specific.Helpers.storm import Storm
+from Specific.Tools.Storm.storm_helper import StormHelper
 from Specific.Tools.Storm.storm_algorithm_type import StormAlgorithmType
 from Specific.Tools.Storm.storm_engine_type import StormEngineType
 
@@ -33,7 +33,7 @@ class StormExecution(Execution):
         if self.algorithm_type == StormAlgorithmType.RATIONAL_SEARCH:
             exact = "--exact"
         command = "{} --jani {} --janiproperty {} {} {} {} {} {} {} {} {} --verbose --precision 1e-6" \
-            .format(Storm().tool_path, file_path, property_name, parameters_argument, engine_argument, eqsolver_argument, topological_eqsolver_argument, native_argument, minmax_argument, topological_minmax_argument,exact)
+            .format(StormHelper().tool_path, file_path, property_name, parameters_argument, engine_argument, eqsolver_argument, topological_eqsolver_argument, native_argument, minmax_argument, topological_minmax_argument, exact)
         return command
 
     def generate_eqsolver_argument(self):

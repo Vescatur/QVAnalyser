@@ -1,11 +1,10 @@
 import json
 import os
-import shutil
 
 from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Results.result import Result
 from Library.Tools.execution import Execution
-from Specific.Helpers.modest import Modest
+from Specific.Tools.Modest.modest_helper import ModestHelper
 from Specific.Tools.Modest.modest_algorithm_type import ModestAlgorithmType
 
 
@@ -32,15 +31,15 @@ class ModestExecution(Execution):
                  ModestAlgorithmType.SOUND_VALUE_ITERATION | ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION | \
                  ModestAlgorithmType.LINEAR_PROGRAMMING | ModestAlgorithmType.SEQUENTIAL_INTERVAL_ITERATION:
                 command = "{} check {} --alg {} --epsilon 1e-6 --width 1e-3 --props {} {} -O {} Json" \
-                    .format(Modest().tool_path, file_path, algorithm_name, property_name, parameters_argument, Modest().temp_file_path)
+                    .format(ModestHelper().tool_path, file_path, algorithm_name, property_name, parameters_argument, ModestHelper().temp_file_path)
                 return command
             case ModestAlgorithmType.APMC | ModestAlgorithmType.CONFIDENCE_INTERVAL | ModestAlgorithmType.ADAPTIVE:
                 command = "{} modes {} --statistical {} --max-run-length 0 -C 0.95 --width 1e-3 --props {} {} -O {} Json" \
-                    .format(Modest().tool_path, file_path, algorithm_name, property_name, parameters_argument, Modest().temp_file_path)
+                    .format(ModestHelper().tool_path, file_path, algorithm_name, property_name, parameters_argument, ModestHelper().temp_file_path)
                 return command
             case ModestAlgorithmType.GENERAL_LABELED_REAL_TIME_DYNAMIC_PROGRAMMING:
                 command = "{} modysh {} --epsilon 1e-6 --props {} {} -O {} Json" \
-                    .format(Modest().tool_path, file_path, property_name, parameters_argument, Modest().temp_file_path)
+                    .format(ModestHelper().tool_path, file_path, property_name, parameters_argument, ModestHelper().temp_file_path)
                 return command
 
     def generate_parameter_text(self, parameters):
@@ -54,12 +53,12 @@ class ModestExecution(Execution):
             return "-E " + parametersText
 
     def read_json(self):
-        if os.path.exists(Modest().temp_file_path):
-            file = open(Modest().temp_file_path, "r", encoding='utf-8-sig')
+        if os.path.exists(ModestHelper().temp_file_path):
+            file = open(ModestHelper().temp_file_path, "r", encoding='utf-8-sig')
             json_output = json.load(file)
             self.result.json_output = json_output
             file.close()
-            os.remove(Modest().temp_file_path)
+            os.remove(ModestHelper().temp_file_path)
 
     def to_command_text(self,algorithm_type) -> str:
         match algorithm_type:

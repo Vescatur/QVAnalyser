@@ -4,7 +4,7 @@ from Library.Tools.tool import Tool
 from Specific.Tools.Storm.storm_algorithm import StormAlgorithm
 from Specific.Tools.Storm.storm_algorithm_type import StormAlgorithmType
 from Specific.Tools.Storm.storm_engine_type import StormEngineType
-from Specific.Helpers.storm import Storm
+from Specific.Tools.Storm.storm_helper import StormHelper
 from Specific.Tools.Storm.storm_result_parser import StormResultParser
 
 
@@ -65,9 +65,9 @@ class StormTool(Tool):
         # only for prism files
 
     def check_setup_tool(self):
-        if not path.exists(Storm().tool_folder_path):
+        if not path.exists(StormHelper().tool_folder_path):
             return False
-        if not path.exists(Storm().tool_path):
+        if not path.exists(StormHelper().tool_path):
             return False
         return True
 
