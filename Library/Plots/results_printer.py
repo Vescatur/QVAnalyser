@@ -102,7 +102,7 @@ class ResultsPrinter(object):
                 complete_instance = True
                 for result in instance.results:
                     if result.algorithm_name == algorithm.name:
-                        if hasattr(result,"not_supported") and result.not_supported: #TODO: Remove the left part of the and
+                        if result.not_supported:
                             not_supported += 1
                         else:
                             total += 1
@@ -148,7 +148,7 @@ class ResultsPrinter(object):
         missing_results = 0
         total = 0
         for result in instance.results:
-            if hasattr(result,"not_supported") and result.not_supported: #TODO: Remove the left part of the and
+            if result.not_supported:
                 not_supported += 1
             else:
                 total += 1

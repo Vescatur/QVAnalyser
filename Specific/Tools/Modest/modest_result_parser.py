@@ -67,7 +67,7 @@ class ModestResultParser(ResultParser):
                 return algorithm_1
 
     def search_for_errors(self, result):
-        if (hasattr(result,"not_supported") and result.not_supported) or result.threw_error: # TODO: remove left part of and
+        if result.not_supported or result.threw_error:
             return
 
         if len(result.command_results) == 0:

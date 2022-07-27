@@ -10,7 +10,7 @@ class StormResultParser(ResultParser):
         self.result_in_next_line = False
 
     def parse_result(self, result: Result, benchmark):
-        if hasattr(result,"not_supported") and result.not_supported: # TODO: remove left part of the and
+        if result.not_supported:
             return
         self.result_in_next_line = False
         log = result.command_results[0].output_log
