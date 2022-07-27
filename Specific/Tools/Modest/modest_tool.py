@@ -4,7 +4,7 @@ from os import path
 from Library.Tools.tool import Tool
 from Specific.Tools.Modest.modest_algorithm import ModestAlgorithm
 from Specific.Tools.Modest.modest_algorithm_type import ModestAlgorithmType
-from Specific.Helpers.modest import Modest
+from Specific.Tools.Modest.modest_helper import ModestHelper
 from Specific.Tools.Modest.modest_result_parser import ModestResultParser
 
 
@@ -24,12 +24,12 @@ class ModestTool(Tool):
         self.glrtdp = ModestAlgorithm(self, "modest glrtdp", ModestAlgorithmType.GENERAL_LABELED_REAL_TIME_DYNAMIC_PROGRAMMING)
 
     def check_setup_tool(self):
-        if not path.exists(Modest().tool_folder_path):
+        if not path.exists(ModestHelper().tool_folder_path):
             return False
-        if not path.exists(Modest().tool_path):
+        if not path.exists(ModestHelper().tool_path):
             return False
-        if path.exists(Modest().temp_file_path):
-            os.remove(Modest().temp_file_path)
+        if path.exists(ModestHelper().temp_file_path):
+            os.remove(ModestHelper().temp_file_path)
         return True
 
     def name(self):

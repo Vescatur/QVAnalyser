@@ -4,11 +4,9 @@ from Library.Benchmarks.benchmark_model import BenchmarkModel
 from Library.Benchmarks.benchmark_sequence import BenchmarkSequence
 from Library.Benchmarks.model_type import ModelType
 from Library.Benchmarks.property_type import PropertyType
-from Specific.Tools.Modest.modest_tool import ModestTool
-
 
 # noinspection DuplicatedCode
-from Specific.Tools.Storm.storm_tool import StormTool
+from Specific.Tools.Prism.prism_tool import PrismTool
 
 
 class TestBenchmark(Benchmark):
@@ -35,9 +33,9 @@ class TestBenchmark(Benchmark):
         self.algorithms.append(modestTool.confidence_interval)
         self.algorithms.append(modestTool.okamoto)
         self.algorithms.append(modestTool.adaptive)
-        self.algorithms.append(modestTool.glrtdp)'''
+        self.algorithms.append(modestTool.glrtdp)
         stormTool = StormTool()
-        '''self.algorithms.append(stormTool.top_jacobi)
+        self.algorithms.append(stormTool.top_jacobi)
         self.algorithms.append(stormTool.top_gmm_plus_plus)
         self.algorithms.append(stormTool.top_gauss_seidel)
         self.algorithms.append(stormTool.top_successive_over_relaxation)
@@ -52,7 +50,7 @@ class TestBenchmark(Benchmark):
         self.algorithms.append(stormTool.top_policy_iteration)
         self.algorithms.append(stormTool.top_linear_programming)
         self.algorithms.append(stormTool.top_value_iteration_to_policy_iteration)
-        self.algorithms.append(stormTool.abstract_refinement)'''
+        self.algorithms.append(stormTool.abstract_refinement)
         self.algorithms.append(stormTool.value_iteration_dd)
         self.algorithms.append(stormTool.policy_iteration_dd)
         self.algorithms.append(stormTool.jacobi_dd)
@@ -60,7 +58,36 @@ class TestBenchmark(Benchmark):
         self.algorithms.append(stormTool.value_iteration_dd_to_sparse)
         self.algorithms.append(stormTool.top_value_iteration_dd_to_sparse)
         self.algorithms.append(stormTool.value_iteration_hybrid)
-        self.algorithms.append(stormTool.top_value_iteration_hybrid)
+        self.algorithms.append(stormTool.top_value_iteration_hybrid)'''
+        prismTool = PrismTool()
+        self.algorithms.append(prismTool.value_iteration_sparse)
+
+        self.algorithms.append(prismTool.top_value_iteration_sparse)
+        self.algorithms.append(prismTool.value_iteration_explicit)
+        self.algorithms.append(prismTool.top_value_iteration_explicit)
+        self.algorithms.append(prismTool.value_iteration_hybrid)
+        self.algorithms.append(prismTool.top_value_iteration_hybrid)
+        self.algorithms.append(prismTool.value_iteration_mtbddd)
+        self.algorithms.append(prismTool.top_value_iteration_mtbddd)
+
+        self.algorithms.append(prismTool.jacobi_explicit)
+        self.algorithms.append(prismTool.gauss_seidel_explicit)
+        self.algorithms.append(prismTool.backwards_gauss_seidel_explicit)
+        self.algorithms.append(prismTool.jacobi_with_over_relaxation_explicit)
+        self.algorithms.append(prismTool.succesive_over_relaxation_explicit)
+        self.algorithms.append(prismTool.backwards_succesive_over_relaxation_explicit)
+
+        self.algorithms.append(prismTool.confidence_interval)
+        self.algorithms.append(prismTool.asymptotic_confidence_interval)
+        self.algorithms.append(prismTool.apmc)
+
+        self.algorithms.append(prismTool.policy_iteration_explicit)
+        self.algorithms.append(prismTool.modified_policy_iteration_explicit)
+
+        self.algorithms.append(prismTool.stochastic_games)
+        self.algorithms.append(prismTool.digital_clocks)
+        self.algorithms.append(prismTool.backwards_reachability)
+
 
 
     def add_leader_sync_1(self):

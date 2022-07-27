@@ -117,7 +117,7 @@ def generate_code_for_file(short_name, file, model_type, original, notes, path, 
         parameter_argument = generate_parameter_argument(parameters)
         for property_data in benchmark_model_data["properties"]:
             match property_data["type"]:
-                case "exp-reward" | "exp-time" | "exp-reward" | "prob-reach":
+                case "exp-reward" | "exp-time" | "exp-steps" | "prob-reach":
                     property_type_argument = to_property_type_argument(property_data["type"])
                     add_line(tab * 2 + "sequence = BenchmarkSequence(model, \"" + property_data[
                         "name"] + "\", " + property_type_argument + ", " + parameter_argument + ")")

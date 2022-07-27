@@ -13,15 +13,16 @@ class BenchmarkResultParser(object):
         for sequence in self.benchmark.benchmark_sequences:
             for instance in sequence.benchmark_instances:
                 for result in instance.results:
-                    self.parse_result(result)
+                    if not result.threw_error:
+                        self.parse_result(result, self.benchmark)
 
-    def parse_result(self, result: Result):
+    def parse_result(self, result: Result,benchmark: Benchmark):
         tool_for_result = None
         for tool in self.benchmark.tools:
             if tool.name() == result.tool_name:
                 tool_for_result = tool
                 break
         if tool_for_result is not None:
-            tool_for_result.result_parser.parse_result(result)
+            tool_for_result.result_parser.parse_result(result, benchmark)
         else:
             raise Exception("Could not find tool of result. The tool name is " + str(result.tool_name))
