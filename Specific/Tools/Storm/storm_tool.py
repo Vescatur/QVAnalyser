@@ -12,6 +12,43 @@ class StormTool(Tool):
 
     def __init__(self):
         super().__init__(StormResultParser())
+
+        self.value_iteration_sparse = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.SPARSE_MATRICES, False, False)
+        self.top_value_iteration_sparse = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.SPARSE_MATRICES, True, False)
+        self.bi_value_iteration_sparse = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.SPARSE_MATRICES, False, True)
+        self.bi_top_value_iteration_sparse = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.SPARSE_MATRICES, True, True)
+
+        self.value_iteration_dd_to_sparse = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.DECISION_DIAGRAM_TO_SPARSE_MATRICES, False, False)
+        self.top_value_iteration_dd_to_sparse = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.DECISION_DIAGRAM_TO_SPARSE_MATRICES, True, False)
+        self.bi_value_iteration_dd_to_sparse = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.DECISION_DIAGRAM_TO_SPARSE_MATRICES, False, True)
+        self.bi_top_value_iteration_dd_to_sparse = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.DECISION_DIAGRAM_TO_SPARSE_MATRICES, True, True)
+
+        self.value_iteration_hybrid = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.HYBRID, False, False)
+        self.top_value_iteration_hybrid = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.HYBRID, True, False)
+        self.bi_value_iteration_hybrid = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.HYBRID, False, True)
+        self.bi_top_value_iteration_hybrid = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.HYBRID, True, True)
+
+        self.value_iteration_dd = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.DECISION_DIAGRAM, False, False)
+        self.bi_value_iteration_dd = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION, StormEngineType.DECISION_DIAGRAM, False, True)
+
+        self.gmm_sparse = StormAlgorithm(self, StormAlgorithmType.GMM_PLUS_PLUS, StormEngineType.SPARSE_MATRICES, False, False)
+        self.jacobi_sparse = StormAlgorithm(self, StormAlgorithmType.JACOBI, StormEngineType.SPARSE_MATRICES, False, False)
+        self.gauss_seidel_sparse = StormAlgorithm(self, StormAlgorithmType.GAUSS_SEIDEL, StormEngineType.SPARSE_MATRICES, False, False)
+        self.successive_over_relaxation_sparse = StormAlgorithm(self, StormAlgorithmType.SUCCESSIVE_OVER_RELAXATION, StormEngineType.SPARSE_MATRICES, False, False)
+        self.walkerchae_sparse = StormAlgorithm(self, StormAlgorithmType.WALKERCHAE, StormEngineType.SPARSE_MATRICES, False, False)
+        self.sound_value_iteration_sparse = StormAlgorithm(self, StormAlgorithmType.SOUND_VALUE_ITERATION, StormEngineType.SPARSE_MATRICES, False, False)
+        self.optimistic_value_iteration_sparse = StormAlgorithm(self, StormAlgorithmType.OPTIMISTIC_VALUE_ITERATION, StormEngineType.SPARSE_MATRICES, False, False)
+        self.interval_iteration_sparse = StormAlgorithm(self, StormAlgorithmType.INTERVAL_ITERATION, StormEngineType.SPARSE_MATRICES, False, False)
+        self.rational_search_sparse = StormAlgorithm(self, StormAlgorithmType.RATIONAL_SEARCH, StormEngineType.SPARSE_MATRICES, False, False)
+        self.eigen_sparse = StormAlgorithm(self, StormAlgorithmType.EIGEN, StormEngineType.SPARSE_MATRICES, False, False)
+        self.elimination_sparse = StormAlgorithm(self, StormAlgorithmType.ELIMINATION, StormEngineType.SPARSE_MATRICES, False, False)
+        self.policy_iteration_sparse = StormAlgorithm(self, StormAlgorithmType.POLICY_ITERATION, StormEngineType.SPARSE_MATRICES, False, False)
+        self.linear_programming_sparse = StormAlgorithm(self, StormAlgorithmType.LINEAR_PROGRAMMING, StormEngineType.SPARSE_MATRICES, False, False)
+        self.value_iteration_to_policy_iteration_sparse = StormAlgorithm(self, StormAlgorithmType.VALUE_ITERATION_TO_POLICY_ITERATION, StormEngineType.SPARSE_MATRICES, False, False)
+
+
+        self.abstract_refinement = StormAlgorithm(self, StormAlgorithmType.ABSTRACTION_REFINEMENT, StormEngineType.ABSTRACTION_REFINEMENT, False, False)
+        '''
         self.value_iteration_dd = StormAlgorithm(self, "storm value iteration dd",
                                                   StormAlgorithmType.VALUE_ITERATION, StormEngineType.DECISION_DIAGRAM,
                                                   False)
@@ -60,9 +97,9 @@ class StormTool(Tool):
         self.acyclic = StormAlgorithm(self, "storm acyclic sparse", StormAlgorithmType.ACYCLIC, StormEngineType.SPARSE_MATRICES, False)
         # can only handle acyclic models
 
-        self.abstract_refinement = StormAlgorithm(self, "storm abstract refinement", StormAlgorithmType.ABSTRACTION_REFINEMENT, StormEngineType.ABSTRACTION_REFINEMENT, False)
         # self.exploration = StormAlgorithm(self, "storm exploration", StormAlgorithmType.EXPLORATION, StormEngineType.EXPLORATION, False)
-        # only for prism files
+        # only for prism files'''
+        self.abstract_refinement = StormAlgorithm(self, StormAlgorithmType.ABSTRACTION_REFINEMENT, StormEngineType.ABSTRACTION_REFINEMENT, False, False)
 
     def check_setup_tool(self):
         if not path.exists(StormHelper().tool_folder_path):

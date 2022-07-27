@@ -8,10 +8,11 @@ from Specific.Tools.Storm.storm_engine_type import StormEngineType
 
 class StormExecution(Execution):
 
-    def __init__(self, instance: BenchmarkInstance, result: Result, algorithm_type: StormAlgorithmType, engine_type: StormEngineType, use_topological: bool):
+    def __init__(self, instance: BenchmarkInstance, result: Result, algorithm_type: StormAlgorithmType, engine_type: StormEngineType, use_topological: bool, use_bisimulation: bool):
         self.algorithm_type = algorithm_type
         self.engine_type = engine_type
         self.use_topological = use_topological
+        self.use_bisimulation = use_bisimulation
         super().__init__(instance, result)
 
     def run(self):
@@ -29,11 +30,14 @@ class StormExecution(Execution):
         native_argument = self.generate_native_argument()
         topological_minmax_argument = self.generate_topological_minmax_argument()
         topological_eqsolver_argument = self.generate_topological_eqsolver_argument()
+        bisimulation = ""
+        if self.use_bisimulation:
+            bisimulation = "--bisimulation"
         exact = ""
         if self.algorithm_type == StormAlgorithmType.RATIONAL_SEARCH:
             exact = "--exact"
-        command = "{} --jani {} --janiproperty {} {} {} {} {} {} {} {} {} --verbose --precision 1e-6" \
-            .format(StormHelper().tool_path, file_path, property_name, parameters_argument, engine_argument, eqsolver_argument, topological_eqsolver_argument, native_argument, minmax_argument, topological_minmax_argument, exact)
+        command = "{} --jani {} --janiproperty {} {} {} {} {} {} {} {} {} {} --verbose --precision 1e-6" \
+            .format(StormHelper().tool_path, file_path, property_name, parameters_argument, engine_argument, eqsolver_argument, topological_eqsolver_argument, native_argument, minmax_argument, topological_minmax_argument, exact,bisimulation)
         return command
 
     def generate_eqsolver_argument(self):

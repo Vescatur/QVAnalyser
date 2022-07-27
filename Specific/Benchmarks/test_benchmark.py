@@ -7,6 +7,7 @@ from Library.Benchmarks.property_type import PropertyType
 
 # noinspection DuplicatedCode
 from Specific.Tools.Prism.prism_tool import PrismTool
+from Specific.Tools.Storm.storm_tool import StormTool
 
 
 class TestBenchmark(Benchmark):
@@ -33,32 +34,43 @@ class TestBenchmark(Benchmark):
         self.algorithms.append(modestTool.confidence_interval)
         self.algorithms.append(modestTool.okamoto)
         self.algorithms.append(modestTool.adaptive)
-        self.algorithms.append(modestTool.glrtdp)
+        self.algorithms.append(modestTool.glrtdp)'''
         stormTool = StormTool()
-        self.algorithms.append(stormTool.top_jacobi)
-        self.algorithms.append(stormTool.top_gmm_plus_plus)
-        self.algorithms.append(stormTool.top_gauss_seidel)
-        self.algorithms.append(stormTool.top_successive_over_relaxation)
-        self.algorithms.append(stormTool.top_walkerchae)
-        self.algorithms.append(stormTool.top_value_iteration)
-        self.algorithms.append(stormTool.top_interval_iteration)
-        self.algorithms.append(stormTool.top_sound_value_iteration)
-        self.algorithms.append(stormTool.top_optimistic_value_iteration)
-        self.algorithms.append(stormTool.top_rational_search)
-        self.algorithms.append(stormTool.top_eigen)
-        self.algorithms.append(stormTool.top_elimination)
-        self.algorithms.append(stormTool.top_policy_iteration)
-        self.algorithms.append(stormTool.top_linear_programming)
-        self.algorithms.append(stormTool.top_value_iteration_to_policy_iteration)
-        self.algorithms.append(stormTool.abstract_refinement)
-        self.algorithms.append(stormTool.value_iteration_dd)
-        self.algorithms.append(stormTool.policy_iteration_dd)
-        self.algorithms.append(stormTool.jacobi_dd)
-        self.algorithms.append(stormTool.rational_search_dd)
+        self.algorithms.append(stormTool.value_iteration_sparse)
+        self.algorithms.append(stormTool.top_value_iteration_sparse)
+        self.algorithms.append(stormTool.bi_value_iteration_sparse)
+        self.algorithms.append(stormTool.bi_top_value_iteration_sparse)
+
         self.algorithms.append(stormTool.value_iteration_dd_to_sparse)
         self.algorithms.append(stormTool.top_value_iteration_dd_to_sparse)
+        self.algorithms.append(stormTool.bi_value_iteration_dd_to_sparse)
+        self.algorithms.append(stormTool.bi_top_value_iteration_dd_to_sparse)
+
         self.algorithms.append(stormTool.value_iteration_hybrid)
-        self.algorithms.append(stormTool.top_value_iteration_hybrid)'''
+        self.algorithms.append(stormTool.top_value_iteration_hybrid)
+        self.algorithms.append(stormTool.bi_value_iteration_hybrid)
+        self.algorithms.append(stormTool.bi_top_value_iteration_hybrid)
+
+        self.algorithms.append(stormTool.value_iteration_dd)
+        self.algorithms.append(stormTool.bi_value_iteration_dd)
+
+        self.algorithms.append(stormTool.gmm_sparse)
+        self.algorithms.append(stormTool.jacobi_sparse)
+        self.algorithms.append(stormTool.gauss_seidel_sparse)
+        self.algorithms.append(stormTool.successive_over_relaxation_sparse)
+        self.algorithms.append(stormTool.walkerchae_sparse)
+        self.algorithms.append(stormTool.sound_value_iteration_sparse)
+        self.algorithms.append(stormTool.optimistic_value_iteration_sparse)
+        self.algorithms.append(stormTool.interval_iteration_sparse)
+        self.algorithms.append(stormTool.rational_search_sparse)
+        self.algorithms.append(stormTool.eigen_sparse)
+        self.algorithms.append(stormTool.elimination_sparse)
+        self.algorithms.append(stormTool.policy_iteration_sparse)
+        self.algorithms.append(stormTool.linear_programming_sparse)
+        self.algorithms.append(stormTool.value_iteration_to_policy_iteration_sparse)
+
+        self.algorithms.append(stormTool.abstract_refinement)
+        '''
         prismTool = PrismTool()
         self.algorithms.append(prismTool.value_iteration_sparse)
 
@@ -86,7 +98,7 @@ class TestBenchmark(Benchmark):
 
         self.algorithms.append(prismTool.stochastic_games)
         self.algorithms.append(prismTool.digital_clocks)
-        self.algorithms.append(prismTool.backwards_reachability)
+        self.algorithms.append(prismTool.backwards_reachability)'''
 
 
 

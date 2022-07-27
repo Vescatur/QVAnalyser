@@ -5,6 +5,7 @@ from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Benchmarks.model_type import ModelType
 from Library.Benchmarks.property_type import PropertyType
 from Specific.Tools.Modest.modest_tool import ModestTool
+from Specific.Tools.Prism.prism_tool import PrismTool
 from Specific.Tools.Storm.storm_tool import StormTool
 
 # This class has been generated using _GenerateBenchmarkFromQVBS.py
@@ -17,7 +18,83 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
 
         modestTool = ModestTool()
         self.tools.append(modestTool)
+        self.algorithms.append(modestTool.value_iteration)
         self.algorithms.append(modestTool.interval_iteration)
+        self.algorithms.append(modestTool.sequential_interval_iteration)
+        self.algorithms.append(modestTool.sound_value_iteration)
+        self.algorithms.append(modestTool.optimistic_value_iteration)
+        self.algorithms.append(modestTool.linear_programming)
+
+        self.algorithms.append(modestTool.confidence_interval)
+        self.algorithms.append(modestTool.okamoto)
+        self.algorithms.append(modestTool.adaptive)
+
+        self.algorithms.append(modestTool.glrtdp)
+
+        stormTool = StormTool()
+        self.algorithms.append(stormTool.value_iteration_sparse)
+        self.algorithms.append(stormTool.top_value_iteration_sparse)
+        self.algorithms.append(stormTool.bi_value_iteration_sparse)
+        self.algorithms.append(stormTool.bi_top_value_iteration_sparse)
+
+        self.algorithms.append(stormTool.value_iteration_dd_to_sparse)
+        self.algorithms.append(stormTool.top_value_iteration_dd_to_sparse)
+        self.algorithms.append(stormTool.bi_value_iteration_dd_to_sparse)
+        self.algorithms.append(stormTool.bi_top_value_iteration_dd_to_sparse)
+
+        self.algorithms.append(stormTool.value_iteration_hybrid)
+        self.algorithms.append(stormTool.top_value_iteration_hybrid)
+        self.algorithms.append(stormTool.bi_value_iteration_hybrid)
+        self.algorithms.append(stormTool.bi_top_value_iteration_hybrid)
+
+        self.algorithms.append(stormTool.value_iteration_dd)
+        self.algorithms.append(stormTool.bi_value_iteration_dd)
+
+        self.algorithms.append(stormTool.gmm_sparse)
+        self.algorithms.append(stormTool.jacobi_sparse)
+        self.algorithms.append(stormTool.gauss_seidel_sparse)
+        self.algorithms.append(stormTool.successive_over_relaxation_sparse)
+        self.algorithms.append(stormTool.walkerchae_sparse)
+        self.algorithms.append(stormTool.sound_value_iteration_sparse)
+        self.algorithms.append(stormTool.optimistic_value_iteration_sparse)
+        self.algorithms.append(stormTool.interval_iteration_sparse)
+        self.algorithms.append(stormTool.rational_search_sparse)
+        self.algorithms.append(stormTool.eigen_sparse)
+        self.algorithms.append(stormTool.elimination_sparse)
+        self.algorithms.append(stormTool.policy_iteration_sparse)
+        self.algorithms.append(stormTool.linear_programming_sparse)
+        self.algorithms.append(stormTool.value_iteration_to_policy_iteration_sparse)
+
+        self.algorithms.append(stormTool.abstract_refinement)
+
+        prismTool = PrismTool()
+        self.algorithms.append(prismTool.value_iteration_sparse)
+
+        self.algorithms.append(prismTool.top_value_iteration_sparse)
+        self.algorithms.append(prismTool.value_iteration_explicit)
+        self.algorithms.append(prismTool.top_value_iteration_explicit)
+        self.algorithms.append(prismTool.value_iteration_hybrid)
+        self.algorithms.append(prismTool.top_value_iteration_hybrid)
+        self.algorithms.append(prismTool.value_iteration_mtbddd)
+        self.algorithms.append(prismTool.top_value_iteration_mtbddd)
+
+        self.algorithms.append(prismTool.jacobi_explicit)
+        self.algorithms.append(prismTool.gauss_seidel_explicit)
+        self.algorithms.append(prismTool.backwards_gauss_seidel_explicit)
+        self.algorithms.append(prismTool.jacobi_with_over_relaxation_explicit)
+        self.algorithms.append(prismTool.succesive_over_relaxation_explicit)
+        self.algorithms.append(prismTool.backwards_succesive_over_relaxation_explicit)
+
+        self.algorithms.append(prismTool.confidence_interval)
+        self.algorithms.append(prismTool.asymptotic_confidence_interval)
+        self.algorithms.append(prismTool.apmc)
+
+        self.algorithms.append(prismTool.policy_iteration_explicit)
+        self.algorithms.append(prismTool.modified_policy_iteration_explicit)
+
+        self.algorithms.append(prismTool.stochastic_games)
+        self.algorithms.append(prismTool.digital_clocks)
+        self.algorithms.append(prismTool.backwards_reachability)
     
     def add_benchmark_instances(self):
         self.add_embedded_actuators()
@@ -42,6 +119,7 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
         self.add_egl_unfairA()
         self.add_egl_unfairB()
         self.add_haddad_monmege_target()
+        self.add_haddad_monmege_exp_steps()
         self.add_herman_steps()
         self.add_leader_sync_eventually_elected()
         self.add_leader_sync_time()
@@ -120,6 +198,7 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
         self.add_rabin_live()
         self.add_random_predicates_goal()
         self.add_rectangle_tireworld_goal()
+        self.add_resource_gathering_expsteps()
         self.add_tireworld_goal()
         self.add_triangle_tireworld_goal()
         self.add_wlan_collisions()
@@ -271,33 +350,38 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
         sequence = BenchmarkSequence(model, "target", PropertyType.REACHABILITY, {"N": 20, "p": 0.7})
         BenchmarkInstance(sequence, {})
     
+    def add_haddad_monmege_exp_steps(self):
+        model = BenchmarkModel(self, "dtmc/haddad-monmege/haddad-monmege.jani","dtmc/haddad-monmege/haddad-monmege.prctl","dtmc/haddad-monmege/haddad-monmege.pm", ModelType.DTMC,"PRISM","adversarial example for value iteration")
+        sequence = BenchmarkSequence(model, "exp_steps", PropertyType.EXPECTED_STEPS, {"N": 20, "p": 0.7})
+        BenchmarkInstance(sequence, {})
+    
     def add_herman_steps(self):
-        model = BenchmarkModel(self, "dtmc/herman/herman.11.jani","dtmc/herman/herman.props","dtmc/herman/herman.11.prism", ModelType.DTMC,"PRISM","PRISM benchmark")
+        model = BenchmarkModel(self, "dtmc/herman/herman.13.jani","dtmc/herman/herman.props","dtmc/herman/herman.13.prism", ModelType.DTMC,"PRISM","PRISM benchmark")
         sequence = BenchmarkSequence(model, "steps", PropertyType.EXPECTED_REWARD, {})
         BenchmarkInstance(sequence, {})
     
     def add_leader_sync_eventually_elected(self):
-        model = BenchmarkModel(self, "dtmc/leader_sync/leader_sync.4-4.jani","dtmc/leader_sync/leader_sync.props","dtmc/leader_sync/leader_sync.4-4.prism", ModelType.DTMC,"PRISM","PRISM benchmark")
+        model = BenchmarkModel(self, "dtmc/leader_sync/leader_sync.5-4.jani","dtmc/leader_sync/leader_sync.props","dtmc/leader_sync/leader_sync.5-4.prism", ModelType.DTMC,"PRISM","PRISM benchmark")
         sequence = BenchmarkSequence(model, "eventually_elected", PropertyType.REACHABILITY, {})
         BenchmarkInstance(sequence, {})
     
     def add_leader_sync_time(self):
-        model = BenchmarkModel(self, "dtmc/leader_sync/leader_sync.5-4.jani","dtmc/leader_sync/leader_sync.props","dtmc/leader_sync/leader_sync.5-4.prism", ModelType.DTMC,"PRISM","PRISM benchmark")
+        model = BenchmarkModel(self, "dtmc/leader_sync/leader_sync.4-3.jani","dtmc/leader_sync/leader_sync.props","dtmc/leader_sync/leader_sync.4-3.prism", ModelType.DTMC,"PRISM","PRISM benchmark")
         sequence = BenchmarkSequence(model, "time", PropertyType.EXPECTED_REWARD, {})
         BenchmarkInstance(sequence, {})
     
     def add_nand_reliable(self):
         model = BenchmarkModel(self, "dtmc/nand/nand.jani","dtmc/nand/nand.props","dtmc/nand/nand.prism", ModelType.DTMC,"PRISM","PRISM benchmark")
-        sequence = BenchmarkSequence(model, "reliable", PropertyType.REACHABILITY, {"N": 40, "K": 1})
+        sequence = BenchmarkSequence(model, "reliable", PropertyType.REACHABILITY, {"N": 60, "K": 1})
         BenchmarkInstance(sequence, {})
     
     def add_oscillators_time_to_synch(self):
-        model = BenchmarkModel(self, "dtmc/oscillators/oscillators.7-10-0.1-1.jani","dtmc/oscillators/oscillators.props","dtmc/oscillators/oscillators.7-10-0.1-1.prism", ModelType.DTMC,"PRISM","large fan-out from initial state")
+        model = BenchmarkModel(self, "dtmc/oscillators/oscillators.6-10-0.1-1.jani","dtmc/oscillators/oscillators.props","dtmc/oscillators/oscillators.6-10-0.1-1.prism", ModelType.DTMC,"PRISM","large fan-out from initial state")
         sequence = BenchmarkSequence(model, "time_to_synch", PropertyType.EXPECTED_REWARD, {"mu": 0.1, "lambda": 1.0})
         BenchmarkInstance(sequence, {})
     
     def add_oscillators_power_consumption(self):
-        model = BenchmarkModel(self, "dtmc/oscillators/oscillators.8-10-0.1-1.jani","dtmc/oscillators/oscillators.props","dtmc/oscillators/oscillators.8-10-0.1-1.prism", ModelType.DTMC,"PRISM","large fan-out from initial state")
+        model = BenchmarkModel(self, "dtmc/oscillators/oscillators.6-10-0.1-1.jani","dtmc/oscillators/oscillators.props","dtmc/oscillators/oscillators.6-10-0.1-1.prism", ModelType.DTMC,"PRISM","large fan-out from initial state")
         sequence = BenchmarkSequence(model, "power_consumption", PropertyType.EXPECTED_REWARD, {"mu": 0.1, "lambda": 1.0})
         BenchmarkInstance(sequence, {})
     
@@ -308,56 +392,56 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
     
     def add_breakdown_queues_Min(self):
         model = BenchmarkModel(self, "ma/breakdown-queues/breakdown-queues.jani","","", ModelType.MA,"Modest","")
-        sequence = BenchmarkSequence(model, "Min", PropertyType.REACHABILITY, {"K": 64})
+        sequence = BenchmarkSequence(model, "Min", PropertyType.REACHABILITY, {"K": 32})
         BenchmarkInstance(sequence, {})
     
     def add_breakdown_queues_Max(self):
         model = BenchmarkModel(self, "ma/breakdown-queues/breakdown-queues.jani","","", ModelType.MA,"Modest","")
-        sequence = BenchmarkSequence(model, "Max", PropertyType.REACHABILITY, {"K": 16})
+        sequence = BenchmarkSequence(model, "Max", PropertyType.REACHABILITY, {"K": 8})
         BenchmarkInstance(sequence, {})
     
     def add_dpm_PminQueuesFull(self):
         model = BenchmarkModel(self, "ma/dpm/dpm.jani","","", ModelType.MA,"Modest","scalable nondeterministic queueing system")
-        sequence = BenchmarkSequence(model, "PminQueuesFull", PropertyType.REACHABILITY, {"N": 6, "C": 4, "TIME_BOUND": 5})
+        sequence = BenchmarkSequence(model, "PminQueuesFull", PropertyType.REACHABILITY, {"N": 6, "C": 8, "TIME_BOUND": 5})
         BenchmarkInstance(sequence, {})
     
     def add_dpm_PmaxQueuesFull(self):
         model = BenchmarkModel(self, "ma/dpm/dpm.jani","","", ModelType.MA,"Modest","scalable nondeterministic queueing system")
-        sequence = BenchmarkSequence(model, "PmaxQueuesFull", PropertyType.REACHABILITY, {"N": 4, "C": 4, "TIME_BOUND": 25})
+        sequence = BenchmarkSequence(model, "PmaxQueuesFull", PropertyType.REACHABILITY, {"N": 8, "C": 6, "TIME_BOUND": 5})
         BenchmarkInstance(sequence, {})
     
     def add_dpm_PminQueue1Full(self):
         model = BenchmarkModel(self, "ma/dpm/dpm.jani","","", ModelType.MA,"Modest","scalable nondeterministic queueing system")
-        sequence = BenchmarkSequence(model, "PminQueue1Full", PropertyType.REACHABILITY, {"N": 6, "C": 8, "TIME_BOUND": 5})
+        sequence = BenchmarkSequence(model, "PminQueue1Full", PropertyType.REACHABILITY, {"N": 6, "C": 4, "TIME_BOUND": 5})
         BenchmarkInstance(sequence, {})
     
     def add_dpm_PmaxQueue1Full(self):
         model = BenchmarkModel(self, "ma/dpm/dpm.jani","","", ModelType.MA,"Modest","scalable nondeterministic queueing system")
-        sequence = BenchmarkSequence(model, "PmaxQueue1Full", PropertyType.REACHABILITY, {"N": 8, "C": 6, "TIME_BOUND": 5})
+        sequence = BenchmarkSequence(model, "PmaxQueue1Full", PropertyType.REACHABILITY, {"N": 4, "C": 8, "TIME_BOUND": 5})
         BenchmarkInstance(sequence, {})
     
     def add_dpm_TminQueuesFull(self):
         model = BenchmarkModel(self, "ma/dpm/dpm.jani","","", ModelType.MA,"Modest","scalable nondeterministic queueing system")
-        sequence = BenchmarkSequence(model, "TminQueuesFull", PropertyType.EXPECTED_TIME, {"N": 6, "C": 4, "TIME_BOUND": 5})
+        sequence = BenchmarkSequence(model, "TminQueuesFull", PropertyType.EXPECTED_TIME, {"N": 8, "C": 4, "TIME_BOUND": 5})
         BenchmarkInstance(sequence, {})
     
     def add_erlang_PminReach(self):
         model = BenchmarkModel(self, "ma/erlang/erlang.jani","","", ModelType.MA,"Modest","scalable sanity check model")
-        sequence = BenchmarkSequence(model, "PminReach", PropertyType.REACHABILITY, {"K": 5000, "R": 100, "TIME_BOUND": 5})
+        sequence = BenchmarkSequence(model, "PminReach", PropertyType.REACHABILITY, {"K": 5000, "R": 100, "TIME_BOUND": 50})
         BenchmarkInstance(sequence, {})
     
     def add_erlang_TminReach(self):
         model = BenchmarkModel(self, "ma/erlang/erlang.jani","","", ModelType.MA,"Modest","scalable sanity check model")
-        sequence = BenchmarkSequence(model, "TminReach", PropertyType.EXPECTED_TIME, {"K": 10, "R": 10, "TIME_BOUND": 5})
+        sequence = BenchmarkSequence(model, "TminReach", PropertyType.EXPECTED_TIME, {"K": 5000, "R": 100, "TIME_BOUND": 5})
         BenchmarkInstance(sequence, {})
     
     def add_flexible_manufacturing_M2Fail_E(self):
-        model = BenchmarkModel(self, "ma/flexible-manufacturing/flexible-manufacturing.9.jani","","", ModelType.MA,"GreatSPN","small symbolic representation")
+        model = BenchmarkModel(self, "ma/flexible-manufacturing/flexible-manufacturing.21.jani","","", ModelType.MA,"GreatSPN","small symbolic representation")
         sequence = BenchmarkSequence(model, "M2Fail_E", PropertyType.EXPECTED_TIME, {"T": 1})
         BenchmarkInstance(sequence, {})
     
     def add_flexible_manufacturing_M3Fail_E(self):
-        model = BenchmarkModel(self, "ma/flexible-manufacturing/flexible-manufacturing.9.jani","","", ModelType.MA,"GreatSPN","small symbolic representation")
+        model = BenchmarkModel(self, "ma/flexible-manufacturing/flexible-manufacturing.21.jani","","", ModelType.MA,"GreatSPN","small symbolic representation")
         sequence = BenchmarkSequence(model, "M3Fail_E", PropertyType.EXPECTED_TIME, {"T": 1})
         BenchmarkInstance(sequence, {})
     
@@ -373,11 +457,11 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
     
     def add_ftwc_TimeMax(self):
         model = BenchmarkModel(self, "ma/ftwc/ftwc.jani","","", ModelType.MA,"Modest","fault-tolerant queueing system")
-        sequence = BenchmarkSequence(model, "TimeMax", PropertyType.EXPECTED_TIME, {"N": 4, "TIME_BOUND": 5})
+        sequence = BenchmarkSequence(model, "TimeMax", PropertyType.EXPECTED_TIME, {"N": 8, "TIME_BOUND": 5})
         BenchmarkInstance(sequence, {})
     
     def add_jobs_completiontime(self):
-        model = BenchmarkModel(self, "ma/jobs/jobs.10-3.jani","","", ModelType.MA,"PRISM-MA","stochastic scheduling problem")
+        model = BenchmarkModel(self, "ma/jobs/jobs.15-3.jani","","", ModelType.MA,"PRISM-MA","stochastic scheduling problem")
         sequence = BenchmarkSequence(model, "completiontime", PropertyType.EXPECTED_TIME, {})
         BenchmarkInstance(sequence, {})
     
@@ -661,38 +745,43 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
         sequence = BenchmarkSequence(model, "goal", PropertyType.REACHABILITY, {})
         BenchmarkInstance(sequence, {})
     
+    def add_resource_gathering_expsteps(self):
+        model = BenchmarkModel(self, "mdp/resource-gathering/resource-gathering.jani","mdp/resource-gathering/resource-gathering.prctl","mdp/resource-gathering/resource-gathering.pm", ModelType.MDP,"PRISM","")
+        sequence = BenchmarkSequence(model, "expsteps", PropertyType.EXPECTED_STEPS, {"B": 1000000, "GOLD_TO_COLLECT": 0, "GEM_TO_COLLECT": 0})
+        BenchmarkInstance(sequence, {})
+    
     def add_tireworld_goal(self):
-        model = BenchmarkModel(self, "mdp/tireworld/tireworld.25.jani","","", ModelType.MDP,"PPDDL","IPPC 2006 benchmark")
+        model = BenchmarkModel(self, "mdp/tireworld/tireworld.17.jani","","", ModelType.MDP,"PPDDL","IPPC 2006 benchmark")
         sequence = BenchmarkSequence(model, "goal", PropertyType.REACHABILITY, {})
         BenchmarkInstance(sequence, {})
     
     def add_triangle_tireworld_goal(self):
-        model = BenchmarkModel(self, "mdp/triangle-tireworld/triangle-tireworld.9.jani","","", ModelType.MDP,"PPDDL","IPPC 2008 benchmark")
+        model = BenchmarkModel(self, "mdp/triangle-tireworld/triangle-tireworld.1681.jani","","", ModelType.MDP,"PPDDL","IPPC 2008 benchmark")
         sequence = BenchmarkSequence(model, "goal", PropertyType.REACHABILITY, {})
         BenchmarkInstance(sequence, {})
     
     def add_wlan_collisions(self):
-        model = BenchmarkModel(self, "mdp/wlan/wlan.2.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.2.prism", ModelType.MDP,"PRISM","PRISM benchmark")
+        model = BenchmarkModel(self, "mdp/wlan/wlan.0.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.0.prism", ModelType.MDP,"PRISM","PRISM benchmark")
         sequence = BenchmarkSequence(model, "collisions", PropertyType.REACHABILITY, {"COL": 0})
         BenchmarkInstance(sequence, {})
     
     def add_wlan_cost_max(self):
-        model = BenchmarkModel(self, "mdp/wlan/wlan.0.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.0.prism", ModelType.MDP,"PRISM","PRISM benchmark")
+        model = BenchmarkModel(self, "mdp/wlan/wlan.4.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.4.prism", ModelType.MDP,"PRISM","PRISM benchmark")
         sequence = BenchmarkSequence(model, "cost_max", PropertyType.EXPECTED_REWARD, {"COL": 0})
         BenchmarkInstance(sequence, {})
     
     def add_wlan_cost_min(self):
-        model = BenchmarkModel(self, "mdp/wlan/wlan.4.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.4.prism", ModelType.MDP,"PRISM","PRISM benchmark")
+        model = BenchmarkModel(self, "mdp/wlan/wlan.2.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.2.prism", ModelType.MDP,"PRISM","PRISM benchmark")
         sequence = BenchmarkSequence(model, "cost_min", PropertyType.EXPECTED_REWARD, {"COL": 0})
         BenchmarkInstance(sequence, {})
     
     def add_wlan_num_collisions(self):
-        model = BenchmarkModel(self, "mdp/wlan/wlan.2.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.2.prism", ModelType.MDP,"PRISM","PRISM benchmark")
+        model = BenchmarkModel(self, "mdp/wlan/wlan.1.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.1.prism", ModelType.MDP,"PRISM","PRISM benchmark")
         sequence = BenchmarkSequence(model, "num_collisions", PropertyType.EXPECTED_REWARD, {"COL": 0})
         BenchmarkInstance(sequence, {})
     
     def add_wlan_sent(self):
-        model = BenchmarkModel(self, "mdp/wlan/wlan.1.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.1.prism", ModelType.MDP,"PRISM","PRISM benchmark")
+        model = BenchmarkModel(self, "mdp/wlan/wlan.6.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.6.prism", ModelType.MDP,"PRISM","PRISM benchmark")
         sequence = BenchmarkSequence(model, "sent", PropertyType.REACHABILITY, {"COL": 0})
         BenchmarkInstance(sequence, {})
     
@@ -702,28 +791,28 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
         BenchmarkInstance(sequence, {})
     
     def add_wlan_time_min(self):
-        model = BenchmarkModel(self, "mdp/wlan/wlan.6.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.6.prism", ModelType.MDP,"PRISM","PRISM benchmark")
+        model = BenchmarkModel(self, "mdp/wlan/wlan.2.jani","mdp/wlan/wlan.props","mdp/wlan/wlan.2.prism", ModelType.MDP,"PRISM","PRISM benchmark")
         sequence = BenchmarkSequence(model, "time_min", PropertyType.EXPECTED_REWARD, {"COL": 0})
         BenchmarkInstance(sequence, {})
     
     def add_wlan_dl_deadline(self):
-        model = BenchmarkModel(self, "mdp/wlan_dl/wlan_dl.2.jani","mdp/wlan_dl/wlan_dl.props","mdp/wlan_dl/wlan_dl.2.prism", ModelType.MDP,"PRISM","PRISM benchmark")
+        model = BenchmarkModel(self, "mdp/wlan_dl/wlan_dl.1.jani","mdp/wlan_dl/wlan_dl.props","mdp/wlan_dl/wlan_dl.1.prism", ModelType.MDP,"PRISM","PRISM benchmark")
         sequence = BenchmarkSequence(model, "deadline", PropertyType.REACHABILITY, {"deadline": 80})
         BenchmarkInstance(sequence, {})
     
     def add_zenotravel_goal(self):
-        model = BenchmarkModel(self, "mdp/zenotravel/zenotravel.6-5-3.jani","","", ModelType.MDP,"PPDDL","IPPC 2008 benchmark")
+        model = BenchmarkModel(self, "mdp/zenotravel/zenotravel.4-2-2.jani","","", ModelType.MDP,"PPDDL","IPPC 2008 benchmark")
         sequence = BenchmarkSequence(model, "goal", PropertyType.REACHABILITY, {})
         BenchmarkInstance(sequence, {})
     
     def add_zeroconf_correct_max(self):
         model = BenchmarkModel(self, "mdp/zeroconf/zeroconf.jani","mdp/zeroconf/zeroconf.props","mdp/zeroconf/zeroconf.prism", ModelType.MDP,"PRISM","PRISM benchmark")
-        sequence = BenchmarkSequence(model, "correct_max", PropertyType.REACHABILITY, {"N": 1000, "K": 2, "reset": False})
+        sequence = BenchmarkSequence(model, "correct_max", PropertyType.REACHABILITY, {"N": 1000, "K": 8, "reset": False})
         BenchmarkInstance(sequence, {})
     
     def add_zeroconf_correct_min(self):
         model = BenchmarkModel(self, "mdp/zeroconf/zeroconf.jani","mdp/zeroconf/zeroconf.props","mdp/zeroconf/zeroconf.prism", ModelType.MDP,"PRISM","PRISM benchmark")
-        sequence = BenchmarkSequence(model, "correct_min", PropertyType.REACHABILITY, {"N": 1000, "K": 8, "reset": False})
+        sequence = BenchmarkSequence(model, "correct_min", PropertyType.REACHABILITY, {"N": 20, "K": 6, "reset": True})
         BenchmarkInstance(sequence, {})
     
     def add_zeroconf_dl_deadline_max(self):
@@ -733,7 +822,7 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
     
     def add_zeroconf_dl_deadline_min(self):
         model = BenchmarkModel(self, "mdp/zeroconf_dl/zeroconf_dl.jani","mdp/zeroconf_dl/zeroconf_dl.props","mdp/zeroconf_dl/zeroconf_dl.prism", ModelType.MDP,"PRISM","PRISM benchmark")
-        sequence = BenchmarkSequence(model, "deadline_min", PropertyType.REACHABILITY, {"N": 1000, "K": 1, "reset": True, "deadline": 20})
+        sequence = BenchmarkSequence(model, "deadline_min", PropertyType.REACHABILITY, {"N": 1000, "K": 1, "reset": True, "deadline": 30})
         BenchmarkInstance(sequence, {})
     
     def add_brp_pta_T_1(self):
@@ -743,7 +832,7 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
     
     def add_brp_pta_T_2(self):
         model = BenchmarkModel(self, "pta/brp-pta/brp-pta.jani","","", ModelType.PTA,"Modest","scalable in multiple dimensions")
-        sequence = BenchmarkSequence(model, "T_2", PropertyType.REACHABILITY, {"N": 16, "MAX": 2, "TD": 1, "TIME_BOUND": 64})
+        sequence = BenchmarkSequence(model, "T_2", PropertyType.REACHABILITY, {"N": 64, "MAX": 12, "TD": 32, "TIME_BOUND": 256})
         BenchmarkInstance(sequence, {})
     
     def add_brp_pta_T_A1(self):
@@ -768,7 +857,7 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
     
     def add_brp_pta_P_1(self):
         model = BenchmarkModel(self, "pta/brp-pta/brp-pta.jani","","", ModelType.PTA,"Modest","scalable in multiple dimensions")
-        sequence = BenchmarkSequence(model, "P_1", PropertyType.REACHABILITY, {"N": 64, "MAX": 12, "TD": 32, "TIME_BOUND": 256})
+        sequence = BenchmarkSequence(model, "P_1", PropertyType.REACHABILITY, {"N": 16, "MAX": 2, "TD": 1, "TIME_BOUND": 64})
         BenchmarkInstance(sequence, {})
     
     def add_brp_pta_P_2(self):
@@ -788,7 +877,7 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
     
     def add_brp_pta_Emax(self):
         model = BenchmarkModel(self, "pta/brp-pta/brp-pta.jani","","", ModelType.PTA,"Modest","scalable in multiple dimensions")
-        sequence = BenchmarkSequence(model, "Emax", PropertyType.EXPECTED_TIME, {"N": 16, "MAX": 2, "TD": 1, "TIME_BOUND": 64})
+        sequence = BenchmarkSequence(model, "Emax", PropertyType.EXPECTED_TIME, {"N": 64, "MAX": 12, "TD": 32, "TIME_BOUND": 256})
         BenchmarkInstance(sequence, {})
     
     def add_brp_pta_Emin(self):
@@ -798,27 +887,27 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
     
     def add_csma_pta_collisions(self):
         model = BenchmarkModel(self, "pta/csma-pta/csma-pta.jani","pta/csma-pta/csma-pta.props","pta/csma-pta/csma-pta.prism", ModelType.PTA,"PRISM","PRISM benchmark")
-        sequence = BenchmarkSequence(model, "collisions", PropertyType.REACHABILITY, {"K": 4, "COL": 8})
+        sequence = BenchmarkSequence(model, "collisions", PropertyType.REACHABILITY, {"K": 2, "COL": 8})
         BenchmarkInstance(sequence, {})
     
     def add_csma_abst_pta_eventually(self):
         model = BenchmarkModel(self, "pta/csma_abst-pta/csma_abst-pta.jani","pta/csma_abst-pta/csma_abst-pta.props","pta/csma_abst-pta/csma_abst-pta.prism", ModelType.PTA,"PRISM","PRISM benchmark")
-        sequence = BenchmarkSequence(model, "eventually", PropertyType.REACHABILITY, {"K": 1, "T": 3000})
+        sequence = BenchmarkSequence(model, "eventually", PropertyType.REACHABILITY, {"K": 1, "T": 1800})
         BenchmarkInstance(sequence, {})
     
     def add_firewire_pta_eventually(self):
         model = BenchmarkModel(self, "pta/firewire-pta/firewire-pta.jani","pta/firewire-pta/firewire-pta.props","pta/firewire-pta/firewire-pta.prism", ModelType.PTA,"PRISM","PRISM benchmark")
-        sequence = BenchmarkSequence(model, "eventually", PropertyType.REACHABILITY, {"delay": 360, "T": 5000})
+        sequence = BenchmarkSequence(model, "eventually", PropertyType.REACHABILITY, {"delay": 30, "T": 7500})
         BenchmarkInstance(sequence, {})
     
     def add_firewire_abst_pta_eventually(self):
         model = BenchmarkModel(self, "pta/firewire_abst-pta/firewire_abst-pta.jani","pta/firewire_abst-pta/firewire_abst-pta.props","pta/firewire_abst-pta/firewire_abst-pta.prism", ModelType.PTA,"PRISM","PRISM benchmark")
-        sequence = BenchmarkSequence(model, "eventually", PropertyType.REACHABILITY, {"delay": 30, "T": 15000})
+        sequence = BenchmarkSequence(model, "eventually", PropertyType.REACHABILITY, {"delay": 360, "T": 5000})
         BenchmarkInstance(sequence, {})
     
     def add_repudiation_honest_eventually(self):
         model = BenchmarkModel(self, "pta/repudiation_honest/repudiation_honest.jani","pta/repudiation_honest/repudiation_honest.props","pta/repudiation_honest/repudiation_honest.prism", ModelType.PTA,"PRISM","PRISM benchmark")
-        sequence = BenchmarkSequence(model, "eventually", PropertyType.REACHABILITY, {"T": 80})
+        sequence = BenchmarkSequence(model, "eventually", PropertyType.REACHABILITY, {"T": 40})
         BenchmarkInstance(sequence, {})
     
     def add_repudiation_malicious_eventually(self):
@@ -858,5 +947,5 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
     
     def add_zeroconf_pta_incorrect(self):
         model = BenchmarkModel(self, "pta/zeroconf-pta/zeroconf-pta.jani","pta/zeroconf-pta/zeroconf-pta.props","pta/zeroconf-pta/zeroconf-pta.prism", ModelType.PTA,"PRISM","PRISM benchmark")
-        sequence = BenchmarkSequence(model, "incorrect", PropertyType.REACHABILITY, {"T": 100})
+        sequence = BenchmarkSequence(model, "incorrect", PropertyType.REACHABILITY, {"T": 200})
         BenchmarkInstance(sequence, {})

@@ -11,9 +11,19 @@ from Specific.Tools.Storm.storm_execution import StormExecution
 
 class StormAlgorithm(Algorithm):
 
-    def __init__(self, tool: Tool, name: str, algorithm_type: StormAlgorithmType, engine_type: StormEngineType, use_topological: bool):
+    def __init__(self, tool: Tool, algorithm_type: StormAlgorithmType, engine_type: StormEngineType, use_topological: bool, use_bisimulation: bool):
+        topological = ""
+        if use_topological:
+            topological = " topological"
+        bisimulation = ""
+        if use_bisimulation:
+            bisimulation = " bisimulation"
+
+        name = tool.name() + "{}{} ".format(topological, bisimulation) + algorithm_type.value + " " + engine_type.value
+
         super().__init__(tool, name)
         self.use_topological = use_topological
+        self.use_bisimulation = use_bisimulation
         self.algorithm_type = algorithm_type
         self.engine_type = engine_type
 
@@ -22,6 +32,13 @@ class StormAlgorithm(Algorithm):
         property_type = instance.benchmark_sequence.property_type
         if model_type == ModelType.PTA:
             return False
+
+        if self.use_bisimulation and model_type == ModelType.MA:
+            match self.engine_type:
+                case StormEngineType.SPARSE_MATRICES:
+                    return False
+                case StormEngineType.DECISION_DIAGRAM_TO_SPARSE_MATRICES | StormEngineType.HYBRID | StormEngineType.DECISION_DIAGRAM:
+                    pass
 
         match instance.benchmark_sequence.benchmark_model.name:
             case "ma/polling-system/polling-system" | "ma/reentrant-queues/reentrant-queues": # These models have the feature nondet-selection
@@ -81,6 +98,6 @@ class StormAlgorithm(Algorithm):
         return False
 
     def protected_run(self, instance: BenchmarkInstance, result: Result) -> Result:
-        StormExecution(instance, result, self.algorithm_type, self.engine_type, self.use_topological)
+        StormExecution(instance, result, self.algorithm_type, self.engine_type, self.use_topological, self.use_bisimulation)
         return result
 

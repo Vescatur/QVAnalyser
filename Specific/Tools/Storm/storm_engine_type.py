@@ -2,9 +2,9 @@ from enum import Enum
 
 
 class StormEngineType(Enum):
-    DECISION_DIAGRAM = "DECISION_DIAGRAM"
-    SPARSE_MATRICES = "SPARSE_MATRICES"
-    DECISION_DIAGRAM_TO_SPARSE_MATRICES = "DECISION_DIAGRAM_TO_SPARSE_MATRICES"
-    HYBRID = "HYBRID"
-    EXPLORATION = "EXPLORATION"
-    ABSTRACTION_REFINEMENT = "ABSTRACTION_REFINEMENT"
+    DECISION_DIAGRAM = "decision diagram"
+    SPARSE_MATRICES = "sparse matrices"
+    DECISION_DIAGRAM_TO_SPARSE_MATRICES = "decision diagram to sparse matrices"
+    HYBRID = "hybrid"
+    EXPLORATION = "exploration"
+    ABSTRACTION_REFINEMENT = "abstraction refinement"

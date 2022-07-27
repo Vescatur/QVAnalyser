@@ -2,24 +2,30 @@ from enum import Enum
 
 
 class StormAlgorithmType(Enum):
-    JACOBI = "JACOBI"
-    GMM_PLUS_PLUS = "GMM_PLUS_PLUS"
-    GAUSS_SEIDEL = "GAUSS_SEIDEL"
-    SUCCESSIVE_OVER_RELAXATION = "SUCCESSIVE_OVER_RELAXATION"
-    WALKERCHAE = "WALKERCHAE"
-    VALUE_ITERATION = "VALUE_ITERATION"
-    INTERVAL_ITERATION = "INTERVAL_ITERATION"
-    SOUND_VALUE_ITERATION = "SOUND_VALUE_ITERATION"
-    OPTIMISTIC_VALUE_ITERATION = "OPTIMISTIC_VALUE_ITERATION"
-    RATIONAL_SEARCH = "RATIONAL_SEARCH"
-    EIGEN = "EIGEN"
-    ELIMINATION = "ELIMINATION"
-    ACYCLIC = "ACYCLIC"
+    #DTMC CTMC
+    JACOBI = "jacobi"
+    GMM_PLUS_PLUS = "gmm++"
+    GAUSS_SEIDEL = "Gauss-Seidel"
+    SUCCESSIVE_OVER_RELAXATION = "successive over relaxation"
+    WALKERCHAE = "walkerchae"
+    EIGEN = "eigen"
+    ELIMINATION = "elimination"
+    ACYCLIC = "acyclic"
 
-    POLICY_ITERATION = "POLICY_ITERATION"
-    LINEAR_PROGRAMMING = "LINEAR_PROGRAMMING"
-    VALUE_ITERATION_TO_POLICY_ITERATION = "VALUE_ITERATION_TO_POLICY_ITERATION"
+    #DTMC MDP CTMC MA
+    VALUE_ITERATION = "value iteration"
+    INTERVAL_ITERATION = "interval iteration"
+    SOUND_VALUE_ITERATION = "sound value iteration"
+    OPTIMISTIC_VALUE_ITERATION = "optimistic value iteration"
+    RATIONAL_SEARCH = "rational search"
 
-    EXPLORATION = "EXPLORATION"
-    ABSTRACTION_REFINEMENT = "ABSTRACTION_REFINEMENT"
+
+    #MDP MA
+    POLICY_ITERATION = "policy iteration"
+    LINEAR_PROGRAMMING = "linear programming"
+    VALUE_ITERATION_TO_POLICY_ITERATION = "value iteration to policy iteration"
+
+    #Extra engines
+    EXPLORATION = "exploration"
+    ABSTRACTION_REFINEMENT = "abstraction refinement"
 

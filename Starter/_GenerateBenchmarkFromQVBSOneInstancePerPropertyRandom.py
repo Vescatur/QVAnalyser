@@ -60,7 +60,7 @@ def generate_start(benchmark_path,data):
         benchmark_model_data = json.load(benchmark_model_file)
         for property_data in benchmark_model_data["properties"]:
              match property_data["type"]:
-                case "exp-reward" | "exp-time" | "exp-reward" | "prob-reach":
+                case "exp-reward" | "exp-time" | "exp-steps" | "prob-reach":
                     add_line(tab * 2 + "self.add_" + short_name.replace("-", "_") + "_" + property_data["name"] + "()")
 
 
@@ -83,7 +83,7 @@ def generate_code_for_benchmark_model(benchmark_model, benchmark_path):
 
     for property_data in benchmark_model_data["properties"]:
          match property_data["type"]:
-            case "exp-reward" | "exp-time" | "exp-reward" | "prob-reach":
+            case "exp-reward" | "exp-time" | "exp-steps" | "prob-reach":
                 generate_code_for_property(short_name, property_data, model_type, original, notes, path, benchmark_model_data)
 
 def generate_code_for_property(short_name, property_data, model_type, original, notes, path, benchmark_model_data):
