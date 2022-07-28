@@ -45,7 +45,7 @@ class StormAlgorithm(Algorithm):
                 return False
             case "ma/breakdown-queues/breakdown-queues" | "ma/ftwc/ftwc" | "mdp/echoring/echoring":
                 match self.engine_type:
-                    case StormEngineType.HYBRID | StormEngineType.DECISION_DIAGRAM_TO_SPARSE_MATRICES:
+                    case StormEngineType.HYBRID | StormEngineType.DECISION_DIAGRAM_TO_SPARSE_MATRICES | StormEngineType.DECISION_DIAGRAM | StormEngineType.ABSTRACTION_REFINEMENT:
                         return False # The symbolic JANI model builder currently does not support assignment levels"
 
         match self.engine_type:

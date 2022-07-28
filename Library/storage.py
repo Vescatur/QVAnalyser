@@ -41,12 +41,19 @@ class Storage(object):
             pickle.dump(result, save_file)
 
     def load_latest_benchmark(self):
-        return self.load_benchmark(self.save_index - 1)
+        return self.load_benchmark(self.save_index - 1,True)
 
-    def load_benchmark(self, save_index):
+
+    def load_latest_before_result_benchmark(self,):
+        return self.load_benchmark(self.save_index - 1,False)
+
+    def load_benchmark(self, save_index,allow_results_benchmark):
         benchmark_path = self.generate_results_benchmark_path(save_index)
-        if not path.exists(benchmark_path):
+        if not allow_results_benchmark:
             benchmark_path = self.generate_finished_benchmark_path(save_index)
+        elif not path.exists(benchmark_path):
+            benchmark_path = self.generate_finished_benchmark_path(save_index)
+
         if not path.exists(benchmark_path):
             benchmark_path = self.generate_unfinished_benchmark_path(save_index)
 
@@ -107,4 +114,5 @@ class Storage(object):
 
     def generate_result_path(self, save_index, instance, result_index):
         return self.generate_instance_folder_path(save_index, instance) + str(result_index) + ".qva"
+
 

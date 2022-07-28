@@ -10,22 +10,30 @@ class ModestResultParser(ResultParser):
 
 
     def parse_result(self, result, benchmark: Benchmark):
+        if result.not_supported or result.threw_error or result.timed_out:
+            return
+
         self.search_for_errors(result)
+        if result.not_supported or result.threw_error:
+            return
+
         if not hasattr(result, 'json_output'):
-            if not result.timed_out:
-                result.threw_error = True
-                if len(result.command_results) >=1:
-                    if result.command_results[0].return_code == -11:
-                        result.error_text = "return code -11"
-                if result.error_text is None:
-                    result.error_text = "No json_output"
+            self.no_json_output(result)
         else:
             algorithm = self.get_algorithm_from_name(benchmark, result)
-            if algorithm == None:
-                raise Exception("Could not find algorithm")
-            if result.threw_error:
-                return
             self.parse_json(algorithm, result)
+
+    def no_json_output(self, result):
+        result.threw_error = True
+        if len(result.command_results) >= 1:
+            if result.command_results[0].return_code == -11:
+                result.error_text = "return code -11"
+            else:
+                error_log = result.command_results[0].error_log
+                output_log = result.command_results[0].output_log
+                result.error_text = "No json_output\n" + error_log + "\n" + output_log
+        else:
+            result.error_text = "No command_results"
 
     def parse_json(self, algorithm, result):
         json_output = result.json_output
@@ -65,25 +73,38 @@ class ModestResultParser(ResultParser):
         for algorithm_1 in benchmark.algorithms:
             if algorithm_1.name == result.algorithm_name:
                 return algorithm_1
+        raise Exception("Could not find algorithm")
 
     def search_for_errors(self, result):
-        if result.not_supported or result.threw_error:
-            return
-
         if len(result.command_results) == 0:
             result.error_text = "no command_result"
             result.threw_error = True
 
-        match = re.search(r": error: (.*)\n", result.command_results[0].error_log)
-        if match:
-            result.error_text = match.group(1)
-            result.threw_error = True
+        self.search_errors_with_query(result, r": error: (.*)\n")
+        self.search_errors_with_query(result, r"Error: (.*)\n")
+        self.search_errors_with_query(result, r"Unhandled exception. (.*)\n")
+        self.search_errors_with_query(result, r"Unhandled exception. (.*)\n")
+        self.search_errors_with_error_message(result, "No suitable input formalism found for the given file names")
+
+    def search_errors_with_query(self, result, query):
+        for error in re.finditer(query, result.command_results[0].error_log):
+            self.process_error(result, error.group(1))
+        for error in re.finditer(query, result.command_results[0].output_log):
+            self.process_error(result, error.group(1))
+
+    def search_errors_with_error_message(self, result, error_message):
+        for error in re.finditer(error_message, result.command_results[0].error_log):
+            self.process_error(result, error_message)
+        for error in re.finditer(error_message, result.command_results[0].output_log):
+            self.process_error(result, error_message)
+
+    def process_error(self,result,error):
+        if result.threw_error:
             return
 
-        match = re.search(r": error: (.*)\n", result.command_results[0].output_log)
-        if match:
-            result.error_text = match.group(1)
-            result.threw_error = True
-            return
+        result.error_text = error
+        result.threw_error = True
+
+
 
 

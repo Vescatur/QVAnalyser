@@ -9,46 +9,43 @@ from Specific.Tools.Prism.prism_tool import PrismTool
 from Specific.Tools.Storm.storm_tool import StormTool
 
 # This class has been generated using _GenerateBenchmarkFromQVBS.py
-class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
+class QvbsBenchmarkSprint6(Benchmark):
     def __init__(self):
         super().__init__()
-        self.time_limit = 10
+        self.time_limit = 900
         
         self.add_benchmark_instances()
 
         modestTool = ModestTool()
         self.tools.append(modestTool)
+        stormTool = StormTool()
+        self.tools.append(stormTool)
+        prismTool = PrismTool()
+        self.tools.append(prismTool)
+
+        #Value iteration
         self.algorithms.append(modestTool.value_iteration)
+        self.algorithms.append(stormTool.value_iteration_sparse)
+        self.algorithms.append(stormTool.value_iteration_dd_to_sparse)
+        self.algorithms.append(stormTool.value_iteration_hybrid)
+        self.algorithms.append(stormTool.value_iteration_dd)
+        self.algorithms.append(prismTool.value_iteration_sparse)
+        self.algorithms.append(prismTool.value_iteration_explicit)
+        self.algorithms.append(prismTool.value_iteration_hybrid)
+        self.algorithms.append(prismTool.value_iteration_mtbddd)
+
+        # partial and statistical model checker
+        self.algorithms.append(modestTool.confidence_interval)
+        self.algorithms.append(prismTool.confidence_interval)
+        self.algorithms.append(modestTool.glrtdp)
+        self.algorithms.append(stormTool.abstract_refinement)
+
+        #Other numerical algorithms
         self.algorithms.append(modestTool.interval_iteration)
         self.algorithms.append(modestTool.sequential_interval_iteration)
         self.algorithms.append(modestTool.sound_value_iteration)
         self.algorithms.append(modestTool.optimistic_value_iteration)
         self.algorithms.append(modestTool.linear_programming)
-
-        self.algorithms.append(modestTool.confidence_interval)
-        self.algorithms.append(modestTool.okamoto)
-        self.algorithms.append(modestTool.adaptive)
-
-        self.algorithms.append(modestTool.glrtdp)
-
-        stormTool = StormTool()
-        self.algorithms.append(stormTool.value_iteration_sparse)
-        self.algorithms.append(stormTool.top_value_iteration_sparse)
-        self.algorithms.append(stormTool.bi_value_iteration_sparse)
-        self.algorithms.append(stormTool.bi_top_value_iteration_sparse)
-
-        self.algorithms.append(stormTool.value_iteration_dd_to_sparse)
-        self.algorithms.append(stormTool.top_value_iteration_dd_to_sparse)
-        self.algorithms.append(stormTool.bi_value_iteration_dd_to_sparse)
-        self.algorithms.append(stormTool.bi_top_value_iteration_dd_to_sparse)
-
-        self.algorithms.append(stormTool.value_iteration_hybrid)
-        self.algorithms.append(stormTool.top_value_iteration_hybrid)
-        self.algorithms.append(stormTool.bi_value_iteration_hybrid)
-        self.algorithms.append(stormTool.bi_top_value_iteration_hybrid)
-
-        self.algorithms.append(stormTool.value_iteration_dd)
-        self.algorithms.append(stormTool.bi_value_iteration_dd)
 
         self.algorithms.append(stormTool.gmm_sparse)
         self.algorithms.append(stormTool.jacobi_sparse)
@@ -65,36 +62,44 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
         self.algorithms.append(stormTool.linear_programming_sparse)
         self.algorithms.append(stormTool.value_iteration_to_policy_iteration_sparse)
 
-        self.algorithms.append(stormTool.abstract_refinement)
-
-        prismTool = PrismTool()
-        self.algorithms.append(prismTool.value_iteration_sparse)
-
-        self.algorithms.append(prismTool.top_value_iteration_sparse)
-        self.algorithms.append(prismTool.value_iteration_explicit)
-        self.algorithms.append(prismTool.top_value_iteration_explicit)
-        self.algorithms.append(prismTool.value_iteration_hybrid)
-        self.algorithms.append(prismTool.top_value_iteration_hybrid)
-        self.algorithms.append(prismTool.value_iteration_mtbddd)
-        self.algorithms.append(prismTool.top_value_iteration_mtbddd)
-
         self.algorithms.append(prismTool.jacobi_explicit)
         self.algorithms.append(prismTool.gauss_seidel_explicit)
         self.algorithms.append(prismTool.backwards_gauss_seidel_explicit)
         self.algorithms.append(prismTool.jacobi_with_over_relaxation_explicit)
         self.algorithms.append(prismTool.succesive_over_relaxation_explicit)
         self.algorithms.append(prismTool.backwards_succesive_over_relaxation_explicit)
-
-        self.algorithms.append(prismTool.confidence_interval)
-        self.algorithms.append(prismTool.asymptotic_confidence_interval)
-        self.algorithms.append(prismTool.apmc)
-
         self.algorithms.append(prismTool.policy_iteration_explicit)
         self.algorithms.append(prismTool.modified_policy_iteration_explicit)
 
+        #PTA
         self.algorithms.append(prismTool.stochastic_games)
         self.algorithms.append(prismTool.digital_clocks)
         self.algorithms.append(prismTool.backwards_reachability)
+
+        #Other simulators
+        self.algorithms.append(modestTool.okamoto)
+        self.algorithms.append(modestTool.adaptive)
+        self.algorithms.append(prismTool.asymptotic_confidence_interval)
+        self.algorithms.append(prismTool.apmc)
+
+        # Other numerical algorithms on engines
+        self.algorithms.append(stormTool.top_value_iteration_sparse)
+        self.algorithms.append(stormTool.top_value_iteration_dd_to_sparse)
+        self.algorithms.append(stormTool.top_value_iteration_hybrid)
+
+        self.algorithms.append(stormTool.bi_value_iteration_sparse)
+        self.algorithms.append(stormTool.bi_value_iteration_dd_to_sparse)
+        self.algorithms.append(stormTool.bi_value_iteration_hybrid)
+        self.algorithms.append(stormTool.bi_value_iteration_dd)
+
+        self.algorithms.append(stormTool.bi_top_value_iteration_sparse)
+        self.algorithms.append(stormTool.bi_top_value_iteration_dd_to_sparse)
+        self.algorithms.append(stormTool.bi_top_value_iteration_hybrid)
+
+        self.algorithms.append(prismTool.top_value_iteration_sparse)
+        self.algorithms.append(prismTool.top_value_iteration_explicit)
+        self.algorithms.append(prismTool.top_value_iteration_hybrid)
+        self.algorithms.append(prismTool.top_value_iteration_mtbddd)
     
     def add_benchmark_instances(self):
         self.add_embedded_actuators()
@@ -741,7 +746,7 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
         BenchmarkInstance(sequence, {})
     
     def add_rectangle_tireworld_goal(self):
-        model = BenchmarkModel(self, "mdp/rectangle-tireworld/rectangle-tireworld.30.jani.gz","","", ModelType.MDP,"PPDDL","IPPC 2008 benchmark")
+        model = BenchmarkModel(self, "mdp/rectangle-tireworld/rectangle-tireworld.30.jani","","", ModelType.MDP,"PPDDL","IPPC 2008 benchmark")
         sequence = BenchmarkSequence(model, "goal", PropertyType.REACHABILITY, {})
         BenchmarkInstance(sequence, {})
     

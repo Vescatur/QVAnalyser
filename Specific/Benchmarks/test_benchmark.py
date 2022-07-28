@@ -6,6 +6,7 @@ from Library.Benchmarks.model_type import ModelType
 from Library.Benchmarks.property_type import PropertyType
 
 # noinspection DuplicatedCode
+from Specific.Tools.Modest.modest_tool import ModestTool
 from Specific.Tools.Prism.prism_tool import PrismTool
 from Specific.Tools.Storm.storm_tool import StormTool
 
@@ -22,9 +23,15 @@ class TestBenchmark(Benchmark):
         self.add_dpm_1()
         self.add_brp_pta_1()
 
-        '''
+
         modestTool = ModestTool()
         self.tools.append(modestTool)
+        stormTool = StormTool()
+        self.tools.append(stormTool)
+        prismTool = PrismTool()
+        self.tools.append(prismTool)
+
+        '''
         self.algorithms.append(modestTool.value_iteration)
         self.algorithms.append(modestTool.interval_iteration)
         self.algorithms.append(modestTool.sequential_interval_iteration)
@@ -35,7 +42,7 @@ class TestBenchmark(Benchmark):
         self.algorithms.append(modestTool.okamoto)
         self.algorithms.append(modestTool.adaptive)
         self.algorithms.append(modestTool.glrtdp)'''
-        stormTool = StormTool()
+
         self.algorithms.append(stormTool.value_iteration_sparse)
         self.algorithms.append(stormTool.top_value_iteration_sparse)
         self.algorithms.append(stormTool.bi_value_iteration_sparse)
@@ -71,7 +78,6 @@ class TestBenchmark(Benchmark):
 
         self.algorithms.append(stormTool.abstract_refinement)
         '''
-        prismTool = PrismTool()
         self.algorithms.append(prismTool.value_iteration_sparse)
 
         self.algorithms.append(prismTool.top_value_iteration_sparse)

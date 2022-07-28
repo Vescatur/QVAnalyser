@@ -79,8 +79,7 @@ class ResultsPrinter(object):
 
     def print_error_information(self, benchmark: Benchmark):
         for algorithm in benchmark.algorithms:
-            pass
-            # self.print_error_information_for_algorithm(benchmark,algorithm)
+             self.print_error_information_for_algorithm(benchmark,algorithm)
         self.print_error_per_instance(benchmark)
 
     def print_error_information_for_algorithm(self, benchmark,algorithm):
@@ -108,7 +107,7 @@ class ResultsPrinter(object):
                             total += 1
                             if result.threw_error:
                                 threw_error += 1
-                                print(sequence_number)
+                                #print(sequence_number)
                                 print(result.error_text)
                                 if len(result.command_results) >= 1 and result.command_results[0].exception is not None:
                                     threw_error_with_exception += 1
@@ -137,8 +136,9 @@ class ResultsPrinter(object):
                 self.print_error_for_instance(instance)
 
     def print_error_for_instance(self, instance: BenchmarkInstance):
-        #print()
-        #print(instance.benchmark_sequence.benchmark_model.name + " " + instance.benchmark_sequence.property_name)
+        print()
+        print(instance.benchmark_sequence.benchmark_model.name + " " + instance.benchmark_sequence.property_name)
+        print(instance.benchmark_sequence.benchmark_model.file_name_jani)
         threw_error_with_exception = 0
         threw_error = 0
         not_supported = 0
@@ -154,10 +154,7 @@ class ResultsPrinter(object):
                 total += 1
                 if result.threw_error:
                     threw_error += 1
-                    # print(result.error_text + " | " + result.algorithm_name )
-                    if result.error_text == "(Engine.cpp:166): The selected combination of engine (abs) and model type (mdp) does not seem to be supported for this value type.": #or \
-                            #result.error_text == "(Engine.cpp:166): The selected combination of engine (abs) and model type (dtmc) does not seem to be supported for this value type.":
-                        print(result.command_results[0].command)
+                    print(result.error_text + " | " + result.algorithm_name )
                     if len(result.command_results) >= 1 and result.command_results[0].exception is not None:
                         threw_error_with_exception += 1
                 if result.qva_error:
@@ -172,10 +169,64 @@ class ResultsPrinter(object):
                         # print(sequence_number)
                         # print(result.command_results[0].output_log)
                         # print(result.command_results[0].error_log)
-        #print("executed " + str(total) + " not supported " + str(not_supported))
-        #print("threw error " + str(threw_error))
-        #print("threw error with exception " + str(threw_error_with_exception))
-        #print("qva exception " + str(qva_error))
-        #print("timed out " + str(timed_out))
-        #print("both " + str(both))
-        #print("missing results " + str(missing_results))
+        print("executed " + str(total) + " not supported " + str(not_supported))
+        print("threw error " + str(threw_error))
+        print("threw error with exception " + str(threw_error_with_exception))
+        print("qva exception " + str(qva_error))
+        print("timed out " + str(timed_out))
+        print("both " + str(both))
+        print("missing results " + str(missing_results))
+
+    def print_all_logs(self):
+        pass
+
+    def print_tool_errors(self, benchmark):
+        print("per algorithm")
+        self.tool_per_algorithm(benchmark)
+        print("per file")
+        self.tool_per_file(benchmark)
+
+    def tool_per_algorithm(self, benchmark):
+        for algorithm in benchmark.algorithms:
+            for sequence in benchmark.benchmark_sequences:
+                for instance in sequence.benchmark_instances:
+                    for result in instance.results:
+                        if result.algorithm_name == algorithm.name:
+                            self.print_tool_error_from_result(result)
+
+    def tool_per_file(self,benchmark):
+        for sequence in benchmark.benchmark_sequences:
+            for instance in sequence.benchmark_instances:
+                for result in instance.results:
+                    self.print_tool_error_from_result(result)
+
+    def print_tool_error_from_result(self,result):
+        if result.threw_error:
+            if self.should_display_error(result.error_text):
+                print("Found error: " + result.error_text)
+                if len(result.command_results) >= 1:
+                    pass
+                    print(result.command_results[0].command)
+                    print(result.command_results[0].output_log)
+                    print(result.command_results[0].error_log)
+
+    def should_display_error(self, error_text):
+        if "No suitable input formalism found for the given file names" in error_text:
+            return False # fixed by unzipping
+        if "parse error - unexpected ''" in error_text:
+            return False # fixed by unzipping
+        if "The probabilities for a transition do not sum up to the expected value of" in error_text:
+            return False # not a tool error
+
+        # These are serious errors
+        display_serious_errors = True
+        if "The program received signal 6 and will be aborted in 3s" in error_text:
+            return display_serious_errors
+        if "The message of this exception is: std::bad_alloc" in error_text:
+            return display_serious_errors
+        if "The linear programming solver did not find an optimal solution for property" in error_text:
+            return display_serious_errors # Looks like other algorithms can solve it
+        if "KeyNotFoundException: The given key '1' was not present in the dictionary" in error_text:
+            return display_serious_errors
+
+        return False

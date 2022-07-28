@@ -60,6 +60,11 @@ class StormResultParser(ResultParser):
         if match:
             error = match.group(1)
         if error is not None:
+            if "The selected engine abs is not considered." in error:
+                return # Bug in Storm. abs is used.
+            if "The selected combination of engine (abs) and model type (" in error:
+                return # Bug in Storm. abs is used.
+
             result.threw_error = True
             result.error_text = error
 

@@ -33,6 +33,30 @@ class PrismAlgorithm(Algorithm):
         if model.file_path_prism_props[-6:] == ".prctl":
             return False
 
+        match instance.benchmark_sequence.benchmark_model.name:
+            case "pta/repudiation_malicious/repudiation_malicious" | "pta/repudiation_honest/repudiation_honest" | "pta/csma-pta/csma-pta" | "pta/csma_abst-pta/csma_abst-pta":
+                match self.algorithm_type:
+                    case PrismAlgorithmType.DIGITAL_CLOCKS:
+                        return False # Strict clock constraints are not allowed when using the digital clocks method
+            case "pta/repudiation_honest/repudiation_honest" | "pta/firewire_abst-pta/firewire_abst-pta" | "pta/firewire-pta/firewire-pta" | "pta/csma_abst-pta/csma_abst-pta" :
+                match self.algorithm_type:
+                    case PrismAlgorithmType.BACKWARDS_REACHABILITY:
+                        return False # Strict clock constraints are not allowed when using the digital clocks method
+            case "dtmc/leader_sync/leader_sync":
+                match self.engine_type:
+                    case PrismEngineType.EXPLICIT:
+                        match property_type:
+                            case PropertyType.EXPECTED_REWARD:
+                                return False # Explicit engine does not yet handle transition rewards for D/CTMCs
+            case "dtmc/herman/herman" | "dtmc/bluetooth/bluetooth":
+                match self.algorithm_type:
+                    case PrismAlgorithmType.CONFIDENCE_INTERVAL | PrismAlgorithmType.ASYMPTOTIC_CONFIDENCE_INTERVAL:
+                        return False # Simulator cannot handle P or R properties with filters
+
+        match instance.benchmark_sequence.benchmark_model.file_name_jani:
+            case "mdp/firewire/firewire.false.jani" | "mdp/eajs/eajs.2.jani":
+                return False # Syntax error ("^", line 10, column 23)
+
         match model_type:
             case ModelType.PTA:
                 match self.algorithm_type:
