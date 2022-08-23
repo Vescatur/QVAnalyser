@@ -72,21 +72,25 @@ class Storage(object):
         instance = sequence.benchmark_instances[counter]
         location = self.generate_instance_folder_path(save_index, instance)
         while path.exists(location):
-            self.load_results(save_index, instance)
-            counter += 1
-            location = self.generate_instance_folder_path(save_index, instance)
-            if counter < len(sequence.benchmark_instances):
-                instance = sequence.benchmark_instances[counter]
-            else:
-                break
+                self.load_results(save_index, instance)
+                counter += 1
+                location = self.generate_instance_folder_path(save_index, instance)
+                if counter < len(sequence.benchmark_instances):
+                    instance = sequence.benchmark_instances[counter]
+                else:
+                    break
 
     def load_results(self, save_index, instance):
         counter = 0
         location = self.generate_result_path(save_index, instance, counter)
-        while path.exists(location):
-            with open(location, 'rb') as save_file:
-                result = pickle.load(save_file)
-                instance.results.append(result)
+        while path.exists(location) or counter < 1000: #TODO: Remove the counter < 1000 because of incorrect files in sprint 6 benchmark
+            if path.exists(location):
+                with open(location, 'rb') as save_file:
+                    try:
+                        result = pickle.load(save_file)
+                        instance.results.append(result)
+                    except:
+                        print("Could not read file " + location)
             counter += 1
             location = self.generate_result_path(save_index, instance, counter)
 
