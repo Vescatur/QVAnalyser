@@ -23,19 +23,21 @@ class Benchmark(object):
         self.benchmark_path = Setup().benchmark_models_path
 
     def run(self):
+        self.storage.save_unfinished_benchmark(self)
+        self.continue_run()
+
+    def continue_run(self):
         self.print_start_information(self.benchmark_sequences, self.algorithms)
+        self.setup.setup_tools(self)
         self.run_algorithms()
         self.storage.save_finished_benchmark(self)
 
     def run_algorithms(self):
-        self.setup.setup_tools(self)
-        self.storage.save_unfinished_benchmark(self)
         for algorithm in self.algorithms:
             for sequence in self.benchmark_sequences:
                 for instance in sequence.benchmark_instances:
                     if not self.has_algorithm_run_on_instance(algorithm, instance):
                         self.run_algorithm(algorithm, instance)
-
 
     def has_algorithm_run_on_instance(self, algorithm: Algorithm, instance: BenchmarkInstance) -> bool:
         for result in instance.results:

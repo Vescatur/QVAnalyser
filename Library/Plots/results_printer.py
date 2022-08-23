@@ -80,7 +80,7 @@ class ResultsPrinter(object):
     def print_error_information(self, benchmark: Benchmark):
         for algorithm in benchmark.algorithms:
              self.print_error_information_for_algorithm(benchmark,algorithm)
-        self.print_error_per_instance(benchmark)
+        #self.print_error_per_instance(benchmark)
 
     def print_error_information_for_algorithm(self, benchmark,algorithm):
         print()
