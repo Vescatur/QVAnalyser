@@ -79,8 +79,8 @@ class ResultsPrinter(object):
 
     def print_error_information(self, benchmark: Benchmark):
         for algorithm in benchmark.algorithms:
-             self.print_error_information_for_algorithm(benchmark,algorithm)
-        #self.print_error_per_instance(benchmark)
+             pass # self.print_error_information_for_algorithm(benchmark,algorithm)
+        self.print_error_per_instance(benchmark)
 
     def print_error_information_for_algorithm(self, benchmark,algorithm):
         print()
@@ -137,7 +137,7 @@ class ResultsPrinter(object):
 
     def print_error_for_instance(self, instance: BenchmarkInstance):
         print()
-        print(instance.benchmark_sequence.benchmark_model.name + " " + instance.benchmark_sequence.property_name)
+        print(instance.benchmark_sequence.benchmark_model.name + " " + instance.benchmark_sequence.property_name + " " + str(instance.benchmark_sequence.index))
         print(instance.benchmark_sequence.benchmark_model.file_name_jani)
         threw_error_with_exception = 0
         threw_error = 0

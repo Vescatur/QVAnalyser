@@ -21,9 +21,9 @@ class PlotSprint3(object):
         results_printer = ResultsPrinter()
         # results_printer.print_error_information(benchmark)
         # results_printer.print_characteristics(benchmark)
-        self.modest_versus_storm(benchmark)
-        # self.characteristic_versus_characteristic(benchmark)
-        #self.time_versus_characteristic(benchmark)
+        # self.modest_versus_storm(benchmark)
+        self.characteristic_versus_characteristic(benchmark)
+        self.time_versus_characteristic(benchmark)
 
     def characteristic_versus_characteristic(self, benchmark):
         self.scatter_plot(benchmark, Measurements.STATES, Measurements.TRANSITIONS, Measurements.STATES, True, True, "plot_states_transition_ratio",None)

@@ -4,7 +4,6 @@ from Library.Benchmarks.benchmark import Benchmark
 from Library.Plots.plot import Plot
 from Library.Plots.plot_filters import result_contains_measurement, result_not_threw_error, result_not_timeout
 from Library.Results.measurements import Measurements
-from Library.setup_environment import Setup
 
 
 class ScatterPlot(Plot):
@@ -58,7 +57,7 @@ class ScatterPlot(Plot):
                     for result in benchmark_instance.results:
                         self.result_to_data(result)
 
-    def result_to_data(self,result: Result):
+    def result_to_data(self,result):
         self.data_x.append(result.measurements[self.measurement_x])
         if self.measurement_divider_y is None:
             self.data_y.append(result.measurements[self.measurement_y])

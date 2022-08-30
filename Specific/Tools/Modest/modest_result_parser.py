@@ -59,7 +59,7 @@ class ModestResultParser(ResultParser):
         if len(json_output["property-times"]) >= 1:
             result.measurements[Measurements.PROPERTY_TIME] = json_output["property-times"][0]["time"]
         property_data = json_output["data"][1]
-        print(property_data)
+        # print(property_data)
         if "data" not in property_data:
             pass
         elif property_data["data"][0]["group"] == "Precomputations" and len(property_data["data"]) == 1:

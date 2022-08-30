@@ -6,5 +6,5 @@ from Specific.Tools.Storm.storm_tool import StormTool
 
 storage = Storage()
 benchmark = storage.load_latest_benchmark()
-#ResultsPrinter().print_characteristics(benchmark)
-ResultsPrinter().print_error_information(benchmark)
+ResultsPrinter().print_characteristics(benchmark)
+#ResultsPrinter().print_error_information(benchmark)
