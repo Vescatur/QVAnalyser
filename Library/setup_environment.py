@@ -10,7 +10,7 @@ class Setup(object):
         self.benchmark_models_path = self.resources_path + "BenchmarkModels/"
         self.tools_path = self.resources_path + "Tools/"
         self.saves_path = self.resources_path + "Saves/"
-        self.plots_path = self.resources_path + "Plots/"
+        self.plots_path = self.resources_path + "Output/"
 
     def setup_tools(self, benchmark):
         missing_tool = False

@@ -7,7 +7,7 @@ from Library.Benchmarks.property_type import PropertyType
 from Specific.Tools.Modest.modest_tool import ModestTool
 from Specific.Tools.Storm.storm_tool import StormTool
 
-# This class has been generated using _GenerateBenchmarkFromQVBS.py
+# This class has been generated using 0Generate_BenchmarkFromQVBS.py
 class QvbsBenchmark(Benchmark):
     def __init__(self):
         super().__init__()
