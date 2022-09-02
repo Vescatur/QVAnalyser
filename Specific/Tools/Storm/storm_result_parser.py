@@ -12,15 +12,21 @@ class StormResultParser(ResultParser):
     def parse_result(self, result: Result, benchmark):
         if result.not_supported:
             return
+        if result.timed_out:
+            return
+        if result.command_results[0].return_code == -9:
+            result.threw_error = True
+            result.error_text = "Returned with code -9"
+            return
         self.result_in_next_line = False
         log = result.command_results[0].output_log
         status = "start"
         for line in log.splitlines():
-            self.parse_log_line(line, result, status)
+            status = self.parse_log_line(line, result, status)
         log = result.command_results[0].error_log
         status = "error"
         for line in log.splitlines():
-            self.parse_log_line(line, result, status)
+            status = self.parse_log_line(line, result, status)
         if Measurements.TRANSITIONS not in result.measurements and Measurements.STATES in result.measurements:
             result.measurements[Measurements.TRANSITIONS] = result.measurements[Measurements.STATES]
 
@@ -49,10 +55,15 @@ class StormResultParser(ResultParser):
         self.parse_line(line, r"Time for model checking: (.*)s", result, Measurements.PROPERTY_TIME)
         self.parse_line(line, r"Time for model checking: (.*)s", result, Measurements.PROPERTY_TIME)
         self.parse_line(line, r"Time for model checking: (.*)s", result, Measurements.PROPERTY_TIME)
+        self.parse_output_property(line, result, Measurements.PROPERTY_OUTPUT)
         self.parse_error(line, result)
+        return status
 
     def parse_error(self, line, result):
         error = None
+        if "BDD Unique table full" in line:
+            error = "BDD Unique table full"
+
         match = re.search(r"ERROR (.*)", line)
         if match:
             error = match.group(1)
@@ -73,19 +84,22 @@ class StormResultParser(ResultParser):
             self.result_in_next_line = False
             result.measurements[measurement] = line.strip()
 
-        match = re.search(r"Result (.*): (.*)", line)
-        if match:
-            if match.group(2) == "":
-                # Workaround if the result is in the next line
-                self.result_in_next_line = True
-                return
+        if "Result" in line:
+            match = re.search(r"Result (.*): ([0123456789.,]*)", line)
+            if match:
+                if match.group(2) == "":
+                    # Workaround if the result is in the next line
+                    self.result_in_next_line = True
+                    return
 
-            # Check for exact result
-            match_exact = re.search(r"(.*) \(approx. .*\)", match.group(2))
-            if match_exact:
-                result.measurements[measurement] = float(match_exact.group(1))
-            else:
-                result.measurements[measurement] = float(match.group(2))
+                # Check for exact result
+                match_exact = re.search(r"(.*)\/(.*) \(approx. .*\)", match.group(2))
+                if match_exact:
+                    numerator = float(match_exact.group(1))
+                    denominator = float(match_exact.group(2))
+                    result.measurements[measurement] = numerator/denominator
+                else:
+                    result.measurements[measurement] = float(match.group(2))
 
     def parse_line_with_status(self, status, line, expected_status, regex, result, measurement):
         if status == expected_status:

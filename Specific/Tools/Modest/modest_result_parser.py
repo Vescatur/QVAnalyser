@@ -46,9 +46,19 @@ class ModestResultParser(ResultParser):
                 self.parse_json_vi(json_output, result)
             case ModestAlgorithmType.CONFIDENCE_INTERVAL | \
                  ModestAlgorithmType.APMC | ModestAlgorithmType.ADAPTIVE:
-                pass
+                self.parse_json_CI(json_output,result)
             case ModestAlgorithmType.GENERAL_LABELED_REAL_TIME_DYNAMIC_PROGRAMMING:
-                pass
+                self.parse_json_GLRTDP(json_output,result)
+
+    def parse_json_GLRTDP(self,json_output,result):
+            result.measurements[Measurements.PROPERTY_OUTPUT] = json_output["data"][0]["value"]
+            result.measurements[Measurements.PROPERTY_TIME] = json_output["property-times"][0]["time"]
+            result.measurements[Measurements.STATE_SPACE_TIME] = 0
+
+    def parse_json_CI(self,json_output,result):
+            result.measurements[Measurements.PROPERTY_OUTPUT] = json_output["data"][0]["data"][0]["value"]
+            result.measurements[Measurements.PROPERTY_TIME] = json_output["data"][0]["values"][1]["value"]
+            result.measurements[Measurements.STATE_SPACE_TIME] = 0
 
     def parse_json_vi(self, json_output, result):
         state_space_exploration_values = json_output["data"][0]["values"]
@@ -60,14 +70,14 @@ class ModestResultParser(ResultParser):
             result.measurements[Measurements.PROPERTY_TIME] = json_output["property-times"][0]["time"]
         property_data = json_output["data"][1]
         # print(property_data)
-        if "data" not in property_data:
-            pass
-        elif property_data["data"][0]["group"] == "Precomputations" and len(property_data["data"]) == 1:
-            result.measurements[Measurements.PROPERTY_OUTPUT] = int(property_data["value"])
-        elif property_data["data"][0]["group"] == "Precomputations":
-            result.measurements[Measurements.PROPERTY_OUTPUT] = property_data["value"]
-        else:
+        if "property" in property_data:
             result.measurements[Measurements.PROPERTY_OUTPUT] = json_output["data"][1]["value"]
+        else:
+            if "data" in property_data:
+                if property_data["data"][0]["group"] == "Precomputations" and len(property_data["data"]) == 1:
+                    result.measurements[Measurements.PROPERTY_OUTPUT] = int(property_data["value"])
+                elif property_data["data"][0]["group"] == "Precomputations":
+                    result.measurements[Measurements.PROPERTY_OUTPUT] = property_data["value"]
 
     def get_algorithm_from_name(self, benchmark, result):
         for algorithm_1 in benchmark.algorithms:
