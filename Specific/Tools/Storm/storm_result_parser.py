@@ -18,6 +18,10 @@ class StormResultParser(ResultParser):
             result.threw_error = True
             result.error_text = "Returned with code -9"
             return
+        if result.command_results[0].return_code == -8:
+            result.threw_error = True
+            result.error_text = "Returned with code -8"
+            return
         self.result_in_next_line = False
         log = result.command_results[0].output_log
         status = "start"
@@ -29,6 +33,9 @@ class StormResultParser(ResultParser):
             status = self.parse_log_line(line, result, status)
         if Measurements.TRANSITIONS not in result.measurements and Measurements.STATES in result.measurements:
             result.measurements[Measurements.TRANSITIONS] = result.measurements[Measurements.STATES]
+        if Measurements.BISIMULATION_TIME in result.measurements:
+            result.measurements[Measurements.STATE_SPACE_TIME] += result.measurements[Measurements.BISIMULATION_TIME]
+
 
     def parse_log_line(self, line, result, status):
         match = re.search(r"Time for model construction", line)

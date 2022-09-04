@@ -60,3 +60,15 @@ def only_dtmc_and_mdp():
 
     return filter
 
+
+def only_dtmc_and_ctmc():
+    def filter(instance: BenchmarkInstance):
+        if '/ctmc/' in instance.benchmark_sequence.benchmark_model.file_path_jani:
+            return True
+        if '/dtmc/' in instance.benchmark_sequence.benchmark_model.file_path_jani:
+            return True
+        return False
+
+    return filter
+
+

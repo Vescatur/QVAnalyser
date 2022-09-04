@@ -23,8 +23,9 @@ class PlotSprint6(object):
         self.percentage_state_property_to_total(benchmark)
 
     def percentage_state_property_to_total(self, benchmark):
-        plot = PercentageTotalPlot(benchmark, "Percentage total")
-        plot.save_plot()
+        PercentageTotalPlot(benchmark, True, True, "Percentage total both").save_plot()
+        PercentageTotalPlot(benchmark, True, False, "Percentage total state space time").save_plot()
+        PercentageTotalPlot(benchmark, False, True, "Percentage total property time").save_plot()
 
     def time_versus_characteristic(self, benchmark):
         #times = [Measurements.WALL_TIME]

@@ -8,8 +8,10 @@ from Library.Results.measurements import Measurements
 
 class PercentageTotalPlot(Plot):
 
-    def __init__(self, benchmark: Benchmark, file_name: str):
+    def __init__(self, benchmark: Benchmark, state_space_time, property_time, file_name: str):
         super().__init__(benchmark, file_name)
+        self.state_space_time = state_space_time
+        self.property_time = property_time
         self.measurement_x = Measurements.WALL_TIME
         self.measurement_y1 = Measurements.STATE_SPACE_TIME
         self.measurement_y2 = Measurements.PROPERTY_TIME
@@ -31,10 +33,11 @@ class PercentageTotalPlot(Plot):
         measurement2 = 0
         if self.measurement_y2 in result.measurements:
             measurement2 = result.measurements[self.measurement_y2]
-        measurement3 = 0
-        if Measurements.PARSING_TIME in result.measurements:
-            measurement3 = result.measurements[Measurements.PARSING_TIME]
-        total = measurement1 + measurement2 + measurement3
+        total = 0
+        if self.state_space_time:
+            total += measurement1
+        if self.property_time:
+            total += measurement2
         divider = result.measurements[self.measurement_divider_y]
         self.data_y.append(total/divider)
 

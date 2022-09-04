@@ -2,6 +2,7 @@ from Library.Benchmarks.benchmark import Benchmark
 from Library.Results.measurements import Measurements
 from Library.Results.result import Result
 from Specific.Tools.Modest.modest_tool import ModestTool
+from Specific.Tools.Prism.prism_tool import PrismTool
 
 
 class BenchmarkResultParser(object):
@@ -61,10 +62,18 @@ class BenchmarkResultParser(object):
             raise Exception("Could not find tool of result. The tool name is " + str(result.tool_name))
 
     def add_characteristics_to_statistical_algorithms(self):
-        measurements = [Measurements.STATES,Measurements.TRANSITIONS, Measurements.BRANCHES]
-        algorithm_vi = ModestTool().value_iteration
+        measurements = [Measurements.STATES, Measurements.TRANSITIONS, Measurements.BRANCHES]
+        algorithm_vi_modest = ModestTool().value_iteration
         algorithms_to_modest_ci = [ModestTool().glrtdp,ModestTool().confidence_interval,ModestTool().adaptive,ModestTool().okamoto]
-        self.add_characteristics_to_algorithm(algorithm_vi, algorithms_to_modest_ci, measurements)
+        self.add_characteristics_to_algorithm(algorithm_vi_modest, algorithms_to_modest_ci, measurements)
+
+        algorithm_vi_prism = PrismTool().value_iteration_mtbddd
+        algorithms_to_prism_ci = [PrismTool().confidence_interval,PrismTool().asymptotic_confidence_interval,PrismTool().apmc]
+        self.add_characteristics_to_algorithm(algorithm_vi_prism, algorithms_to_prism_ci, measurements)
+
+        algorithm_vi_prism = PrismTool().digital_clocks
+        algorithms_to_prism_ci = [PrismTool().backwards_reachability,PrismTool().stochastic_games]
+        self.add_characteristics_to_algorithm(algorithm_vi_prism, algorithms_to_prism_ci, measurements)
 
     def add_characteristics_to_algorithm(self, algorithm_from, algorithms_to, measurements):
         for sequence in self.benchmark.benchmark_sequences:

@@ -41,8 +41,10 @@ class ModestResultParser(ResultParser):
         match algorithm.algorithm_type:
             case ModestAlgorithmType.VALUE_ITERATION | ModestAlgorithmType.INTERVAL_ITERATION | \
                  ModestAlgorithmType.SEQUENTIAL_INTERVAL_ITERATION | ModestAlgorithmType.SOUND_VALUE_ITERATION | \
-                 ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION | ModestAlgorithmType.LINEAR_PROGRAMMING | \
+                 ModestAlgorithmType.OPTIMISTIC_VALUE_ITERATION | \
                  ModestAlgorithmType.SYMBLICIT_STATE_ELIMINATION:
+                self.parse_json_vi(json_output, result)
+            case ModestAlgorithmType.LINEAR_PROGRAMMING:
                 self.parse_json_vi(json_output, result)
             case ModestAlgorithmType.CONFIDENCE_INTERVAL | \
                  ModestAlgorithmType.APMC | ModestAlgorithmType.ADAPTIVE:
