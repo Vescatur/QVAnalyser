@@ -1,5 +1,6 @@
 from Library.Benchmarks.benchmark_instance import BenchmarkInstance
 from Library.Benchmarks.benchmark_sequence import BenchmarkSequence
+from Library.Benchmarks.property_type import PropertyType
 from Library.Results.measurements import Measurements
 from Library.Results.result import Result
 from Library.Tools.algorithm import Algorithm
@@ -71,4 +72,49 @@ def only_dtmc_and_ctmc():
 
     return filter
 
+def only_mdp_and_ma():
+    def filter(instance: BenchmarkInstance):
+        if '/mdp/' in instance.benchmark_sequence.benchmark_model.file_path_jani:
+            return True
+        if '/ma/' in instance.benchmark_sequence.benchmark_model.file_path_jani:
+            return True
+        return False
+
+    return filter
+
+def only_mdp_reward():
+    def filter(instance: BenchmarkInstance):
+        if '/mdp/' in instance.benchmark_sequence.benchmark_model.file_path_jani:
+            if instance.benchmark_sequence.property_type == PropertyType.REACHABILITY:
+                return False
+            else:
+                return True
+        return False
+
+    return filter
+
+def only_mdp_reachability():
+    def filter(instance: BenchmarkInstance):
+        if '/mdp/' in instance.benchmark_sequence.benchmark_model.file_path_jani:
+            if instance.benchmark_sequence.property_type == PropertyType.REACHABILITY:
+                return True
+        return False
+
+    return filter
+
+def only_ma():
+    def filter(instance: BenchmarkInstance):
+        if '/ma/' in instance.benchmark_sequence.benchmark_model.file_path_jani:
+            return True
+        return False
+
+    return filter
+
+def only_pta():
+    def filter(instance: BenchmarkInstance):
+        if '/pta/' in instance.benchmark_sequence.benchmark_model.file_path_jani:
+            return True
+        return False
+
+    return filter
 
