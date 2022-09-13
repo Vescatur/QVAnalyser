@@ -24,8 +24,10 @@ class MatrixSprint6(object):
         #MatrixSimiliar(benchmark, algorithms_mdp_ma, only_mdp_and_ma(),True)
         #MatrixSimiliar(benchmark, algorithms_pta, only_pta(),True)
         #MatrixWins(benchmark, algorithms_markov_chains, only_dtmc_and_ctmc(),True)
+        #MatrixWins(benchmark, algorithms_mdp_ma, only_mdp_and_ma(),True)
+        #MatrixWins(benchmark, algorithms_pta, only_pta(),True)
 
-        MatrixBenchmarkInstances(benchmark,only_dtmc_and_ctmc(),True)
+        #MatrixBenchmarkInstances(benchmark,only_dtmc_and_ctmc(),True)
         #MatrixBenchmarkInstances(benchmark,only_mdp_reward(),True)
         #MatrixBenchmarkInstances(benchmark,only_mdp_reachability(),True)
         #MatrixBenchmarkInstances(benchmark,only_ma(),True)
@@ -49,6 +51,14 @@ class MatrixSprint6(object):
 
     def algorithms_for_mdp_and_ma(self, modestTool, prismTool, stormTool):
         algorithms = []
+
+        #algorithms.append(prismTool.confidence_interval)
+        #algorithms.append(prismTool.asymptotic_confidence_interval)
+        #algorithms.append(prismTool.apmc)
+        #algorithms.append(modestTool.confidence_interval)
+        #algorithms.append(modestTool.okamoto)
+        #algorithms.append(modestTool.adaptive)
+
         algorithms.append(modestTool.glrtdp)
         algorithms.append(modestTool.linear_programming)
         algorithms.append(stormTool.linear_programming_sparse)
@@ -64,6 +74,7 @@ class MatrixSprint6(object):
         algorithms.append(prismTool.value_iteration_explicit)
         algorithms.append(prismTool.top_value_iteration_explicit)
         algorithms.append(prismTool.gauss_seidel_explicit)
+        #algorithms.append(prismTool.backwards_gauss_seidel_explicit)
         #algorithms.append(prismTool.jacobi_explicit)
 
         algorithms.append(modestTool.value_iteration)
@@ -78,7 +89,6 @@ class MatrixSprint6(object):
         #algorithms.append(stormTool.eigen_sparse)
         #algorithms.append(stormTool.elimination_sparse)
 
-        #algorithms.append(prismTool.backwards_gauss_seidel_explicit)
         #algorithms.append(stormTool.gmm_sparse)
         #algorithms.append(stormTool.gauss_seidel_sparse)
         #algorithms.append(stormTool.jacobi_sparse)

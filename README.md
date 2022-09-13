@@ -38,7 +38,7 @@ cd "Starter"
 
 export PYTHONPATH="../"
 
-python3.10 RunTestBenchmark.py
+python3.10 1Benchmark_Example.py
 
 # Credits
 
@@ -55,4 +55,5 @@ https://qcomp.org/benchmarks/
 
 # License
 
+https://creativecommons.org/licenses/by/4.0/
 https://creativecommons.org/licenses/by/4.0/legalcode
