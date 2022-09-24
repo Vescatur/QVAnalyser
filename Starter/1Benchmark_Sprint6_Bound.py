@@ -1,7 +1,7 @@
-from Specific.Benchmarks.example_benchmark import ExampleBenchmark
+from Specific.Benchmarks.qvbs_benchmark_sprint_6 import QvbsBenchmarkSprint6
 from Specific.Tools.ModestBound.modest_bound_tool import ModestBoundTool
 
-benchmark = ExampleBenchmark()
+benchmark = QvbsBenchmarkSprint6()
 
 benchmark.tools = []
 tool = ModestBoundTool()
@@ -10,4 +10,3 @@ benchmark.algorithms = []
 benchmark.algorithms.append(tool.bound)
 
 benchmark.run()
-
