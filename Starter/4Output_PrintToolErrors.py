@@ -1,5 +1,5 @@
-from Library.Output.results_printer import ResultsPrinter
 from Library.storage import Storage
+from Specific.Output.results_printer import ResultsPrinter
 
 storage = Storage()
 benchmark = storage.load_latest_benchmark()

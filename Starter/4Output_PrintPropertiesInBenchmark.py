@@ -1,8 +1,8 @@
 import re
 
-from Specific.Benchmarks.qvbs_benchmark_sprint_6 import QvbsBenchmarkSprint6
+from Specific.Benchmarks.qvbs_benchmark_thesis import QvbsBenchmarkThesis
 
-benchmark = QvbsBenchmarkSprint6()
+benchmark = QvbsBenchmarkThesis()
 
 
 def generate_parameter_text(parameters):

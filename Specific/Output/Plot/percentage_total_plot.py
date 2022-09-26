@@ -1,7 +1,5 @@
-import matplotlib.pyplot as plt
-
 from Library.Benchmarks.benchmark import Benchmark
-from Library.Output.plot import Plot
+from Specific.Output.Plot.plot import Plot
 from Library.Output.plot_filters import result_contains_measurement, result_not_threw_error, result_not_timeout
 from Library.Results.measurements import Measurements
 

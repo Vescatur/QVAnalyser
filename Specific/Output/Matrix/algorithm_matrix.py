@@ -2,7 +2,7 @@ from Library.Results.measurements import Measurements
 from Specific.Output.display_name import algorithm_name_to_display_name
 
 
-class Matrix(object):
+class AlgorithmMatrix(object):
 
     def __init__(self, benchmark,algorithms,instance_filter,use_latex):
         self.benchmark = benchmark

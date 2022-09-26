@@ -1,17 +1,9 @@
-from Library.Output.plot_filters import result_not_threw_error, result_not_timeout, result_is_from_algorithm, \
-    only_dtmc_and_mdp
-from Library.Output.results_printer import ResultsPrinter
+from Library.Output.plot_filters import result_is_from_algorithm
 from Library.Output.scatter_plot import ScatterPlot
-from Library.Output.tool_plot import ToolPlot
 from Library.Results.measurements import Measurements
-from Library.setup_environment import Setup
 from Library.storage import Storage
-import matplotlib.pyplot as plt
-import numpy as np
 
-from Specific.Output.percentage_total_plot import PercentageTotalPlot
-from Specific.Tools.Modest.modest_tool import ModestTool
-from Specific.Tools.Storm.storm_tool import StormTool
+from Specific.Output.Plot.percentage_total_plot import PercentageTotalPlot
 
 
 class PlotSprint6(object):

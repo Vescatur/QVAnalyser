@@ -2,7 +2,7 @@ from Library.Benchmarks.benchmark import Benchmark
 from Library.Results.measurements import Measurements
 
 
-class MeasurementPrinter(object):
+class CompactMeasurementPrinter(object):
 
     def print_measurements(self, benchmark: Benchmark, measurements, tool_name):
         for algorithm in benchmark.algorithms:

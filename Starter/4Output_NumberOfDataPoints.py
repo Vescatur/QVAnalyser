@@ -1,7 +1,5 @@
 from Library.Results.measurements import Measurements
 from Library.storage import Storage
-from Specific.Output.matrices_sprint_6 import MatrixSprint6
-from Specific.Output.statistics_sprint_6 import StatisticsSprint6
 from Specific.Output.display_name import algorithm_name_to_display_name
 
 storage = Storage()

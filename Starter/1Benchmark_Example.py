@@ -1,13 +1,13 @@
 from Specific.Benchmarks.example_benchmark import ExampleBenchmark
-from Specific.Tools.ModestBound.modest_bound_tool import ModestBoundTool
+from Specific.Tools.Modest.modest_tool import ModestTool
 
 benchmark = ExampleBenchmark()
 
 benchmark.tools = []
-tool = ModestBoundTool()
+tool = ModestTool()
 benchmark.tools.append(tool)
 benchmark.algorithms = []
-benchmark.algorithms.append(tool.bound)
+benchmark.algorithms.append(tool.interval_iteration)
 
 benchmark.run()
 

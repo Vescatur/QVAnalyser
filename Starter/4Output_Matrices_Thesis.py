@@ -1,6 +1,6 @@
 from Library.storage import Storage
-from Specific.Output.matrices_sprint_6 import MatrixSprint6
+from Specific.Output.Matrix.matrices_thesis import MatrixThesis
 
 storage = Storage()
 benchmark = storage.load_latest_benchmark()
-MatrixSprint6(benchmark)
+MatrixThesis(benchmark)

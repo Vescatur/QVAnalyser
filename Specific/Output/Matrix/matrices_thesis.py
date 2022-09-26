@@ -1,14 +1,9 @@
-from Library.Output.matrix_benchmark_instances import MatrixBenchmarkInstances
-from Library.Output.matrix_similiar import MatrixSimiliar
-from Library.Output.matrix_wins import MatrixWins
-from Library.Output.plot_filters import only_dtmc_and_ctmc, only_mdp_and_ma, only_pta, only_ma, only_mdp_reward, \
-    only_mdp_reachability
 from Specific.Tools.Modest.modest_tool import ModestTool
 from Specific.Tools.Prism.prism_tool import PrismTool
 from Specific.Tools.Storm.storm_tool import StormTool
 
 
-class MatrixSprint6(object):
+class MatrixThesis(object):
 
     def __init__(self, benchmark):
         stormTool = StormTool()

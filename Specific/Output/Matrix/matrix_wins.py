@@ -1,6 +1,6 @@
 import numpy as np
 
-from Library.Output.matrix import Matrix
+from Specific.Output.Matrix.algorithm_matrix import AlgorithmMatrix
 from Library.Results.measurements import Measurements
 from Specific.Output.display_name import algorithm_name_to_display_name
 
@@ -8,7 +8,7 @@ from Specific.Output.display_name import algorithm_name_to_display_name
 def first_element(item):
     return item[0]
 
-class MatrixWins(Matrix):
+class AlgorithmMatrixWins(AlgorithmMatrix):
 
     def __init__(self, benchmark, algorithms, instance_filter, use_latex):
         self.benchmark = benchmark

@@ -1,8 +1,8 @@
-from Library.Output.matrix import Matrix
+from Specific.Output.Matrix.algorithm_matrix import AlgorithmMatrix
 from Library.Results.measurements import Measurements
 
 
-class MatrixSimiliarWinning(Matrix):
+class AlgorithmMatrixSimilarWinning(AlgorithmMatrix):
 
     def generate_cell_text(self, algorithm_left, algorithm_top):
         time_limit = self.benchmark.time_limit

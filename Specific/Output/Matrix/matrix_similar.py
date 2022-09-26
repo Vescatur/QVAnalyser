@@ -1,10 +1,10 @@
 import numpy as np
 
-from Library.Output.matrix import Matrix
+from Specific.Output.Matrix.algorithm_matrix import AlgorithmMatrix
 from Library.Results.measurements import Measurements
 
 
-class MatrixSimiliar(Matrix):
+class AlgorithmMatrixSimilar(AlgorithmMatrix):
 
     def generate_cell_text(self, algorithm_left, algorithm_top):
         use_correlation = False

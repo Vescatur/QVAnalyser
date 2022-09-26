@@ -15,5 +15,6 @@ for sequence in benchmark.benchmark_sequences:
                     print(result.measurements[Measurements.STATES])
                     result.measurements[Measurements.STATES] = 6.499124097455577*math.pow(10,29)
 
+#TODO: Remove three algorithms and an incorrect benchmark instance.
 
 storage.save_result_benchmark(benchmark)
