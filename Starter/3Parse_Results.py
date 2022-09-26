@@ -3,5 +3,6 @@ from Library.storage import Storage
 
 storage = Storage()
 benchmark = storage.load_latest_before_result_benchmark()
-BenchmarkResultParser(benchmark,True)
+BenchmarkResultParser(benchmark,True,True)
 storage.save_result_benchmark(benchmark)
+

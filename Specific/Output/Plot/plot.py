@@ -83,6 +83,6 @@ class Plot(object):
         plt.ylabel(self.generate_y_label())
 
         print("finished plot " + self.file_name)
-        print(Setup().plots_path+self.file_name+".png")
-        plt.savefig(Setup().plots_path+self.file_name+".png")
+        print(Setup().output_path + self.file_name + ".png")
+        plt.savefig(Setup().output_path + self.file_name + ".png")
         plt.close()

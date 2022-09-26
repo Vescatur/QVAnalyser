@@ -7,9 +7,10 @@ from Specific.Tools.Prism.prism_tool import PrismTool
 
 class BenchmarkResultParser(object):
 
-    def __init__(self, benchmark: Benchmark, remove_output_log):
+    def __init__(self, benchmark: Benchmark, remove_output_log,remove_duplicate_results):
         self.benchmark = benchmark
-        self.remove_duplicates()
+        if remove_duplicate_results:
+            self.remove_duplicates()
         self.parse_benchmark()
         if remove_output_log:
             self.remove_output_log()
@@ -26,7 +27,6 @@ class BenchmarkResultParser(object):
 
     # A save had multiple entries from the same result because of a bug. This removes these entries
     def remove_duplicates(self):
-        print("removing duplicates")
         for sequence in self.benchmark.benchmark_sequences:
             for instance in sequence.benchmark_instances:
                 no_duplicate_results = []

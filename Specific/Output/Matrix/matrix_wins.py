@@ -8,35 +8,35 @@ from Specific.Output.display_name import algorithm_name_to_display_name
 def first_element(item):
     return item[0]
 
-class AlgorithmMatrixWins(AlgorithmMatrix):
+class MatrixWins(AlgorithmMatrix):
 
-    def __init__(self, benchmark, algorithms, instance_filter, use_latex):
+    def __init__(self, benchmark, algorithms, instance_filter, use_latex,name):
         self.benchmark = benchmark
         self.instance_filter = instance_filter
         sorted_algorithms = self.order_algorithms_by_wins(algorithms)
 
-        super().__init__(benchmark, sorted_algorithms, instance_filter, use_latex)
+        super().__init__(benchmark, sorted_algorithms, instance_filter, use_latex,name)
 
     def print_top_row(self, algorithms):
         if self.use_latex:
-            print("\\begin{table}[htbp]")
-            print("\centering")
+            self.writer.print("\\begin{table}[htbp]")
+            self.writer.print("\centering")
             allignments = "l"*(len(algorithms)+3)
-            print("\\begin{tabular}{"+allignments+"}")
-            print("\\toprule")
+            self.writer.print("\\begin{tabular}{"+allignments+"}")
+            self.writer.print("\\toprule")
             line = ""
             for alg in algorithms:
                 display_name = algorithm_name_to_display_name(alg.name)
                 line += "\t& \\fonttopsimilar \\rotatebox{90}{"+display_name + "} "
             line += "\t& \\rotatebox{90}{Wins} "
             line += "\t& \\rotatebox{90}{Best} "
-            print(line + "\\\\")
+            self.writer.print(line + "\\\\")
         else:
             line = "\t"
             for alg in algorithms:
                 display_name = algorithm_name_to_display_name(alg.name)
                 line += display_name + "\t"
-            print(line)
+            self.writer.print(line)
 
 
     def order_algorithms_by_wins(self, algorithms):
@@ -96,12 +96,12 @@ class AlgorithmMatrixWins(AlgorithmMatrix):
                 line += "\t& " + str(self.generate_cell_text(algorithm_left, algorithm_top))
             line += "\t& " + str(self.wins_per_algorithm[algorithm_left])
             line += "\t& " + str(self.best_per_algorithm[algorithm_left])
-            print(line + " \\\\")
+            self.writer.print(line + " \\\\")
         else:
             line = display_name + "\t"
             for algorithm_top in algorithms:
                 line += str(self.generate_cell_text(algorithm_left, algorithm_top)) + "\t"
-            print(line)
+            self.writer.print(line)
 
     def generate_cell_text(self, algorithm_left, algorithm_top):
         wins = 0

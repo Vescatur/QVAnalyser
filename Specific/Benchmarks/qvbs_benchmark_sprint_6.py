@@ -9,7 +9,7 @@ from Specific.Tools.Prism.prism_tool import PrismTool
 from Specific.Tools.Storm.storm_tool import StormTool
 
 # This class has been generated using 0Generate_BenchmarkFromQVBS.py
-class QvbsBenchmarkThesis(Benchmark):
+class QvbsBenchmarkSprint6(Benchmark):
     def __init__(self):
         super().__init__()
         self.time_limit = 900

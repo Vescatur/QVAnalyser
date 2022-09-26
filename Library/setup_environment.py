@@ -10,7 +10,7 @@ class Setup(object):
         self.benchmark_models_path = self.resources_path + "BenchmarkModels/"
         self.tools_path = self.resources_path + "Tools/"
         self.saves_path = self.resources_path + "Saves/"
-        self.plots_path = self.resources_path + "Output/"
+        self.output_path = self.resources_path + "Output/"
 
     def setup_tools(self, benchmark):
         missing_tool = False
@@ -29,7 +29,7 @@ class Setup(object):
         self.try_create_directory(self.benchmark_models_path)
         self.try_create_directory(self.tools_path)
         self.try_create_directory(self.saves_path)
-        self.try_create_directory(self.plots_path)
+        self.try_create_directory(self.output_path)
 
     def try_create_directory(self, location):
         if not path.exists(location):

@@ -4,7 +4,7 @@ from Specific.Output.Matrix.algorithm_matrix import AlgorithmMatrix
 from Library.Results.measurements import Measurements
 
 
-class AlgorithmMatrixSimilar(AlgorithmMatrix):
+class MatrixSimilar(AlgorithmMatrix):
 
     def generate_cell_text(self, algorithm_left, algorithm_top):
         use_correlation = False

@@ -1,36 +1,38 @@
 from Library.Results.measurements import Measurements
+from Specific.Output.Matrix.text_file_printer import TextFileWriter
 from Specific.Output.display_name import algorithm_name_to_display_name
 
 
 class AlgorithmMatrix(object):
 
-    def __init__(self, benchmark,algorithms,instance_filter,use_latex):
-        self.benchmark = benchmark
-        self.instance_filter = instance_filter
-        self.use_latex = use_latex
+    def __init__(self, benchmark,algorithms,instance_filter,use_latex,name):
+        with TextFileWriter(name) as self.writer:
+            self.benchmark = benchmark
+            self.instance_filter = instance_filter
+            self.use_latex = use_latex
 
-        self.print_top_row(algorithms)
-        self.print_body(algorithms)
-        self.print_bottom_row()
+            self.print_top_row(algorithms)
+            self.print_body(algorithms)
+            self.print_bottom_row()
 
     def print_top_row(self, algorithms):
         if self.use_latex:
-            print("\\begin{table}[htbp]")
-            print("\centering")
+            self.writer.print("\\begin{table}[htbp]")
+            self.writer.print("\centering")
             allignments = "l"*(len(algorithms)+1)
-            print("\\begin{tabular}{"+allignments+"}")
-            print("\\toprule")
+            self.writer.print("\\begin{tabular}{"+allignments+"}")
+            self.writer.print("\\toprule")
             line = ""
             for alg in algorithms:
                 display_name = algorithm_name_to_display_name(alg.name)
                 line += "\t& \\fonttopsimilar \\rotatebox{90}{"+display_name + "}"
-            print(line + "\\\\")
+            self.writer.print(line + "\\\\")
         else:
             line = "\t"
             for alg in algorithms:
                 display_name = algorithm_name_to_display_name(alg.name)
                 line += display_name + "\t"
-            print(line)
+            self.writer.print(line)
 
     def print_body(self, algorithms):
         for alg in algorithms:
@@ -42,12 +44,12 @@ class AlgorithmMatrix(object):
             line = display_name
             for algorithm_top in algorithms:
                 line += "\t& " + str(self.generate_cell_text(algorithm_left, algorithm_top))
-            print(line + " \\\\")
+            self.writer.print(line + " \\\\")
         else:
             line = display_name + "\t"
             for algorithm_top in algorithms:
                 line += str(self.generate_cell_text(algorithm_left, algorithm_top)) + "\t"
-            print(line)
+            self.writer.print(line)
 
     def generate_cell_text(self, algorithm_left, algorithm_top):
         raise Exception("Unimplemented method Matrix.generate_cell_text()")
@@ -59,11 +61,11 @@ class AlgorithmMatrix(object):
 
     def print_bottom_row(self):
         if self.use_latex:
-            print("\\bottomrule")
-            print("\\end{tabular}")
-            print("\\caption{??}")
-            print("\\label{table:??}")
-            print("\\end{table}")
+            self.writer.print("\\bottomrule")
+            self.writer.print("\\end{tabular}")
+            self.writer.print("\\caption{??}")
+            self.writer.print("\\label{table:??}")
+            self.writer.print("\\end{table}")
 
 
 

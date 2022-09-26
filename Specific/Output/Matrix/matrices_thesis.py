@@ -1,3 +1,8 @@
+from Specific.Output.Matrix.matrix_benchmark_instances import MatrixBenchmarkInstances
+from Specific.Output.Matrix.matrix_similar import MatrixSimilar
+from Specific.Output.Matrix.matrix_wins import MatrixWins
+from Specific.Output.Plot.plot_filters import only_dtmc_and_ctmc, only_mdp_and_ma, only_pta, only_mdp_reward, \
+    only_mdp_reachability, only_ma
 from Specific.Tools.Modest.modest_tool import ModestTool
 from Specific.Tools.Prism.prism_tool import PrismTool
 from Specific.Tools.Storm.storm_tool import StormTool
@@ -15,18 +20,19 @@ class MatrixThesis(object):
         algorithms_pta = self.algorithms_for_pta(modestTool, prismTool, stormTool)
 
 
-        #MatrixSimiliar(benchmark, algorithms_markov_chains, only_dtmc_and_ctmc(),True)
-        #MatrixSimiliar(benchmark, algorithms_mdp_ma, only_mdp_and_ma(),True)
-        #MatrixSimiliar(benchmark, algorithms_pta, only_pta(),True)
-        #MatrixWins(benchmark, algorithms_markov_chains, only_dtmc_and_ctmc(),True)
-        #MatrixWins(benchmark, algorithms_mdp_ma, only_mdp_and_ma(),True)
-        #MatrixWins(benchmark, algorithms_pta, only_pta(),True)
+        MatrixSimilar(benchmark, algorithms_markov_chains, only_dtmc_and_ctmc(),True,"SimilarAlgorithmsDtmcCtmc")
+        MatrixSimilar(benchmark, algorithms_mdp_ma, only_mdp_and_ma(),True,"SimilarAlgorithmsMdpMa")
+        MatrixSimilar(benchmark, algorithms_pta, only_pta(),True,"SimilarAlgorithmsPta")
 
-        #MatrixBenchmarkInstances(benchmark,only_dtmc_and_ctmc(),True)
-        #MatrixBenchmarkInstances(benchmark,only_mdp_reward(),True)
-        #MatrixBenchmarkInstances(benchmark,only_mdp_reachability(),True)
-        #MatrixBenchmarkInstances(benchmark,only_ma(),True)
-        #MatrixBenchmarkInstances(benchmark,only_pta(),True)
+        MatrixWins(benchmark, algorithms_markov_chains, only_dtmc_and_ctmc(),True,"WinsDtmcCtmc")
+        MatrixWins(benchmark, algorithms_mdp_ma, only_mdp_and_ma(),True,"WinsMdpMa")
+        MatrixWins(benchmark, algorithms_pta, only_pta(),True,"WinsPta")
+
+        MatrixBenchmarkInstances(benchmark,only_dtmc_and_ctmc(),True,"SimilarInstancesDtmcCtmc")
+        MatrixBenchmarkInstances(benchmark,only_mdp_reward(),True,"SimilarInstancesMdpReward")
+        MatrixBenchmarkInstances(benchmark,only_mdp_reachability(),True,"SimilarInstancesMdpReachability")
+        MatrixBenchmarkInstances(benchmark,only_ma(),True,"SimilarInstancesMa")
+        MatrixBenchmarkInstances(benchmark,only_pta(),True,"SimilarInstancesPta")
 
 
     def algorithms_for_pta(self, modestTool, prismTool, stormTool):

@@ -3,6 +3,7 @@ import re
 import numpy as np
 
 from Library.Results.measurements import Measurements
+from Specific.Output.Matrix.text_file_printer import TextFileWriter
 
 
 def first_element(item):
@@ -10,15 +11,16 @@ def first_element(item):
 
 class MatrixBenchmarkInstances(object):
 
-    def __init__(self, benchmark,instance_filter,use_latex):
-        self.benchmark = benchmark
-        self.use_latex = use_latex
-
-        unsorted_instances = self.get_instances(benchmark,instance_filter)
-        self.instances = self.order_instance_by_time(unsorted_instances)
-        self.print_top_row()
-        self.print_body()
-        self.print_bottom_row()
+    def __init__(self, benchmark,instance_filter,use_latex,name):
+        with TextFileWriter(name) as self.writer:
+            self.benchmark = benchmark
+            self.use_latex = use_latex
+    
+            unsorted_instances = self.get_instances(benchmark,instance_filter)
+            self.instances = self.order_instance_by_time(unsorted_instances)
+            self.print_top_row()
+            self.print_body()
+            self.print_bottom_row()
 
     def get_instances(self, benchmark,instance_filter):
         instances = []
@@ -62,11 +64,11 @@ class MatrixBenchmarkInstances(object):
 
     def print_top_row(self):
         if self.use_latex:
-            print("\\begin{table}[htbp]")
-            print("\centering")
+            self.writer.print("\\begin{table}[htbp]")
+            self.writer.print("\centering")
             allignments = "l"*(len(self.instances)+1+3)
-            print("\\begin{tabular}{"+allignments+"}")
-            print("\\toprule")
+            self.writer.print("\\begin{tabular}{"+allignments+"}")
+            self.writer.print("\\toprule")
             line = ""
             for instance in self.instances:
                 display_name = self.instance_to_display_name(instance)
@@ -75,12 +77,12 @@ class MatrixBenchmarkInstances(object):
             line += "\t& \\rotatebox{90}{Average time}"
             line += "\t& \\rotatebox{90}{Average states}"
 
-            print(line + " \\\\")
+            self.writer.print(line + " \\\\")
         else:
             line = "\t"
             for instance in self.instances:
                 line += self.instance_to_display_name(instance) + "\t"
-            print(line)
+            self.writer.print(line)
 
     def print_body(self):
         for instance in self.instances:
@@ -131,9 +133,9 @@ class MatrixBenchmarkInstances(object):
                 line += "\t"
 
         if self.use_latex:
-            print(line + " \\\\")
+            self.writer.print(line + " \\\\")
         else:
-            print(line)
+            self.writer.print(line)
 
     def generate_cell_text(self, instance_left, instance_top):
         time_limit = self.benchmark.time_limit
@@ -187,11 +189,11 @@ class MatrixBenchmarkInstances(object):
 
     def print_bottom_row(self):
         if self.use_latex:
-            print("\\bottomrule")
-            print("\\end{tabular}")
-            print("\\caption{??}")
-            print("\\label{table:??}")
-            print("\\end{table}")
+            self.writer.print("\\bottomrule")
+            self.writer.print("\\end{tabular}")
+            self.writer.print("\\caption{??}")
+            self.writer.print("\\label{table:??}")
+            self.writer.print("\\end{table}")
 
     def number_to_hex(self, number):
         text = format(round(number),"X")

@@ -1,41 +1,41 @@
 import numpy as np
 from Library.Results.measurements import Measurements
+from Specific.Output.Matrix.text_file_printer import TextFileWriter
 from Specific.Output.display_name import algorithm_name_to_display_name
 from Specific.Tools.Modest.modest_tool import ModestTool
 from Specific.Tools.Prism.prism_tool import PrismTool
 from Specific.Tools.Storm.storm_tool import StormTool
 
 
-class StatisticsSprint6(object):
+class Statistics(object):
 
-    def __init__(self, benchmark,time):
-        self.benchmark = benchmark
+    def __init__(self, benchmark,characteristics,time,name):
+        with TextFileWriter(name) as self.writer:
+            self.benchmark = benchmark
 
-        #self.times = [Measurements.STATE_SPACE_TIME, Measurements.PROPERTY_TIME, Measurements.WALL_TIME]
-
-        self.times = [time]
-        self.characteristics = [Measurements.STATES, Measurements.TRANSITIONS, Measurements.BRANCHES]
-
-        self.time_names = {}
-        self.time_names[Measurements.STATE_SPACE_TIME] = "State space time"
-        self.time_names[Measurements.PROPERTY_TIME] = "Property time"
-        self.time_names[Measurements.WALL_TIME] = "Wall-clock time"
-
-        self.characteristic_names = {}
-        self.characteristic_names[Measurements.STATES] = "States"
-        self.characteristic_names[Measurements.TRANSITIONS] = "Transitions"
-        self.characteristic_names[Measurements.BRANCHES] = "Branches"
-
-        self.print_top_row()
-        self.print_body()
-        self.print_bottom_row()
+            self.times = [time]
+            self.characteristics = characteristics
+    
+            self.time_names = {}
+            self.time_names[Measurements.STATE_SPACE_TIME] = "State space time"
+            self.time_names[Measurements.PROPERTY_TIME] = "Property time"
+            self.time_names[Measurements.WALL_TIME] = "Wall-clock time"
+    
+            self.characteristic_names = {}
+            self.characteristic_names[Measurements.STATES] = "States"
+            self.characteristic_names[Measurements.TRANSITIONS] = "Transitions"
+            self.characteristic_names[Measurements.BRANCHES] = "Branches"
+    
+            self.print_top_row()
+            self.print_body()
+            self.print_bottom_row()
 
     def print_top_row(self):
-        print("\\begin{table}[htbp]")
-        print("\centering")
+        self.writer.print("\\begin{table}[htbp]")
+        self.writer.print("\centering")
         allignments = "l" * (len(self.times) * len(self.characteristics)*2 + 1)
-        print("\\begin{tabular}{" + allignments + "}")
-        print("\\toprule")
+        self.writer.print("\\begin{tabular}{" + allignments + "}")
+        self.writer.print("\\toprule")
         line1 = ""
         line2 = ""
         first = True
@@ -43,9 +43,9 @@ class StatisticsSprint6(object):
             line1 += "\t& \multicolumn{3}{l}{" + self.time_names[time] + "}"
             for characteristic in self.characteristics:
                 line2 += "\t& \multicolumn{2}{l}{" + self.characteristic_names[characteristic] + "}"
-        print(line1 + "\\\\")
-        print(line2 + "\\\\")
-        print("\cmidrule(r){1-1} \cmidrule{2-7} ")
+        self.writer.print(line1 + "\\\\")
+        self.writer.print(line2 + "\\\\")
+        self.writer.print("\cmidrule(r){1-1} \cmidrule{2-7} ")
 
     def print_body(self):
         results = {}
@@ -87,24 +87,16 @@ class StatisticsSprint6(object):
                                 line += "\t& \m{" + str(ramp_number) + "x - " + str(start_number) + "}"
                         else:
                             line += "\t& "
-                        '''print(correlation_number)
-                        print(correlated_line)
-                        print(characteristic_measurements)
-                        print(time_measurements)
-
-                        for i in range(0, len(time_measurements)):
-                            print(str(characteristic_measurements[i]).replace(".", ",") + "\t" + str(time_measurements[i]).replace(".", ","))
-                        return '''
                     else:
                         line += "\t& No data \t&"
-            print(line + " \\\\")
+            self.writer.print(line + " \\\\")
 
     def print_bottom_row(self):
-        print("\\bottomrule")
-        print("\\end{tabular}")
-        print("\\caption{??}")
-        print("\\label{table:??}")
-        print("\\end{table}")
+        self.writer.print("\\bottomrule")
+        self.writer.print("\\end{tabular}")
+        self.writer.print("\\caption{??}")
+        self.writer.print("\\label{table:??}")
+        self.writer.print("\\end{table}")
 
     def all_equal(self, measurements):
         for measurement in measurements:
