@@ -21,7 +21,7 @@ class MatrixWins(AlgorithmMatrix):
         if self.use_latex:
             self.writer.print("\\begin{table}[htbp]")
             self.writer.print("\centering")
-            allignments = "l"*(len(algorithms)+3)
+            allignments = "l"*(len(algorithms)+4)
             self.writer.print("\\begin{tabular}{"+allignments+"}")
             self.writer.print("\\toprule")
             line = ""
@@ -29,6 +29,7 @@ class MatrixWins(AlgorithmMatrix):
                 display_name = algorithm_name_to_display_name(alg.name)
                 line += "\t& \\fonttopsimilar \\rotatebox{90}{"+display_name + "} "
             line += "\t& \\rotatebox{90}{Wins} "
+            line += "\t& \\rotatebox{90}{Total} "
             line += "\t& \\rotatebox{90}{Best} "
             self.writer.print(line + "\\\\")
         else:
@@ -57,12 +58,14 @@ class MatrixWins(AlgorithmMatrix):
                     fast_results[instance] = fast_result
 
 
+        self.totals_per_algorithm = {}
         self.wins_per_algorithm = {}
         self.best_per_algorithm = {}
         algorithms_with_wins = []
         for algorithm in algorithms:
             total_best = 0
             wins = 0
+            total = 0
             for sequence in self.benchmark.benchmark_sequences:
                 for instance in sequence.benchmark_instances:
                     if self.instance_filter(instance):
@@ -73,11 +76,13 @@ class MatrixWins(AlgorithmMatrix):
                             result_left = self.find_result_with_algorithm(instance, algorithm)
                             result_top = self.find_result_with_algorithm(instance, algorithm_opponent)
                             if not result_left.not_supported and not result_top.not_supported:
+                                total += 1
                                 time_left = self.get_time(result_left)
                                 time_top = self.get_time(result_top)
                                 if time_left < time_top:
                                     wins += 1
 
+            self.totals_per_algorithm[algorithm] = total
             self.wins_per_algorithm[algorithm] = wins
             self.best_per_algorithm[algorithm] = total_best
             algorithms_with_wins.append((wins,algorithm))
@@ -95,6 +100,7 @@ class MatrixWins(AlgorithmMatrix):
             for algorithm_top in algorithms:
                 line += "\t& " + str(self.generate_cell_text(algorithm_left, algorithm_top))
             line += "\t& " + str(self.wins_per_algorithm[algorithm_left])
+            line += "\t& " + str(self.totals_per_algorithm[algorithm_left])
             line += "\t& " + str(self.best_per_algorithm[algorithm_left])
             self.writer.print(line + " \\\\")
         else:

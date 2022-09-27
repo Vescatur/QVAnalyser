@@ -5,7 +5,7 @@ from Specific.Output.display_name import algorithm_name_to_display_name
 from Specific.Tools.Modest.modest_tool import ModestTool
 from Specific.Tools.Prism.prism_tool import PrismTool
 from Specific.Tools.Storm.storm_tool import StormTool
-
+from scipy import stats
 
 class Statistics(object):
 
@@ -33,19 +33,21 @@ class Statistics(object):
     def print_top_row(self):
         self.writer.print("\\begin{table}[htbp]")
         self.writer.print("\centering")
-        allignments = "l" * (len(self.times) * len(self.characteristics)*2 + 1)
+        allignments = "l" * (len(self.times) * len(self.characteristics)*3 + 1)
         self.writer.print("\\begin{tabular}{" + allignments + "}")
         self.writer.print("\\toprule")
         line1 = ""
         line2 = ""
-        first = True
+        line3 = ""
         for time in self.times:
-            line1 += "\t& \multicolumn{3}{l}{" + self.time_names[time] + "}"
+            line1 += "\t& \multicolumn{9}{l}{" + self.time_names[time] + "}"
             for characteristic in self.characteristics:
-                line2 += "\t& \multicolumn{2}{l}{" + self.characteristic_names[characteristic] + "}"
+                line2 += "\t& \multicolumn{3}{l}{" + self.characteristic_names[characteristic] + "}"
+                line3 += "\t& r-value \t& p-value \t& \multicolumn{1}{l}{formula} "
         self.writer.print(line1 + "\\\\")
         self.writer.print(line2 + "\\\\")
-        self.writer.print("\cmidrule(r){1-1} \cmidrule{2-7} ")
+        self.writer.print(line3 + "\\\\")
+        self.writer.print("\cmidrule(r){1-1} \cmidrule{2-10} ")
 
     def print_body(self):
         results = {}
@@ -68,27 +70,27 @@ class Statistics(object):
                             time_measurements.append(result.measurements[time])
                             characteristic_measurements.append(result.measurements[characteristic])
                     if len(time_measurements) >= 3 and not self.all_equal(time_measurements):
-                        R2 = np.corrcoef(time_measurements, characteristic_measurements)
-                        correlation_number = R2[0][1]
-                        round_correlation = round(correlation_number * 100) / 100
-                        color = self.generate_color(correlation_number)
+                        result = stats.linregress(characteristic_measurements,time_measurements)
+                        round_correlation = round(result.rvalue * 100) / 100
+                        color = self.generate_color(result.rvalue)
                         line += "\t& " + color + str(round_correlation)
+                        round_pvalue = round(result.pvalue * 100) / 100
+                        line += "\t& " + "{:.2f}".format(round_pvalue)
 
-                        if correlation_number >=0.7:
-                            correlated_line = np.polyfit(characteristic_measurements, time_measurements, 1)
+                        if result.pvalue <= 0.05:
                             divider = 100
                             step_size = 1000000
-                            start_number = round(correlated_line[1] * divider) / (divider)
-                            ramp_number = round(correlated_line[0] * divider*step_size) / divider
-                            if start_number >= 0:
-                                line += "\t& \m{" + str(ramp_number) + "x + " + str(start_number) + "}"
+                            intercept_display = round(result.intercept * divider) / (divider)
+                            slope_display = round(result.slope * divider*step_size) / divider
+                            if intercept_display >= 0:
+                                line += "\t& \m{" + str(slope_display) + "x + " + str(intercept_display) + "}"
                             else:
-                                start_number = start_number * -1
-                                line += "\t& \m{" + str(ramp_number) + "x - " + str(start_number) + "}"
+                                intercept_display = intercept_display * -1
+                                line += "\t& \m{" + str(slope_display) + "x - " + str(intercept_display) + "}"
                         else:
                             line += "\t& "
                     else:
-                        line += "\t& No data \t&"
+                        line += "\t& No data \t& \t&"
             self.writer.print(line + " \\\\")
 
     def print_bottom_row(self):

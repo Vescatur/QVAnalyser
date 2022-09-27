@@ -8,17 +8,18 @@ count = 0
 total_time = 0
 
 for sequence in benchmark.benchmark_sequences:
-    if "resource" in sequence.benchmark_model.name:
-        for instance in sequence.benchmark_instances:
-             for result in instance.results:
-                 if Measurements.WALL_TIME in result.measurements:
-                    count += 1
-                    total_time += result.measurements[Measurements.WALL_TIME]
-                    if result.threw_error or result.timed_out:
-                        print("error")
-                        total_time -= result.measurements[Measurements.WALL_TIME]
-                        total_time += benchmark.time_limit*2
-print(total_time/count)
+    for instance in sequence.benchmark_instances:
+        for result in instance.results:
+            if result.algorithm_name == "Prism backwards successive over-relaxation explicit":
+                i = 1
+            if "rectangle" in instance.benchmark_sequence.benchmark_model.file_name_jani:
+                i = 1
+
+for algorithm in benchmark.algorithms:
+    if algorithm.name == "Prism backwards successive over-relaxation explicit":
+        i = 1
+
+
 
 for algorithms in benchmark.algorithms:
     pass

@@ -4,28 +4,18 @@ from Library.Results.measurements import Measurements
 
 class OverviewMeasurementPrinter(object):
 
-    def print_overview_measurements(self, benchmark: Benchmark, measurements):
-        algorithms = []
-        for alg in benchmark.algorithms:
-            if alg.tool.name() == "Modest":
-                algorithms.append(alg)
-        for alg in benchmark.algorithms:
-            if alg.tool.name() == "Prism":
-                algorithms.append(alg)
-        for alg in benchmark.algorithms:
-            if alg.tool.name() == "Storm":
-                algorithms.append(alg)
-
+    def print_overview_measurements(self,benchmark, algorithms,instance_filter, measurements):
         for measurement in measurements:
-            self.print_overview_for_one_measurement(benchmark,algorithms,measurement)
+            self.print_overview_for_one_measurement(benchmark, algorithms, instance_filter, measurement)
 
-    def print_overview_for_one_measurement(self,benchmark, algorithms, measurement):
+    def print_overview_for_one_measurement(self, benchmark, algorithms, instance_filter, measurement):
         print()
         print(measurement)
         self.print_top_row(algorithms)
         for sequence in benchmark.benchmark_sequences:
             for instance in sequence.benchmark_instances:
-                self.print_row(algorithms,instance,measurement)
+                if instance_filter(instance):
+                    self.print_row(algorithms,instance,measurement)
 
     def print_top_row(self, algorithms):
         line = "\t"
@@ -43,7 +33,13 @@ class OverviewMeasurementPrinter(object):
     def print_cell(self, alg, instance, measurement):
         for result in instance.results:
             if result.algorithm_name == alg.name:
-                if measurement in result.measurements:
+                if result.threw_error:
+                    return "error\t"
+                elif result.timed_out:
+                    return "timed out\t"
+                elif result.not_supported:
+                    return "not supported\t"
+                elif measurement in result.measurements:
                     return str(result.measurements[measurement]) + "\t"
                 else:
                     return "\t"
