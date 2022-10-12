@@ -21,7 +21,7 @@ class MatrixWins(AlgorithmMatrix):
         if self.use_latex:
             self.writer.print("\\begin{table}[htbp]")
             self.writer.print("\centering")
-            allignments = "l"*(len(algorithms)+4)
+            allignments = "l"*(len(algorithms)+1+3+2)
             self.writer.print("\\begin{tabular}{"+allignments+"}")
             self.writer.print("\\toprule")
             line = ""
@@ -29,6 +29,8 @@ class MatrixWins(AlgorithmMatrix):
                 display_name = algorithm_name_to_display_name(alg.name)
                 line += "\t& \\fonttopsimilar \\rotatebox{90}{"+display_name + "} "
             line += "\t& \\rotatebox{90}{Wins} "
+            line += "\t& \\rotatebox{90}{Draws} "
+            line += "\t& \\rotatebox{90}{Losses} "
             line += "\t& \\rotatebox{90}{Total} "
             line += "\t& \\rotatebox{90}{Best} "
             self.writer.print(line + "\\\\")
@@ -60,12 +62,16 @@ class MatrixWins(AlgorithmMatrix):
 
         self.totals_per_algorithm = {}
         self.wins_per_algorithm = {}
+        self.draws_per_algorithm = {}
+        self.loss_per_algorithm = {}
         self.best_per_algorithm = {}
         algorithms_with_wins = []
         for algorithm in algorithms:
             total_best = 0
             wins = 0
-            total = 0
+            draws = 0
+            loss = 0
+
             for sequence in self.benchmark.benchmark_sequences:
                 for instance in sequence.benchmark_instances:
                     if self.instance_filter(instance):
@@ -73,17 +79,23 @@ class MatrixWins(AlgorithmMatrix):
                             if fast_results[instance].algorithm_name == algorithm.name:
                                 total_best+=1
                         for algorithm_opponent in algorithms:
-                            result_left = self.find_result_with_algorithm(instance, algorithm)
-                            result_top = self.find_result_with_algorithm(instance, algorithm_opponent)
-                            if not result_left.not_supported and not result_top.not_supported:
-                                total += 1
-                                time_left = self.get_time(result_left)
-                                time_top = self.get_time(result_top)
-                                if time_left < time_top:
-                                    wins += 1
+                            if algorithm_opponent is not algorithm:
+                                result_left = self.find_result_with_algorithm(instance, algorithm)
+                                result_top = self.find_result_with_algorithm(instance, algorithm_opponent)
+                                if not result_left.not_supported and not result_top.not_supported:
+                                    time_left = self.get_time(result_left)
+                                    time_top = self.get_time(result_top)
+                                    if time_left < time_top:
+                                        wins += 1
+                                    elif time_left == time_top:
+                                        draws += 1
+                                    elif time_left > time_top:
+                                        loss += 1
 
-            self.totals_per_algorithm[algorithm] = total
+            self.totals_per_algorithm[algorithm] = wins+draws+loss
             self.wins_per_algorithm[algorithm] = wins
+            self.draws_per_algorithm[algorithm] = draws
+            self.loss_per_algorithm[algorithm] = loss
             self.best_per_algorithm[algorithm] = total_best
             algorithms_with_wins.append((wins,algorithm))
 
@@ -93,18 +105,20 @@ class MatrixWins(AlgorithmMatrix):
             sorted_algorithms.append(win_algorithm[1])
         return sorted_algorithms
 
-    def print_body_line(self, algorithms, algorithm_left):
+    def print_body_line(self, algorithms, algorithm_left, index):
         display_name = algorithm_name_to_display_name(algorithm_left.name)
         if self.use_latex:
-            line = display_name
+            line = str(index) + " " + display_name
             for algorithm_top in algorithms:
                 line += "\t& " + str(self.generate_cell_text(algorithm_left, algorithm_top))
             line += "\t& " + str(self.wins_per_algorithm[algorithm_left])
+            line += "\t& " + str(self.draws_per_algorithm[algorithm_left])
+            line += "\t& " + str(self.loss_per_algorithm[algorithm_left])
             line += "\t& " + str(self.totals_per_algorithm[algorithm_left])
             line += "\t& " + str(self.best_per_algorithm[algorithm_left])
             self.writer.print(line + " \\\\")
         else:
-            line = display_name + "\t"
+            line = str(index) + " " + display_name + "\t"
             for algorithm_top in algorithms:
                 line += str(self.generate_cell_text(algorithm_left, algorithm_top)) + "\t"
             self.writer.print(line)

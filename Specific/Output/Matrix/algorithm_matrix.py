@@ -35,18 +35,20 @@ class AlgorithmMatrix(object):
             self.writer.print(line)
 
     def print_body(self, algorithms):
+        index = 1
         for alg in algorithms:
-            self.print_body_line(algorithms, alg)
+            self.print_body_line(algorithms, alg, index)
+            index += 1
 
-    def print_body_line(self, algorithms, algorithm_left):
+    def print_body_line(self, algorithms, algorithm_left, index):
         display_name = algorithm_name_to_display_name(algorithm_left.name)
         if self.use_latex:
-            line = display_name
+            line = str(index) + " " + display_name
             for algorithm_top in algorithms:
                 line += "\t& " + str(self.generate_cell_text(algorithm_left, algorithm_top))
             self.writer.print(line + " \\\\")
         else:
-            line = display_name + "\t"
+            line = str(index) + " " + display_name + "\t"
             for algorithm_top in algorithms:
                 line += str(self.generate_cell_text(algorithm_left, algorithm_top)) + "\t"
             self.writer.print(line)

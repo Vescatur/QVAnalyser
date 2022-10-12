@@ -157,7 +157,7 @@ class ResultsPrinter(object):
                 total += 1
                 if result.threw_error:
                     threw_error += 1
-                    print(result.error_text + " | " + result.algorithm_name )
+                    print(str(result.error_text) + " | " + result.algorithm_name )
                     if len(result.command_results) >= 1 and result.command_results[0].exception is not None:
                         threw_error_with_exception += 1
                 if result.qva_error:

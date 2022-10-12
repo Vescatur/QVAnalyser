@@ -85,20 +85,21 @@ class MatrixBenchmarkInstances(object):
             self.writer.print(line)
 
     def print_body(self):
+        index = 1
         for instance in self.instances:
-            self.print_body_line(instance)
+            self.print_body_line(instance, index)
+            index += 1
 
-    def print_body_line(self, instance_left):
+    def print_body_line(self, instance_left,index):
         display_name = self.instance_to_display_name(instance_left)
-        line = instance_left.benchmark_sequence.benchmark_model.name + "\t"
 
         if self.use_latex:
-            line = display_name
+            line = str(index) + " " + display_name
             for instance_top in self.instances:
                 line += "\t& " + str(self.generate_cell_text(instance_left, instance_top))
 
         else:
-            line = display_name + "\t"
+            line = str(index) + " " + display_name + "\t"
             for instance_top in self.instances:
                 line += str(self.generate_cell_text(instance_left, instance_top)) + "\t"
 
