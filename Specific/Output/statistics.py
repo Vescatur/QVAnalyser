@@ -73,10 +73,11 @@ class Statistics(object):
                     if len(time_measurements) >= 3 and not self.all_equal(time_measurements):
                         result = stats.linregress(characteristic_measurements,time_measurements)
                         round_correlation = round(result.rvalue * 100) / 100
-                        color = self.generate_color(result.rvalue)
-                        line += "\t& " + color + str(round_correlation)
+                        colorR = self.generate_color_r_value(result.rvalue)
+                        line += "\t& " + colorR + str(round_correlation)
                         round_pvalue = round(result.pvalue * 100) / 100
-                        line += "\t& " + "{:.2f}".format(round_pvalue)
+                        colorP = self.generate_color_p_value(result.pvalue)
+                        line += "\t& " + colorP + "{:.2f}".format(round_pvalue)
 
                         if result.pvalue <= 0.05:
                             divider = 100
@@ -107,7 +108,7 @@ class Statistics(object):
                 return False
         return True
 
-    def generate_color(self, metric):
+    def generate_color_r_value(self, metric):
         color = None
         white = np.array([255, 255, 255])
         if metric >= 0:
@@ -118,6 +119,23 @@ class Statistics(object):
             red = np.array([230, 124, 115])
             factor = 1 + metric
             color = white * factor + red * (1 - factor)
+
+        hex_color = self.number_to_hex(color[0]) + self.number_to_hex(color[1]) + self.number_to_hex(color[2])
+        return "\cellcolor[HTML]{" + hex_color + "}"
+
+
+    def generate_color_p_value(self, metric):
+        color = None
+        white = np.array([255, 255, 255])
+        if metric <= 0.05:
+            green = np.array([87, 187, 138])
+            factor = metric/0.05
+            color = green * (1 - factor) + white * factor
+        else:
+            red = np.array([230, 124, 115])
+            factor = (metric-0.05)/0.95
+            factor = (factor+1)/2
+            color = white * (1 - factor) + red * factor
 
         hex_color = self.number_to_hex(color[0]) + self.number_to_hex(color[1]) + self.number_to_hex(color[2])
         return "\cellcolor[HTML]{" + hex_color + "}"
