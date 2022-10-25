@@ -58,9 +58,10 @@ class Statistics(object):
             for instance in sequence.benchmark_instances:
                 for result in instance.results:
                     results[result.algorithm_name].append(result)
-
+        index = 0
         for algorithm in self.get_algorithms():
-            line = algorithm_name_to_display_name(algorithm.name)
+            index += 1
+            line = str(index) + " " + algorithm_name_to_display_name(algorithm.name)
             for time in self.times:
                 for characteristic in self.characteristics:
                     time_measurements = []

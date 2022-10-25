@@ -74,7 +74,7 @@ class MatrixBenchmarkInstances(object):
                 display_name = self.instance_to_display_name(instance)
                 line += "\t& \\fonttopsimilar \\rotatebox{90}{"+display_name + "}"
 
-            line += "\t& \\rotatebox{90}{Average time}"
+            line += "\t& \\rotatebox{90}{Average wall-clock time}"
             line += "\t& \\rotatebox{90}{Average states}"
 
             self.writer.print(line + " \\\\")
