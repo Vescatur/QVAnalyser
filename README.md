@@ -28,6 +28,9 @@ https://www.modestchecker.net/Downloads/Modest-Toolset-v3.1.190-g35b359a78-linux
 Instructions to install Storm are on.
 https://www.stormchecker.org/documentation/obtain-storm/build.html
 
+Prism can be installed via:
+https://www.prismmodelchecker.org/download.php
+
 # Run
 
 To start the application use the following commands or the file run.sh.
