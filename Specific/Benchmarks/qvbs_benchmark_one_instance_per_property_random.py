@@ -17,7 +17,7 @@ class QvbsBenchmarkOneInstancePerPropertyRandom(Benchmark):
         
         stormTool = StormTool()
         self.tools.append(stormTool)
-        self.algorithms.append(stormTool.interval_iteration_sparse)
+        self.algorithms.append(stormTool.interval_iteration)
         
         modestTool = ModestTool()
         self.tools.append(modestTool)

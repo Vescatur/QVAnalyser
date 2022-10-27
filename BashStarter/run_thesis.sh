@@ -1,4 +1,4 @@
 git pull
 export PYTHONPATH="../"
 cd ./../Starter
-python3.10 BenchmarkSprint6.py
+python3.10 1Benchmark_Thesis.py
