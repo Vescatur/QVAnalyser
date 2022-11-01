@@ -19,7 +19,7 @@ class AlgorithmMatrix(object):
         if self.use_latex:
             self.writer.print("\\begin{table}[htbp]")
             self.writer.print("\centering")
-            allignments = "l"*(len(algorithms)+1)
+            allignments = "l"*(len(algorithms)+1+1)
             self.writer.print("\\begin{tabular}{"+allignments+"}")
             self.writer.print("\\toprule")
             line = ""

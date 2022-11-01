@@ -2,6 +2,7 @@ import numpy as np
 
 from Specific.Output.Matrix.algorithm_matrix import AlgorithmMatrix
 from Library.Results.measurements import Measurements
+from Specific.Output.display_name import algorithm_name_to_display_name
 
 
 class MatrixSimilar(AlgorithmMatrix):
@@ -58,6 +59,37 @@ class MatrixSimilar(AlgorithmMatrix):
             else:
                 similarity_metric = 1-(differences/total)
                 return str(round(similarity_metric*1000))
+
+    def print_body_line(self, algorithms, algorithm_left, index):
+        display_name = algorithm_name_to_display_name(algorithm_left.name)
+        if self.use_latex:
+            line = str(index) + " " + display_name
+            for algorithm_top in algorithms:
+                line += "\t& " + str(self.generate_cell_text(algorithm_left, algorithm_top))
+
+            count = 0
+            total_time = 0
+            for sequence in self.benchmark.benchmark_sequences:
+                for instance in sequence.benchmark_instances:
+                    if self.instance_filter(instance):
+                        for result in instance.results:
+                            if result.algorithm_name == algorithm_left.name:
+                                if result.not_supported == False:
+                                    count += 1
+                                    time = self.get_time(result,self.benchmark.time_limit)
+                                    total_time += time
+
+            average_time = total_time/count
+            print(average_time)
+            print(total_time)
+            print(count)
+            line += "\t& " + str(average_time)
+            self.writer.print(line + " \\\\")
+        else:
+            line = str(index) + " " + display_name + "\t"
+            for algorithm_top in algorithms:
+                line += str(self.generate_cell_text(algorithm_left, algorithm_top)) + "\t"
+            self.writer.print(line)
 
     def get_time(self, result_top, time_limit):
         time_top = time_limit * 2
