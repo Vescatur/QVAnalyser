@@ -26,9 +26,9 @@ for sequence in benchmark.benchmark_sequences:
         if sequence.benchmark_model.name == previousModel:
             print("\t& " + sequence.property_name.replace("_","\_") + "\t& " + parametersText + "\t\\\\")
         else:
-            print("\cmidrule(r){1-3}")
+            print("\cmidrule(){1-3}")
             benchmark_name = sequence.benchmark_model.name
-            regex = r"\/[a-zA-Z-]*"
+            regex = r"\/[a-zA-Z-_]*"
             match = re.search(regex, benchmark_name)
             short_name1 = match.group(0)
             short_name2 = short_name1[1:] # Removes first character

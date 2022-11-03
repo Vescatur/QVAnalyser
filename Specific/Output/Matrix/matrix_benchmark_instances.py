@@ -54,7 +54,7 @@ class MatrixBenchmarkInstances(object):
 
     def instance_to_display_name(self,instance):
         benchmark_name = instance.benchmark_sequence.benchmark_model.name
-        regex = r"\/[a-zA-Z-]*"
+        regex = r"\/[a-zA-Z-_]*"
         match = re.search(regex, benchmark_name)
         short_name1 = match.group(0)
         short_name2 = short_name1[1:] # Removes first character
@@ -65,6 +65,7 @@ class MatrixBenchmarkInstances(object):
     def print_top_row(self):
         if self.use_latex:
             self.writer.print("\\begin{table}[htbp]")
+            self.writer.print("\\caption{??}")
             self.writer.print("\centering")
             allignments = "l"*(len(self.instances)+1+3)
             self.writer.print("\\begin{tabular}{"+allignments+"}")
@@ -192,7 +193,6 @@ class MatrixBenchmarkInstances(object):
         if self.use_latex:
             self.writer.print("\\bottomrule")
             self.writer.print("\\end{tabular}")
-            self.writer.print("\\caption{??}")
             self.writer.print("\\label{table:??}")
             self.writer.print("\\end{table}")
 
